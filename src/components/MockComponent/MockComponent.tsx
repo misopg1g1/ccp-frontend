@@ -1,12 +1,26 @@
-import React, { FC } from 'react';
+import React from 'react';
+import logo from '../../logo.svg';
 import './MockComponent.css';
 
-interface MockComponentProps {}
-
-const MockComponent: FC<MockComponentProps> = () => (
-  <div className="MockComponent" data-testid="MockComponent">
-      MockComponent Running!!!
-  </div>
-);
+function MockComponent() {
+  return (
+    <div className="App" data-testid="MockComponent">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
 
 export default MockComponent;
