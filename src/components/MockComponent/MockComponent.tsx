@@ -4,7 +4,7 @@ import './MockComponent.css';
 
 function MockComponent() {
   return (
-    <div className="App">
+    <div className="App" data-testid="MockComponent">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
