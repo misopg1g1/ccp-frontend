@@ -8,3 +8,20 @@ html,body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
 }
+
+.medium {
+  color:  #FFFFFF;
+  margin: 2px;
+  font-style: normal;
+  height: 36px;
+  font-weight: 500;
+  font-size: 28px;
+}
+
+.light {
+  color: #FFFFFF;
+  margin: 2px;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 17px;
+}
