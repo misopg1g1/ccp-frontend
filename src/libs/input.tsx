@@ -106,18 +106,9 @@ class Input extends React.Component {
 
         const {required, requiredMessage, invalidMessage, fixedLabel, forcedValid} = this.props
         const {width, marginTop, marginBotton, marginRight, marginLeft, paddingBottom, display} = this.props
-        const {backgroundInput, reference, maxLength, minLength, max, min} = this.props
+        const {backgroundInput, reference, maxLength, minLength, max, min, hideError} = this.props
         const {name, type, placeholder, label, searchValue, labelWidth, autocomplete} = this.props
         const {minDate, maxDate, checked, disabled, align, float, additionalProp} = this.props
-        const {errorPosition, hideError} = this.props
-
-        const styles = {
-            errorMessage: {
-                position: 'abosulute',
-                color: '#b94141',
-                top: '35px'
-            }
-        }
 
         let {classInput} = this.props;
         const {error, errorRegex, errorMessage, valid, value} = this.state
@@ -149,13 +140,9 @@ class Input extends React.Component {
             className += 'typeInput'
         }
 
-        if (errorPosition) {
-            styles.errorMessage.position = errorPosition
-        }
-
         return (
             <div
-                className={className}
+                className='LoginFormInputs'
                 style={{
                     width: width || '100%',
                     marginTop,
@@ -168,6 +155,15 @@ class Input extends React.Component {
                     float
                 }}
             >
+                <label
+                    className='FormLabel'
+                    htmlFor={type === 'radio' ? `filterCat${value}` : name}
+                    {...((type === 'radio' || type === 'checkbox') && {
+                        style: {width: labelWidth || width}
+                    })}
+                >
+                    {searchValue ? boldTextWithString(label, searchValue) : label}
+                </label>
                 <input
                     className={classInput + classValid}
                     type={type}
@@ -199,24 +195,13 @@ class Input extends React.Component {
                         }
                     })}
                 />
-                <label
-                    htmlFor={type === 'radio' ? `filterCat${value}` : name}
-                    {...((type === 'radio' || type === 'checkbox') && {
-                        style: {width: labelWidth || width}
-                    })}
-                >
-                    {searchValue ? boldTextWithString(label, searchValue) : label}
-                </label>
                 {!hideError && classValid === ' error' && errorRegex === false && (
-                    <p
-                        className="errorMessage"
-                        style={{...styles.errorMessage}}
-                    >
+                    <p className="ErrorMessage">
                         {!value ? requiredMessage : invalidMessage}
                     </p>
                 )}
                 {!hideError && errorRegex && (
-                    <p className='errorMessage' style={styles.errorMessage}>
+                    <p className='ErrorMessage'>
                         {errorMessage}
                     </p>
                 )}

@@ -1,14 +1,20 @@
 import './login.css'
 import {useState} from 'react'
+import {connect} from 'react-redux'
+import {login} from '../../actions/login'
 import LoginForm from '../../components/login/loginForm'
 
-const LoginPage = () => {
+const LoginPage = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [fieldIsValid, setFieldIsValid] = useState({
         username: null,
         password: null
     })
+    const {
+        loginFunc,
+        isLoggedIn
+    } = props
 
     const isValidFields = () => {
         if (!fieldIsValid.password || !fieldIsValid.username) {
@@ -18,10 +24,9 @@ const LoginPage = () => {
     }
     
     const submit = event => {
-        console.log('event');
         event.preventDefault();
         if (isValidFields()) {
-            LoginForm({
+            loginFunc({
                 credentials: {username, password}
             })
             return true;
@@ -30,7 +35,6 @@ const LoginPage = () => {
     }
     
     const handleValueChange = (name, value) => {
-        console.log('handleValueChange')
         if (name === 'username') {
             setUsername(value)
         }
@@ -38,6 +42,10 @@ const LoginPage = () => {
             setPassword(value)
         }
         setFieldIsValid({...fieldIsValid, [name]: null})
+    }
+
+    const handleValueValid = (name, valid) => {
+        setFieldIsValid({...fieldIsValid, [name]: valid})
     }
 
     return (
@@ -53,6 +61,7 @@ const LoginPage = () => {
                     <LoginForm
                         fieldIsValid={fieldIsValid}
                         handleValueChange={handleValueChange}
+                        handleValueValid={handleValueValid}
                         username={username}
                         password={password}
                         submit={submit}
@@ -62,5 +71,13 @@ const LoginPage = () => {
         </form>
     )
 }
+
+const mapStateToProps = state => ({
+    isLoggedIn: state.login.isLoggedIn
+})
+
+const mapDispatchToProps = {
+    loginFunc: login
+}
    
-export default LoginPage
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
