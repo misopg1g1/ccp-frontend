@@ -1,6 +1,7 @@
 import './loginForm.css'
 import PropTypes from 'prop-types'
 import Input from '../../libs/input'
+import Icon from '../../libs/icons'
 
 const LoginForm = (props) => {
     const {
@@ -9,6 +10,8 @@ const LoginForm = (props) => {
         handleValueValid,
         username,
         password,
+        showPassword,
+        togglePasswordVisible,
         submit
     } = props
 
@@ -33,8 +36,9 @@ const LoginForm = (props) => {
                 >
                 </Input>
                 <Input
-                    type='text'
+                    type={showPassword ? 'text' : 'password'}
                     name='password'
+                    autocomplete
                     label='Contraseña'
                     placeholder='Escriba su contraseña'
                     value={password}
@@ -46,7 +50,15 @@ const LoginForm = (props) => {
                     classInput='LoginFormInput '
                     marginTop='32px'
                     forcedValid={fieldIsValid.password}
-                >
+                    icon={
+                        <Icon
+                            className={'LoginIconInput'}
+                            icon={showPassword ? 'eyeClosed' : 'eye'}
+                            color='black'
+                            onClick={togglePasswordVisible}
+                        />
+                    }
+                >  
                 </Input>
             </div>
             <button 
@@ -63,9 +75,11 @@ LoginForm.propTypes = {
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     fieldIsValid: PropTypes.object.isRequired,
+    showPassword: PropTypes.bool.isRequired,
     handleValueChange: PropTypes.func.isRequired,
     handleValueValid: PropTypes.func.isRequired,
-    submit: PropTypes.func.isRequired
+    submit: PropTypes.func.isRequired,
+    togglePasswordVisible: PropTypes.func.isRequired
 }
 
 export default LoginForm

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import boldTextWithString from '../utils/boldTextWithString'
+import { unmaskValue, maskValue } from '../utils/mask'
 
 class Input extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Input extends React.Component {
         }
 
         this.state = {
-            value: value,
+            value: this.maskValue(value),
             error: false,
             errorRegex: false,
             errorMessage: '',
@@ -39,7 +40,7 @@ class Input extends React.Component {
         if (maxLength && targetValue.length > maxLength && currentValue.length < targetValue.length) {
             return null
         }
-        const value = targetValue
+        const value = this.maskValue(targetValue)
         this.setState(
             {value},
             () => {
@@ -48,12 +49,34 @@ class Input extends React.Component {
                 }
             }
         )
-        handleValueChange(targetName, value);
+        handleValueChange(targetName, this.unmaskValue(value))
         return true
     }
 
     onBlur(event) {
         this.validate(event.target.name)
+    }
+
+    maskValue = (value) => {
+        const {mask} = this.props
+        if (!value) {
+            return ''
+        }
+        if (!mask) {
+            return value
+        }
+        return maskValue(value, mask)
+    }
+
+    unmaskValue = value => {
+        const {mask} = this.props
+        if (!value) {
+            return ''
+        }
+        if (!mask) {
+            return value
+        }
+        return unmaskValue(value, mask)
     }
 
     validate(name) {
@@ -69,14 +92,14 @@ class Input extends React.Component {
 
         // empty value
         if (value === '') {
-            nextState.valid = false;
-            this.setState(nextState);
+            nextState.valid = false
+            this.setState(nextState)
             handleValueValid(name, required ? false : null)
             return
         }
 
         if(mask) {
-            value = value;
+            value = unmaskValue(value, mask)
         }
 
         // Con regex
@@ -94,7 +117,7 @@ class Input extends React.Component {
         }
 
         if (nextState.errorRegex) {
-            return;
+            return
         }
 
         this.setState(nextState)
@@ -102,15 +125,15 @@ class Input extends React.Component {
     }
 
     render() {
-        let classValid = '';
+        let classValid = ''
 
         const {required, requiredMessage, invalidMessage, fixedLabel, forcedValid} = this.props
         const {width, marginTop, marginBotton, marginRight, marginLeft, paddingBottom, display} = this.props
         const {backgroundInput, reference, maxLength, minLength, max, min, hideError} = this.props
         const {name, type, placeholder, label, searchValue, labelWidth, autocomplete} = this.props
-        const {minDate, maxDate, checked, disabled, align, float, additionalProp} = this.props
+        const {minDate, maxDate, checked, disabled, align, float, additionalProp, icon} = this.props
 
-        let {classInput} = this.props;
+        let {classInput} = this.props
         const {error, errorRegex, errorMessage, valid, value} = this.state
 
         if (required) {
@@ -195,16 +218,19 @@ class Input extends React.Component {
                         }
                     })}
                 />
-                {!hideError && classValid === ' error' && errorRegex === false && (
-                    <p className="ErrorMessage">
-                        {!value ? requiredMessage : invalidMessage}
-                    </p>
+                {icon}
+                <div>
+                    {!hideError && classValid === ' error' && errorRegex === false && (
+                        <p className="ErrorMessage">
+                            {!value ? requiredMessage : invalidMessage}
+                        </p>
+                    )}
+                    {!hideError && errorRegex && (
+                        <p className='ErrorMessage'>
+                            {errorMessage}
+                        </p>
                 )}
-                {!hideError && errorRegex && (
-                    <p className='ErrorMessage'>
-                        {errorMessage}
-                    </p>
-                )}
+                </div>
             </div>
         )
     }
@@ -251,7 +277,8 @@ Input.propTypes = {
     additionalProp: PropTypes.any,
     max: PropTypes.number,
     min: PropTypes.number,
-    hasError: PropTypes.bool
+    hasError: PropTypes.bool,
+    icon: PropTypes.any
 }
 
 Input.defaultProps = {
@@ -292,7 +319,8 @@ Input.defaultProps = {
     additionalProp: null,
     max: null,
     min: null,
-    hasError: false
+    hasError: false,
+    icon: null
 }
 
 export default Input

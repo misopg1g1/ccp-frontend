@@ -11,6 +11,7 @@ const LoginPage = (props) => {
         username: null,
         password: null
     })
+    const [showPassword, setShowPasswword] = useState(false)
     const {
         loginFunc,
         isLoggedIn
@@ -32,6 +33,10 @@ const LoginPage = (props) => {
             return true;
         }
         return false;
+    }
+
+    const togglePasswordVisible = () => {
+        setShowPasswword(!showPassword)
     }
     
     const handleValueChange = (name, value) => {
@@ -65,6 +70,8 @@ const LoginPage = (props) => {
                         username={username}
                         password={password}
                         submit={submit}
+                        showPassword={showPassword}
+                        togglePasswordVisible={togglePasswordVisible}
                     />
                 </div>
             </div>
