@@ -27,6 +27,7 @@ class Input extends React.Component {
             const value = nextProps.value || ''
             return {value}
         }
+        return null
     }
 
     onChange(event) {
