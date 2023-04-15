@@ -3,7 +3,7 @@ export const login = (server) => {
     server.post('/api/login', (req, res) => {
         res.json(
             {
-                "Title": "Hola from server!"
+                "Title": "Hello from server!"
             }
         );         
     });

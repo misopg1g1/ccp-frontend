@@ -1,7 +1,6 @@
 import {combineReducers} from 'redux';
 import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import {connectRouter} from 'connected-react-router';
 
 import login from './login'
 
@@ -19,9 +18,8 @@ const loginPersistConfig = {
     storage
 };
 
-const rootReducer = history => 
+const rootReducer = () => 
     combineReducers({
-        router: connectRouter(history),
         login: persistReducer(loginPersistConfig, login)
     });
 
