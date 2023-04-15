@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url'
 import express from 'express'
 import bodyParser from 'body-parser';
 import { createServer as createViteServer } from 'vite'
-import login from './routes/login/index.js'
+import { login } from './routes/login/index.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
