@@ -1,35 +1,35 @@
 export const config = {
     AR: {
         dev: {
-            apiGateway: 'http://localhost:3003'
-        },
-        staging: {
             apiGateway: 'https://stagingapi.edgarluna.dev'
         },
+        staging: {
+            apiGateway: 'http://api-gateway-svc'
+        },
         production: {
-            apiGateway: 'https://ccpapi.edgarluna.dev'
+            apiGateway: 'http://api-gateway-svc'
         }
     },
     CL: {
         dev: {
-            apiGateway: 'http://localhost:3003'
-        },
-        staging: {
             apiGateway: 'https://stagingapi.edgarluna.dev'
         },
+        staging: {
+            apiGateway: 'http://api-gateway-svc'
+        },
         production: {
-            apiGateway: 'https://ccpapi.edgarluna.dev'
+            apiGateway: 'http://api-gateway-svc'
         }
     },
     CO: {
         dev: {
-            apiGateway: 'http://localhost:3003'
-        },
-        staging: {
             apiGateway: 'https://stagingapi.edgarluna.dev'
         },
+        staging: {
+            apiGateway: 'http://api-gateway-svc'
+        },
         production: {
-            apiGateway: 'https://ccpapi.edgarluna.dev'
+            apiGateway: 'http://api-gateway-svc'
         }
     }
 };

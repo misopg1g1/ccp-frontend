@@ -1,3 +1,5 @@
 import constants from '../constants.js'
+import * as dotenv from 'dotenv'
 
-export const env = process.env.APP_ENV || constants.ENV_STAGING
+dotenv.config();
+export const env = process.env.APP_ENV
