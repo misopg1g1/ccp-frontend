@@ -12,7 +12,7 @@ jobs:
       matrix:
         node-version: [ 18.x ]
     env:
-      FRONTEND_ENVS: ${{secrets.FRONTEND_ENVS}}
+      FRONTEND_ENVS: ${{secrets.FRONTEND_ENVS_PRODUCTION}}
     steps:
       - uses: actions/checkout@v3
 
