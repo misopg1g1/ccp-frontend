@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import Error from '../../layout/messages/error'
 import LoginForm from '../../components/login/loginForm'
 import getErrorMessage from '../../utils/getErrorMessage'
+import {DEFAULT_TIMEOUT_MESSAGE} from '../../constants/actionTypes'
 
 const LoginPage = (props) => {
     const [user, setUser] = useState('')
@@ -23,6 +24,11 @@ const LoginPage = (props) => {
         isLoggedIn,
         cleanError
     } = props
+
+    if (error) {
+        error.code = "Error en login"
+        error.timeout = DEFAULT_TIMEOUT_MESSAGE
+    }
 
     if (isLoggedIn) {
         console.log('isLoggedIn_1', isLoggedIn)

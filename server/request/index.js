@@ -1,3 +1,24 @@
+import CryptoJS from 'crypto-js';
+
+export const hashObject = (jsonBody) => {
+    const cleanJsonBody = Object.fromEntries(
+      Object.entries(jsonBody).filter(([key]) => key !== 'hash'),
+    );
+    const sortedKeys = Object.keys(cleanJsonBody).sort();
+    const jsonString = sortedKeys
+      .map(
+        (key, index) =>
+          `"${key}": "${cleanJsonBody[key]}"${
+            index < sortedKeys.length - 1 ? ', ' : ''
+          }`,
+      )
+      .join('');
+  
+    const wrappedJsonString = `{${jsonString}}`;
+    const md5Hash = CryptoJS.MD5(wrappedJsonString).toString();
+    console.log('here', md5Hash);
+    return {...cleanJsonBody, hash: md5Hash};
+};
 
 export class Request {
     constructor() {
@@ -5,9 +26,10 @@ export class Request {
     }
 
     static async post(url, payload) {
+        const body = hashObject(payload);
         return fetch(url, {
             method: 'POST',
-            body: JSON.stringify(payload),
+            body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
             },
