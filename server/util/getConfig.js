@@ -1,5 +1,5 @@
-const config = require('../config');
-const countryCode = require('./getCountryCode');
-const env = require('./getEnv');
+import { config} from '../config.js'
+import { country } from './getCountryCode.js'
+import { env } from './getEnv.js'
 
-module.exports = config[countryCode][env];
+export default config[country][env]

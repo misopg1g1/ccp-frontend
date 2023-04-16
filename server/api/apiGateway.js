@@ -1,13 +1,7 @@
-const config = require('../../util/getConfig');
-const request = require('../../request');
+import config from '../util/getConfig.js'
+import { Request } from '../request/index.js'
 
-module.exports = {
-    login: ({ username, password, browser, os }) => {
-        const url = `${config.apiGateway}/login`;
-        console.log('username', username);
-        console.log('password', password);
-        console.log('browser', browser);
-        console.log('os', os);
-        return 'Autenticación exitosa';
-    }
-};
+export function login({ user, password, hash }) {
+    const url = `${config.apiGateway}/session/login`
+    return Request.post(url, {user, password, hash})
+}

@@ -9,7 +9,6 @@ function* loginSaga({credentials}) {
     try {
         const body = {...credentials};
         const {data} = yield call(login, body); 
-        console.log('data', data);
     } catch (error) {
         yield put({type: LOGIN_FAIL, error: error.data});
     }

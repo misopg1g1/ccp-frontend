@@ -1,5 +1,4 @@
 import express from 'express'
-import { login } from './routes/login/index.js'
 import loadRoutes from './routes/index.js'
 
 async function createServer() {

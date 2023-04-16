@@ -1,2 +1,1 @@
-const country = process.env.COUNTRY || 'co';
-module.exports = country.toUpperCase();
+export const country = (process.env.COUNTRY || 'co').toUpperCase()

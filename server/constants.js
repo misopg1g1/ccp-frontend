@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // Environments
     ENV_DEV: 'dev',
     ENV_STAGING: 'staging',
