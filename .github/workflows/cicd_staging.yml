@@ -44,6 +44,7 @@ jobs:
       REGISTRY_HOST: ${{ secrets.REGISTRY_HOST }}
       REGISTRY_SPACE: ${{ secrets.REGISTRY_SPACE }}
       REPO_NAME: ${{ github.event.repository.name }}
+      FRONTEND_ENVS: ${{secrets.FRONTEND_ENVS_STAGING}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -54,6 +55,9 @@ jobs:
             echo "Dockerfile no encontrado. No se ejecutará la acción."
             exit 0
           fi
+      - name: Crear env file
+        run: |
+          echo ${FRONTEND_ENVS} > .env
       - name: Autenticarse en el registry
         run: echo $REGISTRY_PASSWORD | docker login $REGISTRY_HOST -u $REGISTRY_USERNAME --password-stdin
       - name: Construir y Subir imagen de docker
