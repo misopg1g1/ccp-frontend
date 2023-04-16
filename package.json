@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "jest --coverage",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "client": "vite",
     "server": "node server/index.js"
