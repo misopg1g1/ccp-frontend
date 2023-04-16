@@ -8,7 +8,7 @@ const LoginForm = (props) => {
         fieldIsValid,
         handleValueChange,
         handleValueValid,
-        username,
+        user,
         password,
         showPassword,
         togglePasswordVisible,
@@ -21,18 +21,18 @@ const LoginForm = (props) => {
             <div className='LoginFormInputs mt-16'>
                 <Input
                     type='text'
-                    name='username'
+                    name='user'
                     autoComplete
                     label='Usuario'
                     placeholder='Escriba su usuario'
-                    value={username}
+                    value={user}
                     handleValueChange={handleValueChange}
                     handleValueValid={handleValueValid}
                     requiredMessage='El campo usuario es requerido'
                     required
                     maxLength={20}
                     classInput='LoginFormInput '
-                    forcedValid={fieldIsValid.username}
+                    forcedValid={fieldIsValid.user}
                 >
                 </Input>
                 <Input
@@ -72,7 +72,7 @@ const LoginForm = (props) => {
 }
 
 LoginForm.propTypes = {
-    username: PropTypes.string.isRequired,
+    user: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     fieldIsValid: PropTypes.object.isRequired,
     showPassword: PropTypes.bool.isRequired,

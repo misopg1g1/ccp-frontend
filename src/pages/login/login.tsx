@@ -1,24 +1,36 @@
 import './login.css'
 import {useState} from 'react'
 import {connect} from 'react-redux'
-import {login} from '../../actions/login'
+import {Navigate} from 'react-router-dom'
+import {login, cleanError } from '../../actions/login'
+import PropTypes from 'prop-types'
+
+import Error from '../../layout/messages/error'
 import LoginForm from '../../components/login/loginForm'
+import getErrorMessage from '../../utils/getErrorMessage'
 
 const LoginPage = (props) => {
-    const [username, setUsername] = useState('')
+    const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
     const [fieldIsValid, setFieldIsValid] = useState({
-        username: null,
+        user: null,
         password: null
     })
     const [showPassword, setShowPasswword] = useState(false)
     const {
+        error,
         loginFunc,
-        isLoggedIn
+        isLoggedIn,
+        cleanError
     } = props
 
+    if (isLoggedIn) {
+        console.log('isLoggedIn_1', isLoggedIn)
+        return <Navigate to={'/dashboard'} />
+    }
+
     const isValidFields = () => {
-        if (!fieldIsValid.password || !fieldIsValid.username) {
+        if (!fieldIsValid.password || !fieldIsValid.user) {
             return false
         }
         return true
@@ -28,7 +40,7 @@ const LoginPage = (props) => {
         event.preventDefault();
         if (isValidFields()) {
             loginFunc({
-                credentials: {username, password}
+                credentials: {user, password}
             })
             return true;
         }
@@ -40,8 +52,8 @@ const LoginPage = (props) => {
     }
     
     const handleValueChange = (name, value) => {
-        if (name === 'username') {
-            setUsername(value)
+        if (name === 'user') {
+            setUser(value)
         }
         if (name === 'password') {
             setPassword(value)
@@ -55,6 +67,7 @@ const LoginPage = (props) => {
 
     return (
         <form id='login' onSubmit={submit}>
+            {error && <Error key={error.code} error={getErrorMessage(error)} handleClose={cleanError} />}
             <div className="LoginBoard">
                 <div className='LoginGreetingPanel'>
                     <div className='LoginGreetingPanelText'>
@@ -67,7 +80,7 @@ const LoginPage = (props) => {
                         fieldIsValid={fieldIsValid}
                         handleValueChange={handleValueChange}
                         handleValueValid={handleValueValid}
-                        username={username}
+                        user={user}
                         password={password}
                         submit={submit}
                         showPassword={showPassword}
@@ -79,12 +92,25 @@ const LoginPage = (props) => {
     )
 }
 
+LoginPage.propTypes = {
+    error: PropTypes.object,
+    isLoggedIn: PropTypes.bool,
+    cleanError: PropTypes.func.isRequired
+}
+
+LoginPage.defaultProps = {
+    error: '',
+    isLoggedIn: false
+}
+
 const mapStateToProps = state => ({
-    isLoggedIn: state.login.isLoggedIn
+    error: state.login.error,
+    isLoggedIn: state.login.isLoggedIn,
 })
 
 const mapDispatchToProps = {
-    loginFunc: login
+    loginFunc: login,
+    cleanError: cleanError
 }
    
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)

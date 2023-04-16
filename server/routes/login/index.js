@@ -8,7 +8,6 @@ export const login = (server) => {
                 let response = { ...r }
                 if (response.error) {
                     log.response_error('login', req, response.error)
-                    res.status(400)
                 }
                 res.json(response)
             }).catch((err) => {
