@@ -9,7 +9,6 @@ const initialState = {
     token: null,
     fetching: false,
     message: null,
-    error: null,
     userData: null
 };
 
@@ -20,7 +19,7 @@ export default function reducer(state = initialState, action) {
         case LOGIN_SUCCESS:
             return { ...state, fetching: false, isLoggedIn: true, token: action.token, userData: action.userData }
         case LOGIN_FAIL:
-            return { ...state, fetching: false, message: null, error: action.error }
+            return { ...state, fetching: false, message: action.message }
         case CLEAN_MESSAGE:
             return { ...state, message: null }
         default:

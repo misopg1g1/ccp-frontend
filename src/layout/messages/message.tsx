@@ -35,7 +35,7 @@ Message.defaultProps = {
 }
 
 Message.propTypes = {
-    mensaje: PropTypes.shape({
+    message: PropTypes.shape({
         title: PropTypes.string.isRequired,
         content: PropTypes.string.isRequired,
         errorClass: PropTypes.string,

@@ -11,12 +11,11 @@ function* loginSaga({credentials}) {
         const body = {...credentials}
         const {data} = yield call(login, body)
         if (data.error) {
-            const error = { data }
             throw { data }
         }
         yield put({ type: LOGIN_SUCCESS, token: data.access_token, userData: data.data })
     } catch (error) {
-        yield put({type: LOGIN_FAIL, error: error.data});
+        yield put({type: LOGIN_FAIL, message: error.data});
     }
 }
 

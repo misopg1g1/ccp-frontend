@@ -19,15 +19,15 @@ const LoginPage = (props) => {
     })
     const [showPassword, setShowPasswword] = useState(false)
     const {
-        error,
+        message,
         loginFunc,
         isLoggedIn,
         cleanMessage
     } = props
 
-    if (error) {
-        error.code = "Error en login"
-        error.timeout = DEFAULT_TIMEOUT_MESSAGE
+    if (message) {
+        message.code = "Error en login"
+        message.timeout = DEFAULT_TIMEOUT_MESSAGE
     }
 
     if (isLoggedIn) {
@@ -73,7 +73,7 @@ const LoginPage = (props) => {
 
     return (
         <form id='login' onSubmit={submit}>
-            {error && <Message key={error.code} message={getMessage(error)} handleClose={cleanMessage} />}
+            {message && <Message key={message.code} message={getMessage(message)} handleClose={cleanMessage} />}
             <div className="LoginBoard">
                 <div className='LoginGreetingPanel'>
                     <div className='LoginGreetingPanelText'>
@@ -99,18 +99,18 @@ const LoginPage = (props) => {
 }
 
 LoginPage.propTypes = {
-    error: PropTypes.object,
+    message: PropTypes.object,
     isLoggedIn: PropTypes.bool,
     cleanMessage: PropTypes.func.isRequired
 }
 
 LoginPage.defaultProps = {
-    error: '',
+    message: '',
     isLoggedIn: false
 }
 
 const mapStateToProps = state => ({
-    error: state.login.error,
+    message: state.login.message,
     isLoggedIn: state.login.isLoggedIn,
 })
 
