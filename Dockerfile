@@ -9,7 +9,6 @@ COPY . .
 
 # Install any needed packages for frontend and backend
 RUN npm install
-RUN cd server && npm install
 
 # Build the frontend
 RUN npm run build
