@@ -2,12 +2,12 @@ import './login.css'
 import {useState} from 'react'
 import {connect} from 'react-redux'
 import {Navigate} from 'react-router-dom'
-import {login, cleanError } from '../../actions/login'
+import {login, cleanMessage } from '../../actions/login'
 import PropTypes from 'prop-types'
 
-import Error from '../../layout/messages/error'
+import Message from '../../layout/messages/message'
 import LoginForm from '../../components/login/loginForm'
-import getErrorMessage from '../../utils/getErrorMessage'
+import getMessage from '../../utils/getMessage'
 import {DEFAULT_TIMEOUT_MESSAGE} from '../../constants/actionTypes'
 
 const LoginPage = (props) => {
@@ -22,7 +22,7 @@ const LoginPage = (props) => {
         error,
         loginFunc,
         isLoggedIn,
-        cleanError
+        cleanMessage
     } = props
 
     if (error) {
@@ -73,7 +73,7 @@ const LoginPage = (props) => {
 
     return (
         <form id='login' onSubmit={submit}>
-            {error && <Error key={error.code} error={getErrorMessage(error)} handleClose={cleanError} />}
+            {error && <Message key={error.code} message={getMessage(error)} handleClose={cleanMessage} />}
             <div className="LoginBoard">
                 <div className='LoginGreetingPanel'>
                     <div className='LoginGreetingPanelText'>
@@ -101,7 +101,7 @@ const LoginPage = (props) => {
 LoginPage.propTypes = {
     error: PropTypes.object,
     isLoggedIn: PropTypes.bool,
-    cleanError: PropTypes.func.isRequired
+    cleanMessage: PropTypes.func.isRequired
 }
 
 LoginPage.defaultProps = {
@@ -116,7 +116,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     loginFunc: login,
-    cleanError: cleanError
+    cleanMessage: cleanMessage
 }
    
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)

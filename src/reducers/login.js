@@ -2,7 +2,7 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    LOGIN_CLEAN_ERRORS,
+    CLEAN_MESSAGE,
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -21,8 +21,8 @@ export default function reducer(state = initialState, action) {
             return { ...state, fetching: false, isLoggedIn: true, token: action.token, userData: action.userData }
         case LOGIN_FAIL:
             return { ...state, fetching: false, message: null, error: action.error }
-        case LOGIN_CLEAN_ERRORS:
-            return { ...state, error: null }
+        case CLEAN_MESSAGE:
+            return { ...state, message: null }
         default:
             return state;
     }

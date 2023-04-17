@@ -23,4 +23,4 @@ const rootReducer = () =>
         login: persistReducer(loginPersistConfig, login)
     });
 
-export default history => persistReducer(persistRootConfig, rootReducer(history));
+export default persistReducer(persistRootConfig, rootReducer());
