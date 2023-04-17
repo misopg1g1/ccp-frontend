@@ -1,29 +1,28 @@
-# Base image
-FROM node:latest as build
+# Use an official Node.js runtime as a parent image
+FROM node:lts
 
-# Set working directory
+# Create a working directory for your application
 WORKDIR /app
 
-# Copy package.json and package-lock.json files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy project files to container
+# Copy your application files to the container
 COPY . .
 
-# Build the project
+# Install any needed packages for frontend and backend
+RUN npm install
+
+# Build the frontend
 RUN npm run build
 
-# Production image
-FROM nginx:latest
+# Install Nginx and supervisord
+RUN apt-get update && apt-get install -y nginx supervisor
 
-# Copy the production build of the app from the builder stage to the Nginx web root directory
-COPY --from=build /app/dist /usr/share/nginx/html
+# Remove the default Nginx configuration and add your own
+RUN rm /etc/nginx/sites-enabled/default
+COPY nginx.conf /etc/nginx/sites-enabled/
 
-# Expose the port on which Nginx will listen
-EXPOSE 80
+# Copy supervisord configuration
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start supervisord
+CMD ["/usr/bin/supervisord"]
+

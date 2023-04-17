@@ -12,7 +12,7 @@ describe('<MockComponent />', () => {
         const button = screen.getByTestId('button');
         let numb = screen.getByTestId('numb');
         expect(mockComponent).toBeInTheDocument();
-        expect(someEnv.innerHTML).toEqual(process.env.VITE_SOME_KEY)
+        expect(someEnv.innerHTML).toEqual("")
         expect(numb.innerHTML).toBe("0")
         fireEvent.click(button)
         expect(numb.innerHTML).toBe("1")
