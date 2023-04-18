@@ -10,7 +10,7 @@ import LoginForm from '../../components/login/loginForm'
 import getMessage from '../../utils/getMessage'
 import {DEFAULT_TIMEOUT_MESSAGE} from '../../constants/actionTypes'
 
-const LoginPage = (props) => {
+const LoginPage = (props: any) => {
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
     const [fieldIsValid, setFieldIsValid] = useState({
@@ -31,7 +31,6 @@ const LoginPage = (props) => {
     }
 
     if (isLoggedIn) {
-        console.log('isLoggedIn_1', isLoggedIn)
         return <Navigate to={'/dashboard'} />
     }
 
@@ -42,7 +41,7 @@ const LoginPage = (props) => {
         return true
     }
     
-    const submit = event => {
+    const submit = (event: any) => {
         event.preventDefault();
         if (isValidFields()) {
             loginFunc({
@@ -57,7 +56,7 @@ const LoginPage = (props) => {
         setShowPasswword(!showPassword)
     }
     
-    const handleValueChange = (name, value) => {
+    const handleValueChange = (name: string, value: string) => {
         if (name === 'user') {
             setUser(value)
         }
@@ -67,7 +66,7 @@ const LoginPage = (props) => {
         setFieldIsValid({...fieldIsValid, [name]: null})
     }
 
-    const handleValueValid = (name, valid) => {
+    const handleValueValid = (name: string, valid: any) => {
         setFieldIsValid({...fieldIsValid, [name]: valid})
     }
 
@@ -109,7 +108,7 @@ LoginPage.defaultProps = {
     isLoggedIn: false
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: any) => ({
     message: state.login.message,
     isLoggedIn: state.login.isLoggedIn,
 })

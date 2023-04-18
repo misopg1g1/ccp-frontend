@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import boldTextWithString from '../utils/boldTextWithString'
-import { unmaskValue, maskValue } from '../utils/mask'
 
 class Input extends React.Component {
-    constructor(props) {
+    constructor(props: any) {
         super(props)
         let {value} = props
         if (props.type === 'checkbox') {
@@ -22,7 +21,7 @@ class Input extends React.Component {
         this.onBlur = this.onBlur.bind(this)
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
+    static getDerivedStateFromProps(nextProps: any, prevState: any) {
         if ((prevState.value !== nextProps.value && !nextProps.mask) || nextProps.value === '') {
             const value = nextProps.value || ''
             return {value}
@@ -30,7 +29,7 @@ class Input extends React.Component {
         return null
     }
 
-    onChange(event) {
+    onChange(event: any) {
         const {forcedValid, handleValueChange, maxLength, type} = this.props
         const {value: currentValue} = this.state
         const targetValue = event.target.type === 'checkbox' ? event.target.checked : event.target.value
@@ -54,11 +53,11 @@ class Input extends React.Component {
         return true
     }
 
-    onBlur(event) {
+    onBlur(event: any) {
         this.validate(event.target.name)
     }
 
-    maskValue = (value) => {
+    maskValue = (value: any) => {
         const {mask} = this.props
         if (!value) {
             return ''
@@ -66,10 +65,9 @@ class Input extends React.Component {
         if (!mask) {
             return value
         }
-        return maskValue(value, mask)
     }
 
-    unmaskValue = value => {
+    unmaskValue = (value: any) => {
         const {mask} = this.props
         if (!value) {
             return ''
@@ -77,10 +75,9 @@ class Input extends React.Component {
         if (!mask) {
             return value
         }
-        return unmaskValue(value, mask)
     }
 
-    validate(name) {
+    validate(name: any) {
         const nextState = {
             error: false,
             errorRegex: false,
@@ -97,10 +94,6 @@ class Input extends React.Component {
             this.setState(nextState)
             handleValueValid(name, required ? false : null)
             return
-        }
-
-        if(mask) {
-            value = unmaskValue(value, mask)
         }
 
         // Con regex
@@ -129,7 +122,7 @@ class Input extends React.Component {
         let classValid = ''
 
         const {required, requiredMessage, invalidMessage, fixedLabel, forcedValid} = this.props
-        const {width, marginTop, marginBotton, marginRight, marginLeft, paddingBottom, display} = this.props
+        const {width, marginTop, marginBottom, marginRight, marginLeft, paddingBottom, display} = this.props
         const {backgroundInput, reference, maxLength, minLength, max, min, hideError} = this.props
         const {name, type, placeholder, label, searchValue, labelWidth, autocomplete} = this.props
         const {minDate, maxDate, checked, disabled, align, float, additionalProp, icon} = this.props
@@ -172,7 +165,7 @@ class Input extends React.Component {
                 style={{
                     width: width || '100%',
                     marginTop,
-                    marginBotton,
+                    marginBottom,
                     marginRight,
                     marginLeft,
                     paddingBottom,
@@ -261,7 +254,7 @@ Input.propTypes = {
     marginLeft: PropTypes.string,
     marginRight: PropTypes.string,
     marginTop: PropTypes.string,
-    marginBotton: PropTypes.string,
+    marginBottom: PropTypes.string,
     width: PropTypes.string,
     fixedLabel: PropTypes.string,
     validations: PropTypes.array,
@@ -305,7 +298,7 @@ Input.defaultProps = {
     marginLeft: null,
     marginRight: null,
     marginTop: null,
-    marginBotton: null,
+    marginBottom: null,
     width: null,
     fixedLabel: null,
     validations: null,
