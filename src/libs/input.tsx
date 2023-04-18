@@ -151,6 +151,7 @@ class Input extends React.Component {
             classValid = (error || errorRegex ? ' error' : '') + (valid ? ' valid' : '')
         }
 
+        /*
         let className = ''
         if (errorMessage !== '') {
             className += 'errorMessage'
@@ -163,6 +164,7 @@ class Input extends React.Component {
         } else {
             className += 'typeInput'
         }
+        */
 
         return (
             <div

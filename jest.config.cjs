@@ -12,7 +12,6 @@ module.exports = {
   collectCoverageFrom: [
     "src/**/*.{js,jsx,ts,tsx}",
     "server/**/*.{js,jsx,ts,tsx}",
-    "!server.js",
     "!**/node_modules/**",
     "!**/path/to/other/ignored/directories/**",
   ],

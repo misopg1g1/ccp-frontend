@@ -17,7 +17,7 @@ const fetchRetry = (reqParams, n) =>
         return fetchRetry(reqParams, n - 1);
     });
 
-function request(method, url, params = {}, body = null, headers = null, retriesNumber) {
+function request(method, url, params = {}, body = null, headers = null, retriesNumber = 0) {
     const reqParams = {
         method,
         responseType: 'json',
