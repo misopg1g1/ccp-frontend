@@ -56,7 +56,7 @@ const LoginPage = (props) => {
         setShowPasswword(!showPassword)
     }
     
-    const handleValueChange = (name: string, value: string) => {
+    const handleValueChange = (name: string, value) => {
         if (name === 'user') {
             setUser(value)
         }

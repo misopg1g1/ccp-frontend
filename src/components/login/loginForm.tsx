@@ -54,7 +54,7 @@ const LoginForm = (props) => {
               className={"LoginIconInput"}
               icon={showPassword ? "eyeClosed" : "eye"}
               color="black"
-              onclick={togglePasswordVisible}
+              onClick={togglePasswordVisible}
             />
           }
         ></Input>
