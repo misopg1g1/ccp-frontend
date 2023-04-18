@@ -10,7 +10,7 @@ async function createServer() {
 
   if (process.env.NODE_ENV !== 'test') {
     app.listen(app.get('port'), () => {
-        console.log(`Find the server at: http://localhost:${app.get('port')}/`);
+        console.info(`Find the server at: http://localhost:${app.get('port')}/`);
       })
   }
 }

@@ -17,7 +17,7 @@ const fetchRetry = (reqParams, n) =>
         return fetchRetry(reqParams, n - 1);
     });
 
-function request(method, url, params = {}, body = null, headers = null, retriesNumber) {
+function request(method, url, params = {}, body = null, headers = null, retriesNumber = 0) {
     const reqParams = {
         method,
         responseType: 'json',
@@ -41,6 +41,6 @@ function request(method, url, params = {}, body = null, headers = null, retriesN
     return fetchRetry(reqParams, retriesNumber).catch(error => Promise.reject(error.response));
 }
 
-export function post(url, query, body = {}, headers = null, options = {}, retrieNumber = 2) {
-    return request('post', url, query, body, headers, options, retrieNumber);
+export function post(url, query, body = {}, headers = null, retrieNumber = 2) {
+    return request('post', url, query, body, headers, retrieNumber);
 }

@@ -44,7 +44,7 @@ Icons.propTypes = {
     className: PropTypes.string,
     border: PropTypes.string,
     icon: PropTypes.string.isRequired,
-    onclick: PropTypes.func
+    onClick: PropTypes.func
 }
 
 Icons.defaultProps = {
@@ -54,7 +54,7 @@ Icons.defaultProps = {
     border: null,
     className: null,
     color: null,
-    onclick: () => ({})
+    onClick: () => ({})
 }
 
 export default Icons;

@@ -2,12 +2,12 @@ import './login.css'
 import {useState} from 'react'
 import {connect} from 'react-redux'
 import {Navigate} from 'react-router-dom'
-import {login, cleanError } from '../../actions/login'
+import {login, cleanMessage } from '../../actions/login'
 import PropTypes from 'prop-types'
 
-import Error from '../../layout/messages/error'
+import Message from '../../layout/messages/message'
 import LoginForm from '../../components/login/loginForm'
-import getErrorMessage from '../../utils/getErrorMessage'
+import getMessage from '../../utils/getMessage'
 import {DEFAULT_TIMEOUT_MESSAGE} from '../../constants/actionTypes'
 
 const LoginPage = (props) => {
@@ -19,19 +19,18 @@ const LoginPage = (props) => {
     })
     const [showPassword, setShowPasswword] = useState(false)
     const {
-        error,
+        message,
         loginFunc,
         isLoggedIn,
-        cleanError
+        cleanMessage
     } = props
 
-    if (error) {
-        error.code = "Error en login"
-        error.timeout = DEFAULT_TIMEOUT_MESSAGE
+    if (message) {
+        message.code = "Error en login"
+        message.timeout = DEFAULT_TIMEOUT_MESSAGE
     }
 
     if (isLoggedIn) {
-        console.log('isLoggedIn_1', isLoggedIn)
         return <Navigate to={'/dashboard'} />
     }
 
@@ -42,7 +41,7 @@ const LoginPage = (props) => {
         return true
     }
     
-    const submit = event => {
+    const submit = (event) => {
         event.preventDefault();
         if (isValidFields()) {
             loginFunc({
@@ -57,7 +56,7 @@ const LoginPage = (props) => {
         setShowPasswword(!showPassword)
     }
     
-    const handleValueChange = (name, value) => {
+    const handleValueChange = (name: string, value) => {
         if (name === 'user') {
             setUser(value)
         }
@@ -67,13 +66,13 @@ const LoginPage = (props) => {
         setFieldIsValid({...fieldIsValid, [name]: null})
     }
 
-    const handleValueValid = (name, valid) => {
+    const handleValueValid = (name: string, valid) => {
         setFieldIsValid({...fieldIsValid, [name]: valid})
     }
 
     return (
         <form id='login' onSubmit={submit}>
-            {error && <Error key={error.code} error={getErrorMessage(error)} handleClose={cleanError} />}
+            {message && <Message key={message.code} message={getMessage(message)} handleClose={cleanMessage} />}
             <div className="LoginBoard">
                 <div className='LoginGreetingPanel'>
                     <div className='LoginGreetingPanelText'>
@@ -99,24 +98,24 @@ const LoginPage = (props) => {
 }
 
 LoginPage.propTypes = {
-    error: PropTypes.object,
+    message: PropTypes.object,
     isLoggedIn: PropTypes.bool,
-    cleanError: PropTypes.func.isRequired
+    cleanMessage: PropTypes.func.isRequired
 }
 
 LoginPage.defaultProps = {
-    error: '',
+    message: '',
     isLoggedIn: false
 }
 
-const mapStateToProps = state => ({
-    error: state.login.error,
+const mapStateToProps = (state) => ({
+    message: state.login.message,
     isLoggedIn: state.login.isLoggedIn,
 })
 
 const mapDispatchToProps = {
     loginFunc: login,
-    cleanError: cleanError
+    cleanMessage: cleanMessage
 }
    
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
