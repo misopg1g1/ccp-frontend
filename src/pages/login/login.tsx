@@ -10,7 +10,7 @@ import LoginForm from '../../components/login/loginForm'
 import getMessage from '../../utils/getMessage'
 import {DEFAULT_TIMEOUT_MESSAGE} from '../../constants/actionTypes'
 
-const LoginPage = (props: any) => {
+const LoginPage = (props) => {
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
     const [fieldIsValid, setFieldIsValid] = useState({
@@ -41,7 +41,7 @@ const LoginPage = (props: any) => {
         return true
     }
     
-    const submit = (event: any) => {
+    const submit = (event) => {
         event.preventDefault();
         if (isValidFields()) {
             loginFunc({
@@ -66,7 +66,7 @@ const LoginPage = (props: any) => {
         setFieldIsValid({...fieldIsValid, [name]: null})
     }
 
-    const handleValueValid = (name: string, valid: any) => {
+    const handleValueValid = (name: string, valid) => {
         setFieldIsValid({...fieldIsValid, [name]: valid})
     }
 
@@ -108,7 +108,7 @@ LoginPage.defaultProps = {
     isLoggedIn: false
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state) => ({
     message: state.login.message,
     isLoggedIn: state.login.isLoggedIn,
 })

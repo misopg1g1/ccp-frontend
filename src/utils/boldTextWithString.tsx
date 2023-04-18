@@ -1,4 +1,4 @@
-const boldTextWithString = (text, string) => {
+const boldTextWithString = (text: string, string: string) => {
     const index = text.toUpperCase().indexOf(string.toUpperCase())
     return (
         <span>

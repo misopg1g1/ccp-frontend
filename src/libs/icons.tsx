@@ -12,7 +12,7 @@ const icons = {
 }
 
 const Icons = props => {
-    const { color, width, height, border, icon, className, viewBox, onClick } = props
+    const { color, width, height, border, icon, className, viewBox, onclick } = props
     
     const renderPath = d => {
         if (border) {
@@ -28,7 +28,7 @@ const Icons = props => {
             className={className}
             viewBox={viewBox}
             xmlns="http://www.w3.org/2000/svg"
-            onClick={onClick}
+            onClick={onclick}
         >
             {Array.isArray(icons[icon]) && icons[icon].map(i => renderPath(i))}
             {!Array.isArray(icons[icon]) && renderPath(icons[icon])}

@@ -1,5 +1,5 @@
 
-const getConten = (error) => {
+const getConten = (error: string) => {
     const array = error.split('|');
     return array.length > 1 ? array[1] : error
 }

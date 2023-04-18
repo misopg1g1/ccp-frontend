@@ -2,7 +2,7 @@ import './message.scss'
 import Icons from "../../libs/icons";
 import PropTypes from 'prop-types'
 
-const Message = ({ message , handleClose, disableCloseButton }) => {
+const Message = ({ message, handleClose, disableCloseButton }) => {
     const onClick = () => {
         if (disableCloseButton) {
             return
