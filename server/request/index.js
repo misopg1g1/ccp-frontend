@@ -4,19 +4,21 @@ export const hashObject = (jsonBody) => {
     const cleanJsonBody = Object.fromEntries(
       Object.entries(jsonBody).filter(([key]) => key !== 'hash'),
     );
-    const sortedKeys = Object.keys(cleanJsonBody).sort();
-    const jsonString = sortedKeys
-      .map(
-        (key, index) =>
-          `"${key}": "${cleanJsonBody[key]}"${
-            index < sortedKeys.length - 1 ? ', ' : ''
-          }`,
-      )
-      .join('');
-  
-    const wrappedJsonString = `{${jsonString}}`;
-    const md5Hash = CryptoJS.MD5(wrappedJsonString).toString();
-    return {...cleanJsonBody, hash: md5Hash};
+    const sortDict = (obj) => {
+        if (typeof obj === 'object' && obj !== null) {
+          const sortedObj = {};
+          Object.keys(obj)
+            .sort()
+            .forEach(key => {
+              sortedObj[key] = obj[key];
+            });
+          return sortedObj;
+        }
+        return obj;
+      };
+      const sortedJson = sortDict(cleanJsonBody);
+      const md5Hash = CryptoJS.MD5(sortedJson).toString();
+      return {...cleanJsonBody, hash: md5Hash};
 };
 
 export class Request {
