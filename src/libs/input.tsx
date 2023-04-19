@@ -1,9 +1,103 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { InputHTMLAttributes} from 'react'
 import boldTextWithString from '../utils/boldTextWithString'
 
-class Input extends React.Component {
-    constructor(props) {
+interface InputComponentProps extends InputHTMLAttributes<HTMLInputElement> {
+    align?: string,
+    disabled?: boolean,
+    maxDate?: string,
+    minDate?: string,
+    labelWidth?: string,
+    searchValue?: string,
+    label: string,
+    placeholder?: string,
+    type: string,
+    autocomplete?: boolean,
+    name?: string,
+    minLength?: number,
+    maxLength?: number,
+    reference?: any,
+    backgroundInput?: string,
+    display?: string,
+    paddingBottom?: string,
+    marginLeft?: string,
+    marginRight?: string,
+    marginTop?: string,
+    marginBottom?: string,
+    width?: string,
+    fixedLabel?: string,
+    validations?: any,
+    handleValueValid: any,
+    validateOnInput?: boolean,
+    handleValueChange: any,
+    required?: boolean,
+    forcedValid?: boolean,
+    value?: any,
+    checked?: any,
+    requiredMessage?: string,
+    invalidMessage?: string,
+    classInput?: string,
+    mask?: string,
+    errorPosition?: string,
+    additionalProp?: any,
+    max?: number,
+    min?: number,
+    hasError?: boolean,
+    icon?: any,
+    onFocus?: () => void,
+}
+
+interface InputComponentState {
+    value: string
+    error: boolean
+    errorRegex: boolean
+    errorMessage: string
+    valid: boolean
+  }
+
+class Input extends React.Component<InputComponentProps, InputComponentState> {
+    static defaultProps = {
+        align: '',
+        float: '',
+        disabled: false,
+        maxDate: null,
+        minDate: null,
+        labelWidth: null,
+        searchValue: null,
+        label: null,
+        placeholder: null,
+        autocomplete: false,
+        name: null,
+        minLength: null,
+        maxLength: null,
+        reference: null,
+        backgroundInput: null,
+        display: null,
+        paddingBottom: null,
+        marginLeft: null,
+        marginRight: null,
+        marginTop: null,
+        marginBottom: null,
+        width: null,
+        fixedLabel: null,
+        validations: null,
+        validateOnInput: false,
+        required: false,
+        requiredMessage: '',
+        invalidMessage: '',
+        forcedValid: false,
+        value: null,
+        checked: '',
+        classInput: '',
+        mask: '',
+        errorPosition: '',
+        additionalProp: null,
+        max: null,
+        min: null,
+        hasError: false,
+        icon: null
+    }
+
+    constructor(props: InputComponentProps) {
         super(props)
         let {value} = props
         if (props.type === 'checkbox') {
@@ -21,7 +115,7 @@ class Input extends React.Component {
         this.onBlur = this.onBlur.bind(this)
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
+    static getDerivedStateFromProps(nextProps: any, prevState: any) {
         if ((prevState.value !== nextProps.value && !nextProps.mask) || nextProps.value === '') {
             const value = nextProps.value || ''
             return {value}
@@ -29,7 +123,7 @@ class Input extends React.Component {
         return null
     }
 
-    onChange(event) {
+    onChange(event: any) {
         const {forcedValid, handleValueChange, maxLength, type} = this.props
         const {value: currentValue} = this.state
         const targetValue = event.target.type === 'checkbox' ? event.target.checked : event.target.value
@@ -53,11 +147,11 @@ class Input extends React.Component {
         return true
     }
 
-    onBlur(event) {
+    onBlur(event: React.FocusEvent<HTMLInputElement>) {
         this.validate(event.target.name)
     }
 
-    maskValue = (value) => {
+    maskValue = (value: any) => {
         const {mask} = this.props
         if (!value) {
             return ''
@@ -67,7 +161,7 @@ class Input extends React.Component {
         }
     }
 
-    unmaskValue = (value) => {
+    unmaskValue = (value: any) => {
         const {mask} = this.props
         if (!value) {
             return ''
@@ -77,7 +171,7 @@ class Input extends React.Component {
         }
     }
 
-    validate(name) {
+    validate(name: string) {
         const nextState = {
             error: false,
             errorRegex: false,
@@ -86,7 +180,7 @@ class Input extends React.Component {
         }
 
         let {value} = this.state
-        const {handleValueValid, required, validations, mask} = this.props
+        const {handleValueValid, required, validations} = this.props
 
         // empty value
         if (value === '') {
@@ -123,10 +217,9 @@ class Input extends React.Component {
 
         const {required, requiredMessage, invalidMessage, fixedLabel, forcedValid} = this.props
         const {width, marginTop, marginBottom, marginRight, marginLeft, paddingBottom, display} = this.props
-        const {backgroundInput, reference, maxLength, minLength, max, min, hideError} = this.props
+        const {backgroundInput, reference, maxLength, minLength, max, min, hasError} = this.props
         const {name, type, placeholder, label, searchValue, labelWidth, autocomplete} = this.props
-        const {minDate, maxDate, checked, disabled, align, float, additionalProp, icon} = this.props
-
+        const {minDate, maxDate, checked, disabled, align, additionalProp, icon, onFocus} = this.props
         let {classInput} = this.props
         const {error, errorRegex, errorMessage, valid, value} = this.state
 
@@ -144,21 +237,6 @@ class Input extends React.Component {
             classValid = (error || errorRegex ? ' error' : '') + (valid ? ' valid' : '')
         }
 
-        /*
-        let className = ''
-        if (errorMessage !== '') {
-            className += 'errorMessage'
-        }
-
-        if (type === 'checkbox') {
-            className += 'typeCheckbox'
-        } else if (type === 'radio') {
-            className += 'typeRadio'
-        } else {
-            className += 'typeInput'
-        }
-        */
-
         return (
             <div
                 className='LoginFormInputs'
@@ -171,7 +249,6 @@ class Input extends React.Component {
                     paddingBottom,
                     display,
                     ...(type === 'date' && {float: 'left'}),
-                    float
                 }}
             >
                 <label
@@ -189,10 +266,9 @@ class Input extends React.Component {
                     name={name}
                     autoComplete={!autocomplete ? 'off' : ''}
                     placeholder={placeholder}
-                    onFocus={this.onFocus}
+                    onFocus={onFocus}
                     onBlur={this.onBlur}
                     onChange={this.onChange}
-                    onKeyPress={this.onKeyPress}
                     value={value}
                     id={type === 'radio' ? `filterCat${value}` : name}
                     ref={reference}
@@ -216,12 +292,12 @@ class Input extends React.Component {
                 />
                 {icon}
                 <div>
-                    {!hideError && classValid === ' error' && errorRegex === false && (
+                    {!hasError && classValid === ' error' && errorRegex === false && (
                         <p className="ErrorMessage">
                             {!value ? requiredMessage : invalidMessage}
                         </p>
                     )}
-                    {!hideError && errorRegex && (
+                    {!hasError && errorRegex && (
                         <p className='ErrorMessage'>
                             {errorMessage}
                         </p>
@@ -230,93 +306,6 @@ class Input extends React.Component {
             </div>
         )
     }
-}
-
-Input.propTypes = {
-    align: PropTypes.string,
-    float: PropTypes.string,
-    disabled: PropTypes.bool,
-    maxDate: PropTypes.string,
-    minDate: PropTypes.string,
-    labelWidth: PropTypes.string,
-    searchValue: PropTypes.string,
-    label: PropTypes.string,
-    placeholder: PropTypes.string,
-    type: PropTypes.string.isRequired,
-    autocomplete: PropTypes.bool,
-    name: PropTypes.string,
-    minLength: PropTypes.number,
-    maxLength: PropTypes.number,
-    reference: PropTypes.any,
-    backgroundInput: PropTypes.string,
-    display: PropTypes.string,
-    paddingBottom: PropTypes.string,
-    marginLeft: PropTypes.string,
-    marginRight: PropTypes.string,
-    marginTop: PropTypes.string,
-    marginBottom: PropTypes.string,
-    width: PropTypes.string,
-    fixedLabel: PropTypes.string,
-    validations: PropTypes.array,
-    handleValueValid: PropTypes.func.isRequired,
-    validateOnInput: PropTypes.bool,
-    handleValueChange: PropTypes.func.isRequired,
-    required: PropTypes.bool,
-    forcedValid: PropTypes.bool,
-    value: PropTypes.any,
-    checked: PropTypes.any,
-    requiredMessage: PropTypes.string,
-    invalidMessage: PropTypes.string,
-    classInput: PropTypes.string,
-    mask: PropTypes.string,
-    errorPosition: PropTypes.string,
-    additionalProp: PropTypes.any,
-    max: PropTypes.number,
-    min: PropTypes.number,
-    hasError: PropTypes.bool,
-    icon: PropTypes.any
-}
-
-Input.defaultProps = {
-    align: '',
-    float: '',
-    disabled: false,
-    maxDate: null,
-    minDate: null,
-    labelWidth: null,
-    searchValue: null,
-    label: null,
-    placeholder: null,
-    autocomplete: false,
-    name: null,
-    minLength: null,
-    maxLength: null,
-    reference: null,
-    backgroundInput: null,
-    display: null,
-    paddingBottom: null,
-    marginLeft: null,
-    marginRight: null,
-    marginTop: null,
-    marginBottom: null,
-    width: null,
-    fixedLabel: null,
-    validations: null,
-    validateOnInput: false,
-    required: false,
-    requiredMessage: '',
-    invalidMessage: '',
-    forcedValid: false,
-    value: null,
-    checked: '',
-    classInput: '',
-    mask: '',
-    errorPosition: '',
-    additionalProp: null,
-    max: null,
-    min: null,
-    hasError: false,
-    icon: null
 }
 
 export default Input

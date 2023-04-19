@@ -5,7 +5,7 @@ import {Navigate} from 'react-router-dom'
 import {login, cleanMessage } from '../../actions/login'
 import PropTypes from 'prop-types'
 
-import Message from '../../layout/messages/message'
+import Message from '../../components/layout/messages/message'
 import LoginForm from '../../components/login/loginForm'
 import getMessage from '../../utils/getMessage'
 import {DEFAULT_TIMEOUT_MESSAGE} from '../../constants/actionTypes'
@@ -87,7 +87,7 @@ const LoginPage = (props) => {
                         handleValueValid={handleValueValid}
                         user={user}
                         password={password}
-                        submit={submit}
+                        onSubmit={submit}
                         showPassword={showPassword}
                         togglePasswordVisible={togglePasswordVisible}
                     />

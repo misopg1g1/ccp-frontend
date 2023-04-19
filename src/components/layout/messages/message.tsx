@@ -1,8 +1,21 @@
 import './message.scss'
-import Icons from "../../libs/icons";
-import PropTypes from 'prop-types'
 
-const Message = ({ message, handleClose, disableCloseButton }) => {
+import React, {FC} from 'react';
+import Icons from "../../../libs/icons";
+
+interface MessageComponentProps {
+    message: {
+        title: string,
+        content: string,
+        type?: string,
+        class?: string,
+        timeout?: number
+    },  
+    handleClose?: any,
+    disableCloseButton?: boolean,
+}
+
+const Message: FC<MessageComponentProps> = ({ message, handleClose = {}, disableCloseButton = false }) => {
     const onClick = () => {
         if (disableCloseButton) {
             return
@@ -18,7 +31,7 @@ const Message = ({ message, handleClose, disableCloseButton }) => {
     const classSel = message.type === 'success' ? 'sel-message-success' : 'sel-message-error'
     
     return (
-        <div className={`message ${message.errorClass}`}>
+        <div className={`message ${message.class}`}>
             <Icons icon="close" className="left-icon" color={color} />
             <div className="message__close-button" onClick={onClick} onKeyDown={onClick} role="button" tabIndex={0}>
                 {!disableCloseButton && <Icons icon="close" />}
@@ -27,22 +40,6 @@ const Message = ({ message, handleClose, disableCloseButton }) => {
             <p className='message__content'>{message.content}</p>
         </div>
     )
-}
-
-Message.defaultProps = {
-    handleClose: () => {},
-    disableCloseButton: false
-}
-
-Message.propTypes = {
-    message: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        content: PropTypes.string.isRequired,
-        errorClass: PropTypes.string,
-        timeout: PropTypes.number
-    }).isRequired,
-    handleClose: PropTypes.func,
-    disableCloseButton: PropTypes.bool
 }
 
 export default (Message)
