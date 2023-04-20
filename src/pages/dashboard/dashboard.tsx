@@ -1,6 +1,14 @@
 import {connect} from 'react-redux'
 
-const DashboardPage = (props) => {
+interface DashboardPageProps {
+
+}
+
+interface DashboardPageState {
+
+}
+
+const DashboardPage = (props: DashboardPageProps) => {
     return (
         <div>
             <p>Hello from Dashboard Page</p>
@@ -8,7 +16,7 @@ const DashboardPage = (props) => {
     )
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: DashboardPageState) => ({
 })
 
 const mapDispatchToProps = {

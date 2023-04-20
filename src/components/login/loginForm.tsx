@@ -49,7 +49,7 @@ const LoginForm : FC<LoginFormComponentProps> = (props) => {
         <Input
           type={showPassword ? "text" : "password"}
           name="password"
-          autocomplete
+          autocomplete={true}
           label="Contraseña"
           placeholder="Escriba su contraseña"
           value={password}

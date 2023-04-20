@@ -52,7 +52,7 @@ interface InputComponentState {
     errorRegex: boolean
     errorMessage: string
     valid: boolean
-  }
+}
 
 class Input extends React.Component<InputComponentProps, InputComponentState> {
     static defaultProps = {
