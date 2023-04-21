@@ -3,8 +3,8 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAIL
-} from '../constants/actionTypes';
-import {login} from '../api/login';
+} from '../constants/actionTypes'
+import {login} from '../api/login'
 
 function* loginSaga({credentials}) {
     try {
@@ -14,7 +14,7 @@ function* loginSaga({credentials}) {
             throw { data }
         }
         yield put({ type: LOGIN_SUCCESS, token: data.access_token, userData: data.data })
-    } catch (error) {
+    } catch (error: any) {
         yield put({type: LOGIN_FAIL, message: error.data});
     }
 }

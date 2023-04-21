@@ -4,7 +4,7 @@ const getConten = (error: string) => {
     return array.length > 1 ? array[1] : error
 }
 
-export default (error) => {
+export default (error: any) => {
     return {
         title: error && error.code ? error.code : '',
         content: error && error.error ? getConten(error.error) : '',

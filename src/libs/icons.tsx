@@ -1,6 +1,20 @@
-import PropTypes from 'prop-types'
+import React, {FC} from 'react'
 
-const icons = {
+interface IconsComponentProps {
+    icon: string,
+    color?: string | undefined,
+    width?: string,
+    height?: string,
+    border?: {
+        color?: string | undefined,
+        width?: string | undefined
+    },
+    className?: string | undefined,
+    viewBox?: string,
+    onClick?: any
+}
+
+const icons: any = {
     close: 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z',
     eye:
     'M8 3c-3.489 0-6.514 2.032-8 5 1.486 2.968 4.511 5 8 5s6.514-2.032 8-5c-1.486-2.968-4.511-5-8-5zM11.945 5.652c0.94 0.6 1.737 1.403 2.335 2.348-0.598 0.946-1.395 1.749-2.335 2.348-1.181 0.753-2.545 1.152-3.944 1.152s-2.763-0.398-3.945-1.152c-0.94-0.6-1.737-1.403-2.335-2.348 0.598-0.946 1.395-1.749 2.335-2.348 0.061-0.039 0.123-0.077 0.185-0.114-0.156 0.427-0.241 0.888-0.241 1.369 0 2.209 1.791 4 4 4s4-1.791 4-4c0-0.481-0.085-0.942-0.241-1.369 0.062 0.037 0.124 0.075 0.185 0.114v0zM8 6.5c0 0.828-0.672 1.5-1.5 1.5s-1.5-0.672-1.5-1.5 0.672-1.5 1.5-1.5 1.5 0.672 1.5 1.5z',
@@ -11,10 +25,19 @@ const icons = {
     ]
 }
 
-const Icons = props => {
-    const { color, width, height, border, icon, className, viewBox, onClick } = props
+const Icons : FC<IconsComponentProps> = (props) => {
+    const {
+        icon, 
+        color = undefined,
+        width = '24',
+        height = '24',
+        border = {},
+        className = undefined,
+        viewBox = '0 0 24 24',
+        onClick = () => ({})
+    } = props
     
-    const renderPath = d => {
+    const renderPath = (d: string) => {
         if (border) {
             return <path key={d} d={d} stroke={border.color} strokeWidth={border.width} />
         }
@@ -30,31 +53,10 @@ const Icons = props => {
             xmlns="http://www.w3.org/2000/svg"
             onClick={onClick}
         >
-            {Array.isArray(icons[icon]) && icons[icon].map(i => renderPath(i))}
+            {Array.isArray(icons[icon]) && icons[icon].map((i: string) => renderPath(i))}
             {!Array.isArray(icons[icon]) && renderPath(icons[icon])}
         </svg>
     )
 }
 
-Icons.propTypes = {
-    viewBox: PropTypes.string,
-    height: PropTypes.string,
-    width: PropTypes.string,
-    color: PropTypes.string,
-    className: PropTypes.string,
-    border: PropTypes.string,
-    icon: PropTypes.string.isRequired,
-    onClick: PropTypes.func
-}
-
-Icons.defaultProps = {
-    viewBox: '0 0 24 24',
-    height:'24',
-    width: '24',
-    border: null,
-    className: null,
-    color: null,
-    onClick: () => ({})
-}
-
-export default Icons;
+export default Icons

@@ -11,8 +11,9 @@ module.exports = {
   setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
   collectCoverageFrom: [
     "src/**/*.{js,jsx,ts,tsx}",
-    "server/**/*.{js,jsx,ts,tsx}",
+    "!**/server/**",
     "!**/node_modules/**",
     "!**/path/to/other/ignored/directories/**",
+    "!vite.config.ts"
   ],
 };

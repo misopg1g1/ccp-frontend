@@ -1,9 +1,21 @@
 import "./loginForm.css";
-import PropTypes from "prop-types";
+
+import React, {FC} from 'react';
 import Input from "../../libs/input";
 import Icon from "../../libs/icons";
 
-const LoginForm = (props) => {
+interface LoginFormComponentProps {
+  user: string,
+  password: string,
+  fieldIsValid: any,
+  showPassword: boolean,
+  handleValueChange: any,
+  handleValueValid: any,
+  onSubmit: any,
+  togglePasswordVisible: any
+}
+
+const LoginForm : FC<LoginFormComponentProps> = (props) => {
   const {
     fieldIsValid,
     handleValueChange,
@@ -12,7 +24,7 @@ const LoginForm = (props) => {
     password,
     showPassword,
     togglePasswordVisible,
-    submit,
+    onSubmit,
   } = props;
 
   return (
@@ -37,7 +49,7 @@ const LoginForm = (props) => {
         <Input
           type={showPassword ? "text" : "password"}
           name="password"
-          autocomplete
+          autocomplete={true}
           label="Contraseña"
           placeholder="Escriba su contraseña"
           value={password}
@@ -59,22 +71,11 @@ const LoginForm = (props) => {
           }
         ></Input>
       </div>
-      <button type="submit" onClick={submit} className="LoginFormButton mt-32">
+      <button type="submit" onClick={onSubmit} className="LoginFormButton mt-32">
         Ingresar
       </button>
     </div>
   );
-};
-
-LoginForm.propTypes = {
-  user: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  fieldIsValid: PropTypes.object.isRequired,
-  showPassword: PropTypes.bool.isRequired,
-  handleValueChange: PropTypes.func.isRequired,
-  handleValueValid: PropTypes.func.isRequired,
-  submit: PropTypes.func.isRequired,
-  togglePasswordVisible: PropTypes.func.isRequired,
 };
 
 export default LoginForm;
