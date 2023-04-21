@@ -5,7 +5,7 @@ import './index.css'
 import Routes from './routes'
 import configureStore from './configureStore'
 
-const {store, persistor} = configureStore();
+const {store} = configureStore();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
