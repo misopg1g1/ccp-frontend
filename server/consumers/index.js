@@ -8,4 +8,12 @@ export class Consumer {
     static login(credentials) {
         return api.login(credentials)
     }
+
+    static getProduct(productId) {
+        return api.getProduct(productId)
+    }
+
+    static addInventory(productId, inventoryData) {
+        return api.addInventory(productId, inventoryData)
+    }
 }
