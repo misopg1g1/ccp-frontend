@@ -6,7 +6,7 @@ import {
 const initialState = {
     message: null,
     productData: null,
-    quantity: 0
+    stock: 0
 }
 
 export default function reducer(state = initialState, action: any) {
