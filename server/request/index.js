@@ -100,7 +100,7 @@ export class Request {
                 return Promise.reject(err)
             }
         }).catch((err) => {
-            console.error(`SERVER-APP-WEB[PUR]: ${url}; EXCEPTION-ERROR: ${JSON.stringify(err)}`)
+            console.error(`SERVER-APP-WEB[PUT]: ${url}; EXCEPTION-ERROR: ${JSON.stringify(err)}`)
             throw err
         })
     }
