@@ -14,7 +14,7 @@ interface ProductData {
     sku: string
     image: string
     description: string
-    currentStock: string
+    stock: string
 }
 
 interface AddInventoryComponentProps {
@@ -133,7 +133,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                                 type='text'
                                 name='current-stock'
                                 label='Current stock'
-                                value={productData.currentStock}
+                                value={productData.stock}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'
