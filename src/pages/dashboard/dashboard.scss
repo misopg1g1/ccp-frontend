@@ -1,0 +1,44 @@
+/* Styles for dahsboard */
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.tabs-container {
+  width: 130px;
+  height: 100%;
+  background-color: #2f76e6;
+  display: flex;
+  flex-direction: row;
+  transition: width 0.3s;
+  transition-timing-function: ease-in;
+
+  &:hover {
+    width: calc(171px * 1.5);
+  }
+
+  :hover .button-container {
+    justify-content: left;
+    margin-left: 30px;
+  }
+  :hover .bottom-menu {
+    justify-content: left;
+  }
+
+  h2 {
+    display: none;
+    margin-left: 10px;
+    color: white;
+  }
+
+  :hover h2 {
+    display: block;
+  }
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+}

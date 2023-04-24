@@ -87,6 +87,7 @@ const LoginPage = (props: LoginPageProps) => {
     }
 
     return (
+        <div className='login-container'>
         <form id='login' onSubmit={submit}>
             {message && <Message key={message.code} message={getMessage(message)} handleClose={cleanMessage} />}
             <div className="LoginBoard">
@@ -110,6 +111,7 @@ const LoginPage = (props: LoginPageProps) => {
                 </div>
             </div>
         </form>
+        </div>
     )
 }
 
