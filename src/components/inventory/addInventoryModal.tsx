@@ -155,6 +155,8 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                                 width='46%'
                                 validations={this.validationsStockField}
                                 required={true}
+                                requiredMessage='El campo es requerido'
+                                forcedValid={this.state.fieldIsValid}
                             ></Input>
                             <div className='{width=46%}'/>
                         </div>
