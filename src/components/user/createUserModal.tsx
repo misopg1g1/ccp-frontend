@@ -22,27 +22,26 @@ interface CreateUserModalComponentState {
         confirmPassword: boolean | undefined
     }
     showPassword?: boolean
+    showConfirmPassword?: boolean
 }
 
 class CreateUserModal extends React.Component<CreateUserModalComponentProps, CreateUserModalComponentState> {
-    showPassword = false
-    showPasswordConfirm = false
-    
-    constructor(props: CreateUserModalComponentProps) {
+        constructor(props: CreateUserModalComponentProps) {
         super(props)
         this.state = {
             username: null,
             password: null,
             confirmPassword: null,
             fieldIsValid: {
-                username: false,
-                password: false,
-                confirmPassword: false
+                username: true,
+                password: true,
+                confirmPassword: true
             }
         }
     }
 
     handleSubmit = (event: any) => {
+        /*
         event.preventDefault()
         const { stock } = this.state
 
@@ -57,17 +56,18 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
             message: ''
         })
         createUser(productData.id, stock)
+        */
+       console.log('TO-DO')
     }
 
     handleValueChange = (name: string, value: string) => {
-        console.log(name, value)
-        if (name === 'user') {
+        if (name === 'username') {
             this.setState({ username: value })
         }
         if (name == 'password') {
             this.setState({ password: value })
         }
-        if (name == 'confirm-password') {
+        if (name == 'confirmPassword') {
             this.setState({ confirmPassword: value })
         }
         this.setState({
@@ -79,7 +79,6 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     }
 
     handleValueValid = (name: string, valid: boolean) => {
-        console.log(name, valid)
         this.setState({
             fieldIsValid: {
                   ...this.state.fieldIsValid,
@@ -89,11 +88,11 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     }
 
     togglePasswordVisible = () => {
-        this.showPassword = !this.showPassword
+        this.setState({ showPassword: !this.state.showPassword })
     }
 
     togglePasswordConfirmVisible = () => {
-        this.showPasswordConfirm = !this.showPasswordConfirm
+        this.setState({ showConfirmPassword: !this.state.showConfirmPassword })
     }
 
     render () {
@@ -127,7 +126,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                             <div className='FormPanel'>
                                 <Input
                                     type='text'
-                                    name='user'
+                                    name='username'
                                     label='Usuario'
                                     placeholder='Ingrese el usuario'
                                     value={this.state.username}
@@ -140,7 +139,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     forcedValid={this.state.fieldIsValid.username}
                                 ></Input>
                                 <Input
-                                    type={this.showPassword ? "text" : "password"}
+                                    type={this.state.showPassword ? "text" : "password"}
                                     name="password"
                                     label="Contraseña"
                                     placeholder="Escriba la contraseña"
@@ -156,7 +155,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     icon={
                                         <Icon
                                         className={"LoginIconInput"}
-                                        icon={this.showPassword ? "eyeClosed" : "eye"}
+                                        icon={this.state.showPassword ? "eyeClosed" : "eye"}
                                         color="black"
                                         onClick={this.togglePasswordVisible}
                                         />
@@ -164,8 +163,8 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                 >
                                 </Input>
                                 <Input
-                                    type={this.showPasswordConfirm ? "text" : "password"}
-                                    name="confirm-password"
+                                    type={this.state.showConfirmPassword ? "text" : "password"}
+                                    name="confirmPassword"
                                     label="Confirmar contraseña"
                                     placeholder="Confirme la contraseña"
                                     value={this.state.confirmPassword}
@@ -180,7 +179,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     icon={
                                         <Icon
                                         className={"LoginIconInput"}
-                                        icon={this.showPasswordConfirm ? "eyeClosed" : "eye"}
+                                        icon={this.state.showConfirmPassword ? "eyeClosed" : "eye"}
                                         color="black"
                                         onClick={this.togglePasswordConfirmVisible}
                                         />
