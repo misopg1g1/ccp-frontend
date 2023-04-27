@@ -9,6 +9,10 @@ export class Consumer {
         return api.login(credentials)
     }
 
+    static createUser(user, token) {
+        return api.createUser(user, token)
+    }
+
     static getProduct(productId) {
         return api.getProduct(productId)
     }

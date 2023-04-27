@@ -2,6 +2,7 @@ import './createUserModal.css'
 
 import React from 'react'
 import Modal from 'react-modal'
+import {connect} from 'react-redux'
 import Icons from '../../libs/icons'
 import Input from '../../libs/input'
 import { createUser } from '../../actions/user'
@@ -10,6 +11,8 @@ import Icon from "../../libs/icons"
 interface CreateUserModalComponentProps {
     isOpen: boolean
     handleCloseModal: any
+    createUserFunc?: any
+    token: string
 }
 
 interface CreateUserModalComponentState {
@@ -40,24 +43,21 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
         }
     }
 
-    handleSubmit = (event: any) => {
-        /*
-        event.preventDefault()
-        const { stock } = this.state
-
-        if (!stock) {
-            this.setState({
-                message: 'empty'
-            })
-            return
+    validationsConfirmPasswordField: any = [
+        {
+            fn: (value: string) => value === this.state.password,
+            message: 'Confirme que las contraseñas sean iguales'
         }
+    ]
 
-        this.setState({
-            message: ''
-        })
-        createUser(productData.id, stock)
-        */
-       console.log('TO-DO')
+    handleSubmit = (event: any) => {
+        event.preventDefault()
+        const { createUserFunc, token } = this.props
+        const user = this.state.username
+        const { password } = this.state
+        const verify_password = this.state.confirmPassword
+        const role = 'ADMIN'
+        createUserFunc({user, password, verify_password, role}, token)
     }
 
     handleValueChange = (name: string, value: string) => {
@@ -184,6 +184,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                         onClick={this.togglePasswordConfirmVisible}
                                         />
                                     }
+                                    validations={this.validationsConfirmPasswordField}
                                 >
                                 </Input>
                             </div>
@@ -205,4 +206,11 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     }
 }
 
-export default CreateUserModal
+const mapStateToProps = (state: CreateUserModalComponentState) => ({
+})
+
+const mapDispatchToProps = {
+    createUserFunc: createUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUserModal)
