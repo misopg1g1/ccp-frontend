@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import "./sidetabs.scss";
 import { BsCalculator } from "react-icons/bs";
 import { AiOutlineInbox } from "react-icons/ai";
@@ -8,13 +8,16 @@ import { RiSuitcaseLine } from "react-icons/ri";
 import { BiExit } from "react-icons/bi";
 import { RxGear } from "react-icons/rx";
 import { Menu, MenuItem } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalState, Roles, UserData } from "../../utils/types";
 import { RoleWrapper } from "../role-wrapper/role-wrapper.component";
+import { logout } from "../../actions/login";
 
 export const SideTabs = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (!open) {
       setAnchorEl(event.currentTarget);
@@ -23,6 +26,12 @@ export const SideTabs = () => {
   const handleClose = (event: React.MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
     setAnchorEl(null);
+  };
+
+  const handleLogout = (event: React.MouseEvent<HTMLLIElement>) => {
+    dispatch(logout());
+    navigation("/");
+    handleClose(event);
   };
   const globalState = useSelector<GlobalState>(
     (state) => state.login.userData
@@ -90,7 +99,7 @@ export const SideTabs = () => {
                 Crear Usuario
               </MenuItem>
             </RoleWrapper>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleLogout}>
               <BiExit />
               Salir
             </MenuItem>
