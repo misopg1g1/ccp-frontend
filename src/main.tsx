@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
-import './index.css'
 import Routes from './routes'
 import configureStore from './configureStore'
+import './global.scss'
 
 const {store} = configureStore();
 
