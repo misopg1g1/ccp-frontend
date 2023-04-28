@@ -26,6 +26,9 @@ interface CreateUserModalComponentState {
     }
     showPassword?: boolean
     showConfirmPassword?: boolean
+    roles: any
+    role: string
+    hasError: boolean
 }
 
 class CreateUserModal extends React.Component<CreateUserModalComponentProps, CreateUserModalComponentState> {
@@ -39,7 +42,36 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                 username: true,
                 password: true,
                 confirmPassword: true
-            }
+            },
+            hasError: false,
+            role: '',
+            roles: [
+                {
+                    name: 'ADMIN',
+                    text: 'Administrador',
+                    isActive: false
+                },
+                {
+                    name: 'SELLER',
+                    text: 'Vendedor',
+                    isActive: false
+                },
+                {
+                    name: 'TRANSPORTER',
+                    text: 'Transportador',
+                    isActive: false
+                },
+                {
+                    name: "MARKETING",
+                    text: 'Marketing',
+                    isActive: false
+                },
+                {
+                    name: "CLIENT",
+                    text: 'Cliente',
+                    isActive: false
+                }
+            ]
         }
     }
 
@@ -51,12 +83,16 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     ]
 
     handleSubmit = (event: any) => {
+        if (!this.state.role) {
+            this.setState({hasError: true})
+            return
+        }
         event.preventDefault()
         const { createUserFunc, token } = this.props
         const user = this.state.username
         const { password } = this.state
         const verify_password = this.state.confirmPassword
-        const role = 'ADMIN'
+        const role = this.state.role
         createUserFunc({user, password, verify_password, role}, token)
     }
 
@@ -93,6 +129,23 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
 
     togglePasswordConfirmVisible = () => {
         this.setState({ showConfirmPassword: !this.state.showConfirmPassword })
+    }
+
+    setSatetRole = (roles: any, selectedRole: string) => {
+        roles.map((role: any) => {
+            if (role.name === selectedRole) {
+                role.isActive = true
+            } else {
+                role.isActive = false
+            }
+        })
+    }
+
+    handleClick = (selectedRole: string) => {
+        const roles = this.state.roles
+        this.setSatetRole(roles, selectedRole)
+        this.setState({ role: selectedRole })
+        this.setState({ hasError: false })
     }
 
     render () {
@@ -137,6 +190,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     maxLength={20}
                                     classInput='Input mt-8'                                    
                                     forcedValid={this.state.fieldIsValid.username}
+                                    width='300px'
                                 ></Input>
                                 <Input
                                     type={this.state.showPassword ? "text" : "password"}
@@ -160,6 +214,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                         onClick={this.togglePasswordVisible}
                                         />
                                     }
+                                    width='300px'
                                 >
                                 </Input>
                                 <Input
@@ -185,12 +240,33 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                         />
                                     }
                                     validations={this.validationsConfirmPasswordField}
+                                    width='300px'
                                 >
                                 </Input>
                             </div>
                             <div className='CategoryPanel'>
                                 <div className='AddRolePanel'>
                                     <span className='AddRoleTitle'>Agregar Role</span>
+                                    {this.state.roles.map((rol: any) => 
+                                        <div 
+                                            key={rol.name}
+                                            data-name={rol.name}
+                                            style={{
+                                                backgroundColor: rol.isActive ? '#2F76E6' : '',
+                                                color: rol.isActive ? '#FFFFFF' : '',
+                                            }}
+                                            className='RoleOption mt-16'
+                                            onClick={((e) => this.handleClick(rol.name))}>
+                                                {rol.text}
+                                        </div>
+                                    )}
+                                </div>
+                                <div>
+                                    {this.state.hasError && (
+                                        <p className='ErrorMessage'>
+                                            Debe seleccionar un rol
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         </div>
