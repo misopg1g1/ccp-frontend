@@ -24,7 +24,8 @@ const DashboardPage = () => {
         <Routes>
           <Route path="view1" element={<Tab1 />} />
           <Route path="view2" element={<Products />} />
-          <Route path="view3" element={<Tab3 />} />
+          <Route path="view3" element={<Tab2 />} />
+          <Route path="view4" element={<Tab3 />} />
         </Routes>
       </div>
     </div>
