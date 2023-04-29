@@ -26,9 +26,7 @@ interface DetailProductComponentProps {
     productData: ProductData
 }
 
-interface DetailProductComponentState {
-    message?: string
-}
+interface DetailProductComponentState {}
 
 class DetailProductModal extends React.Component<DetailProductComponentProps, DetailProductComponentState> {
     constructor(props: DetailProductComponentProps) {
@@ -37,7 +35,6 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
 
     render () {
         const { isOpen, handleCloseModal, productData } = this.props
-
         const customStyle = {
             overlay : {
                 background: 'rgba(0, 0, 0, 0.7)'
@@ -154,10 +151,8 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
     }
 }
 
-const mapStateToProps = (state: DetailProductComponentState) => ({
-})
+const mapStateToProps = () => ({})
 
-const mapDispatchToProps = {
-}
+const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailProductModal)
