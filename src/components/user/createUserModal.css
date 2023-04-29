@@ -16,8 +16,8 @@
 
 .AddRolePanel {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     width: 224px;
     height: 316px;
     box-sizing: border-box;
@@ -31,4 +31,21 @@
     line-height: 24px;
     color: #000000;
     margin-top: 8px;
+}
+
+.RoleOption {
+    width: 176px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 10px 10px;
+    cursor: default;
+    background-color: #EBECEF;
+    color: #45536C;
+}
+
+.RoleOption:hover {
+    background-color: #729fe8;
+    color: white;
 }
