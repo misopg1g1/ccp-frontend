@@ -14,16 +14,24 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action: any) {
-    switch (action.type) {
-        case LOGIN_REQUEST:
-            return { ...state, fetching: true, error: null }
-        case LOGIN_SUCCESS:
-            return { ...state, fetching: false, isLoggedIn: true, token: action.token, userData: action.userData }
-        case LOGIN_FAIL:
-            return { ...state, fetching: false, message: action.message }
-        case CLEAN_MESSAGE:
-            return { ...state, message: null }
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case LOGIN_REQUEST:
+      return { ...state, fetching: true, error: null };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        isLoggedIn: true,
+        token: action.token,
+        userData: action.userData,
+      };
+    case LOGIN_FAIL:
+      return { ...state, fetching: false, message: action.message };
+    case CLEAN_MESSAGE:
+      return { ...state, message: null };
+    case LOGOUT: 
+      return { ...state, isLoggedIn: false,  token: null, userData: null,};
+    default:
+      return state;
+  }
 }
