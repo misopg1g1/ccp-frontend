@@ -34,7 +34,7 @@ const LoginForm : FC<LoginFormComponentProps> = (props) => {
         <Input
           type="text"
           name="user"
-          autoComplete
+          autoComplete='true'
           label="Usuario"
           placeholder="Escriba su usuario"
           value={user}
@@ -43,13 +43,13 @@ const LoginForm : FC<LoginFormComponentProps> = (props) => {
           requiredMessage="El campo usuario es requerido"
           required
           maxLength={20}
-          classInput="LoginFormInput "
+          classInput="LoginFormInput"
           forcedValid={fieldIsValid.user}
         ></Input>
         <Input
           type={showPassword ? "text" : "password"}
           name="password"
-          autocomplete={true}
+          autocomplete='true'
           label="Contraseña"
           placeholder="Escriba su contraseña"
           value={password}
@@ -58,7 +58,7 @@ const LoginForm : FC<LoginFormComponentProps> = (props) => {
           requiredMessage="El campo contraseña es requerido"
           required
           maxLength={20}
-          classInput="LoginFormInput "
+          classInput="LoginFormInput"
           marginTop="32px"
           forcedValid={fieldIsValid.password}
           icon={

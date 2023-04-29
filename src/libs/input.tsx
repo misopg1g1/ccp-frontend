@@ -11,7 +11,7 @@ interface InputComponentProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string,
     placeholder?: string,
     type: string,
-    autocomplete?: boolean,
+    autocomplete?: string,
     name?: string,
     minLength?: number,
     maxLength?: number,
@@ -26,9 +26,9 @@ interface InputComponentProps extends InputHTMLAttributes<HTMLInputElement> {
     width?: string,
     fixedLabel?: string,
     validations?: any,
-    handleValueValid: any,
+    handleValueValid?: any,
     validateOnInput?: boolean,
-    handleValueChange: any,
+    handleValueChange?: any,
     required?: boolean,
     forcedValid?: boolean,
     value?: any,
@@ -224,7 +224,7 @@ class Input extends React.Component<InputComponentProps, InputComponentState> {
         const {error, errorRegex, errorMessage, valid, value} = this.state
 
         if (required) {
-            classInput += 'required'
+            classInput += ' required'
         }
         if (fixedLabel) {
             classInput += ' fixedLabel'
