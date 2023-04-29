@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import login from './login'
 import inventory from './inventory'
 import user from './user'
+import message from './message'
 
 const persistRootConfig = {
     key: 'root',
@@ -26,6 +27,7 @@ const rootReducer = () =>
         login: persistReducer(loginPersistConfig, login),
         inventory,
         user,
+        message,
     });
 
 export default () => persistReducer(persistRootConfig, rootReducer());

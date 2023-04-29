@@ -15,10 +15,14 @@ interface CreateUserModalComponentProps {
     token: string
 }
 
+interface NewUserData {
+    user: string
+    password: string
+    verify_password: string
+    role: string
+}
+
 interface CreateUserModalComponentState {
-    username: string | null
-    password: string | null
-    confirmPassword: string | null
     fieldIsValid: {
         username: boolean | undefined
         password: boolean | undefined
@@ -27,24 +31,20 @@ interface CreateUserModalComponentState {
     showPassword?: boolean
     showConfirmPassword?: boolean
     roles: any
-    role: string
     hasError: boolean
+    userData: NewUserData
 }
 
 class CreateUserModal extends React.Component<CreateUserModalComponentProps, CreateUserModalComponentState> {
         constructor(props: CreateUserModalComponentProps) {
         super(props)
         this.state = {
-            username: null,
-            password: null,
-            confirmPassword: null,
             fieldIsValid: {
                 username: true,
                 password: true,
                 confirmPassword: true
             },
             hasError: false,
-            role: '',
             roles: [
                 {
                     name: 'ADMIN',
@@ -71,40 +71,43 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                     text: 'Cliente',
                     isActive: false
                 }
-            ]
+            ],
+            userData: {
+                user: '',
+                password: '',
+                verify_password: '',
+                role: ''
+            }
         }
     }
 
     validationsConfirmPasswordField: any = [
         {
-            fn: (value: string) => value === this.state.password,
+            fn: (value: string) => value === this.state.userData.password,
             message: 'Confirme que las contraseñas sean iguales'
         }
     ]
 
     handleSubmit = (event: any) => {
-        if (!this.state.role) {
+        event.preventDefault()
+        if (!this.state.userData.role) {
             this.setState({hasError: true})
             return
         }
-        event.preventDefault()
         const { createUserFunc, token } = this.props
-        const user = this.state.username
-        const { password } = this.state
-        const verify_password = this.state.confirmPassword
-        const role = this.state.role
-        createUserFunc({user, password, verify_password, role}, token)
+        createUserFunc(this.state.userData, token)
+        this.handleCloseModal(event)
     }
 
     handleValueChange = (name: string, value: string) => {
         if (name === 'username') {
-            this.setState({ username: value })
+            this.setState({ userData: {...this.state.userData, user: value }})
         }
         if (name == 'password') {
-            this.setState({ password: value })
+            this.setState({ userData: {...this.state.userData, password: value }})
         }
         if (name == 'confirmPassword') {
-            this.setState({ confirmPassword: value })
+            this.setState({ userData: {...this.state.userData, verify_password: value }})
         }
         this.setState({
             fieldIsValid: {
@@ -131,7 +134,8 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
         this.setState({ showConfirmPassword: !this.state.showConfirmPassword })
     }
 
-    setSatetRole = (roles: any, selectedRole: string) => {
+    setStateRole = (selectedRole: string) => {
+        const roles = this.state.roles
         roles.map((role: any) => {
             if (role.name === selectedRole) {
                 role.isActive = true
@@ -142,14 +146,29 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     }
 
     handleClick = (selectedRole: string) => {
-        const roles = this.state.roles
-        this.setSatetRole(roles, selectedRole)
-        this.setState({ role: selectedRole })
+        this.setStateRole(selectedRole)
+        this.setState({ userData: {...this.state.userData, role: selectedRole }})
         this.setState({ hasError: false })
     }
 
+    clearModal = () => {
+        this.setState({ userData: {
+            ...this.state.userData,
+            user: '',
+            password: '',
+            verify_password: '',
+            role: ''
+        }})
+        this.setStateRole('')
+    }
+
+    handleCloseModal = (event: any) => {
+        this.props.handleCloseModal(event)
+        this.clearModal();
+    }
+
     render () {
-        const { isOpen, handleCloseModal } = this.props
+        const { isOpen } = this.props
         const customStyle = {
             overlay : {
                 background: 'rgba(0, 0, 0, 0.7)'
@@ -166,11 +185,11 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
         }
 
         return (
-            <Modal isOpen={isOpen} onRequestClose={handleCloseModal} style={customStyle} ariaHideApp={false} >
+            <Modal isOpen={isOpen} onRequestClose={this.handleCloseModal} style={customStyle} ariaHideApp={false} >
                 <div className='ContentModal'>
                     <div>
                         <span className='ModalTitle'>Crear Usuario</span>
-                        <div className='CloseModalButton' onClick={handleCloseModal} role='button' tabIndex={0}>
+                        <div className='CloseModalButton' onClick={this.handleCloseModal} role='button' tabIndex={0}>
                             <Icons icon='close' className='left-icon' color='#000000' />
                         </div>
                     </div>
@@ -182,7 +201,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     name='username'
                                     label='Usuario'
                                     placeholder='Ingrese el usuario'
-                                    value={this.state.username}
+                                    value={this.state.userData.user}
                                     handleValueChange={this.handleValueChange}
                                     handleValueValid={this.handleValueValid}
                                     requiredMessage='El campo usuario es requerido'
@@ -197,7 +216,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     name="password"
                                     label="Contraseña"
                                     placeholder="Escriba la contraseña"
-                                    value={this.state.password}
+                                    value={this.state.userData.password}
                                     handleValueChange={this.handleValueChange}
                                     handleValueValid={this.handleValueValid}
                                     requiredMessage="El campo contraseña es requerido"
@@ -222,7 +241,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     name="confirmPassword"
                                     label="Confirmar contraseña"
                                     placeholder="Confirme la contraseña"
-                                    value={this.state.confirmPassword}
+                                    value={this.state.userData.verify_password}
                                     handleValueChange={this.handleValueChange}
                                     handleValueValid={this.handleValueValid}
                                     requiredMessage="El campo contraseña es requerido"
@@ -282,8 +301,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     }
 }
 
-const mapStateToProps = (state: CreateUserModalComponentState) => ({
-})
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
     createUserFunc: createUser
