@@ -1,7 +1,7 @@
 import './dashboard.scss'
 import { connect } from "react-redux";
 import { Link, Route, Routes } from "react-router-dom";
-import { SideTabs } from '../../components/sideTabs/sidetabs.component';
+import SideTabs from '../../components/sideTabs/sidetabs.component';
 import Products from '../products/products';
 
 interface DashboardPageProps {}

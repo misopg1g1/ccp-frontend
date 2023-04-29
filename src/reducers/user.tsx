@@ -2,7 +2,8 @@ import {
     CREATE_USER_REQUEST,
     CREATE_USER_SUCCESS,
     CREATE_USER_FAIL,
-    CLEAN_MESSAGE
+    CLEAN_MESSAGE,
+    DELETE_USER_DATA
 } from '../constants/actionTypes'
 
 const initialState = {
@@ -21,6 +22,8 @@ export default function reducer(state = initialState, action: any) {
             return { ...state, fetching: false, message: action.message }
         case CLEAN_MESSAGE:
             return { ...state, message: null }
+        case DELETE_USER_DATA:
+            return { ...state, userData: null }
         default:
             return state;
     }
