@@ -301,7 +301,9 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     }
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = (state: any) => ({
+    token: state.login.token
+})
 
 const mapDispatchToProps = {
     createUserFunc: createUser

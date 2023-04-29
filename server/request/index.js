@@ -86,26 +86,25 @@ export class Request {
         })
     }
 
-    static async put(url, payload) {
+    static async put(url, payload, token = null) {
         const body = hashObject(payload);
+        const headers = setHeaders(token)
         return fetch(url, {
             method: 'PUT',
             body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers
         })
         .then(response => response.json())
         .then(response => {
             try {
                 if (response.error) {
-                    console.error(`SERVER-APP-WEB[PUT]: ${url}; BODY: ${JSON.stringify(payload)}; RESPONSE-ERROR: ${JSON.stringify(response)}`)
+                    console.error(`SERVER-APP-WEB[PUT]: ${url}; BODY: ${JSON.stringify(body)}; RESPONSE-ERROR: ${JSON.stringify(response)}`)
                     return response
                 }
-                console.info(`SERVER-APP-WEB[PUT]: ${url}; BODY: ${JSON.stringify(payload)}; SUCCESS`)
+                console.info(`SERVER-APP-WEB[PUT]: ${url}; BODY: ${JSON.stringify(body)}; SUCCESS`)
                 return response
             } catch (err) {
-                console.error(`SERVER-APP-WEB[PUT]: ${url}; BODY: ${JSON.stringify(payload)}; EXCEPTION; REQUEST: ${JSON.stringify(err)}`)
+                console.error(`SERVER-APP-WEB[PUT]: ${url}; BODY: ${JSON.stringify(body)}; EXCEPTION; REQUEST: ${JSON.stringify(err)}`)
                 return Promise.reject(err)
             }
         }).catch((err) => {

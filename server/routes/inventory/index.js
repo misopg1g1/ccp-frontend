@@ -3,7 +3,8 @@ import * as log from '../../util/log.js'
 
 export const inventory = (server) => {
     server.put('/api/products/:productId/inventories', (req, res) => {
-        Consumer.addInventory(req.params, req.body)
+        const token = req.get('Authorization')
+        Consumer.addInventory(req.params, req.body, token)
         .then( r => {
             let response = { ...r }
             if (response.error) {

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { cleanMessage } from "../actions/message"
 
-const useLogin = () => {
+const useMessage = () => {
     const dispatch = useDispatch()
     const { message } = useSelector((state: any) => state.message)
     const cleanMessageFunc = () => dispatch(cleanMessage())
@@ -12,4 +12,4 @@ const useLogin = () => {
     }
 }
 
-export default useLogin
+export default useMessage

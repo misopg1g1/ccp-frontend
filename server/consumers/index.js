@@ -21,7 +21,7 @@ export class Consumer {
         return api.getAllProducts(token)
     }
 
-    static addInventory(productId, inventoryData) {
-        return api.addInventory(productId, inventoryData)
+    static addInventory(productId, inventoryData, token) {
+        return api.addInventory(productId, inventoryData, token)
     }
 }
