@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 
-export const hashObject = (jsonBody) => {
+const hashObject = (jsonBody) => {
     const cleanJsonBody = Object.fromEntries(
       Object.entries(jsonBody).filter(([key]) => key !== 'hash'),
     );
@@ -20,6 +20,16 @@ export const hashObject = (jsonBody) => {
       const md5Hash = CryptoJS.MD5(JSON.stringify(sortedJson)).toString();
       return {...cleanJsonBody, hash: md5Hash};
 };
+
+const setHeaders = (token) => {
+    const headers = {
+        'Content-Type': 'application/json'
+    }
+    if (token) {
+        headers['Authorization'] = token
+    }
+    return headers
+}
 
 export class Request {
     constructor() {
@@ -46,29 +56,25 @@ export class Request {
         })
     }
 
-    static async post(url, payload) {
-        const body = hashObject(payload);
+    static async post(url, payload, token = null) {
+        const body = hashObject(payload)
+        const headers = setHeaders(token)
         return fetch(url, {
             method: 'POST',
             body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers
         })
         .then(response => response.json())
         .then(response => {
-            if (payload.password) {
-                payload.password = '**********'
-            }
             try {
                 if (response.error) {
-                    console.error(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(payload)}; RESPONSE-ERROR: ${JSON.stringify(response)}`)
+                    console.error(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(body)}; RESPONSE-ERROR: ${JSON.stringify(response)}`)
                     return response
                 }
-                console.info(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(payload)}; SUCCESS`)
+                console.info(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(body)}; SUCCESS`)
                 return response
             } catch (err) {
-                console.error(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(payload)}; EXCEPTION; REQUEST: ${JSON.stringify(err)}`)
+                console.error(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(body)}; EXCEPTION; REQUEST: ${JSON.stringify(err)}`)
                 return Promise.reject(err)
             }
         }).catch((err) => {

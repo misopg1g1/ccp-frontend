@@ -6,6 +6,11 @@ export function login({ user, password }) {
     return Request.post(url, {user, password})
 }
 
+export function createUser({ user, password, verify_password, role}, token) {
+    const url = `${config.apiGateway}/session/create_user`
+    return Request.post(url, {user, password, verify_password, role}, token)
+}
+
 export function getProduct({productId}) {
     const url = `${config.apiGateway}/products/${productId}`
     return Request.get(url)
