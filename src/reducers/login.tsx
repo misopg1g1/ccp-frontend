@@ -13,7 +13,7 @@ const initialState = {
   userData: null,
 };
 
-export default function reducer(state = initialState, action) {
+export default function reducer(state = initialState, action: any) {
   switch (action.type) {
     case LOGIN_REQUEST:
       return { ...state, fetching: true, error: null };
