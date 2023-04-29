@@ -1,14 +1,14 @@
 /// <reference types="vite/client" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import  viteSassPlugin from "vite-plugin-sass";
+import sassDts from 'vite-plugin-sass-dts'
 
 export default defineConfig({
   plugins: [
     react({
       include: "**/*.tsx,**/*.scss",
     }),
-    viteSassPlugin(),
+    sassDts(),
   ],
 
   server: {
