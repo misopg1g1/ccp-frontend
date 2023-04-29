@@ -16,7 +16,7 @@ interface CreateUserModalComponentProps {
 }
 
 interface NewUserData {
-    username: string
+    user: string
     password: string
     verify_password: string
     role: string
@@ -73,7 +73,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                 }
             ],
             userData: {
-                username: '',
+                user: '',
                 password: '',
                 verify_password: '',
                 role: ''
@@ -101,7 +101,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
 
     handleValueChange = (name: string, value: string) => {
         if (name === 'username') {
-            this.setState({ userData: {...this.state.userData, username: value }})
+            this.setState({ userData: {...this.state.userData, user: value }})
         }
         if (name == 'password') {
             this.setState({ userData: {...this.state.userData, password: value }})
@@ -154,7 +154,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     clearModal = () => {
         this.setState({ userData: {
             ...this.state.userData,
-            username: '',
+            user: '',
             password: '',
             verify_password: '',
             role: ''
@@ -201,7 +201,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     name='username'
                                     label='Usuario'
                                     placeholder='Ingrese el usuario'
-                                    value={this.state.userData.username}
+                                    value={this.state.userData.user}
                                     handleValueChange={this.handleValueChange}
                                     handleValueValid={this.handleValueValid}
                                     requiredMessage='El campo usuario es requerido'

@@ -1,7 +1,6 @@
 import {
   LOGIN_REQUEST,
   INIT_LOGIN,
-  CLEAN_MESSAGE,
   LOGOUT,
 } from "../constants/actionTypes";
 
@@ -16,4 +15,3 @@ export const logout = () => {
 };
 
 export const initLogin = () => ({ type: INIT_LOGIN });
-export const cleanMessage = () => ({ type: CLEAN_MESSAGE });

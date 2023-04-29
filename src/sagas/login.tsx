@@ -2,7 +2,8 @@ import {takeLatest, call, put} from 'redux-saga/effects';
 import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
-    LOGIN_FAIL
+    LOGIN_FAIL,
+    SET_MESSAGE_ERROR
 } from '../constants/actionTypes'
 import {login} from '../api/login'
 
@@ -15,7 +16,9 @@ function* loginSaga({credentials}) {
         }
         yield put({ type: LOGIN_SUCCESS, token: data.access_token, userData: data.data })
     } catch (error: any) {
-        yield put({type: LOGIN_FAIL, message: error.data});
+        error.data.code = 'Error en login'
+        yield put({type: LOGIN_FAIL});
+        yield put({type: SET_MESSAGE_ERROR, message: error.data})
     }
 }
 
