@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { GlobalState } from "../../utils/types";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
-import {BsThreeDotsVertical} from 'react-icons/bs'
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 function createData(
   name: string,
@@ -61,9 +61,10 @@ const columns: GridColDef[] = [
 
 export default function Products() {
   const [sortModel, setSortModel] = React.useState<any>([]);
-  const products = useSelector<GlobalState>(
+  const productsMap = useSelector<GlobalState>(
     (state) => state.product.products
-  ) as Product[];
+  ) as {}
+  const products: Product[] = Object.values(productsMap)
 
   return (
     <div className="product-main-container">
@@ -91,7 +92,7 @@ export default function Products() {
       </div>
       <div className="table-container">
         <DataGrid
-          rows={Object.values(products)}
+          rows={products}
           columns={columns}
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}
