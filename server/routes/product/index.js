@@ -29,4 +29,19 @@ export const product = (server) => {
             res.status(500).send(err)
         })
     })
+
+    server.post('/api/products', (req, res) => {
+        const token = req.get('Authorization')
+        Consumer.createProduct(req.body, token)
+        .then( r => {
+            let response = { ...r }
+            if (response.error) {
+                log.response_error('product', req, response.error)
+            }
+            res.json(response)
+        }).catch((err) => {
+            log.response_error('product', req, err)
+            res.status(500).send(err)
+        })
+    })
 }

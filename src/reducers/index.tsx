@@ -7,6 +7,7 @@ import inventory from './inventory'
 import user from './user'
 import product from './product'
 import message from './message'
+import product from './product'
 
 const persistRootConfig = {
     key: 'root',
@@ -31,6 +32,7 @@ const rootReducer = () =>
         user,
         product,
         message,
+        product,
     });
 
 export default () => persistReducer(persistRootConfig, rootReducer());
