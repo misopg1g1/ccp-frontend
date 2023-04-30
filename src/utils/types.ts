@@ -11,6 +11,7 @@ export interface UserData {
 export interface GlobalState {
   login: {
     userData: UserData;
+    token: string;
   };
   product: {
     products: Product[];

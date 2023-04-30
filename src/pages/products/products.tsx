@@ -3,7 +3,7 @@ import Header from "../../components/header/header.component";
 import { Widget } from "../../components/widget/widget.component";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import "./products.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GlobalState } from "../../utils/types";
 import {
   DataGrid,
@@ -15,6 +15,7 @@ import { IconButton } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { getAllProducts } from "../../actions/product";
 
 const columns: GridColDef[] = [
   {
@@ -32,10 +33,19 @@ const columns: GridColDef[] = [
   { field: "name", headerName: "Nombre", flex: 2 },
   { field: "sku", headerName: "SKU", flex: 2 },
   {
-    field: "category",
+    field: "categories",
     headerName: "Categoría",
     flex: 2,
-    valueGetter: (params) => params.value.name,
+    valueGetter: (params) => {
+      const names = (params.value as Product["categories"]).map(
+        (category) => category.name
+      );
+      let resultConcat = "";
+      names.forEach(
+        (name) => (resultConcat = resultConcat.concat(` ${name} `))
+      );
+      return resultConcat;
+    },
   },
   {
     field: "status",
@@ -60,10 +70,18 @@ export default function Products() {
   const [selectedRows, setSelectedRows] = React.useState<GridRowSelectionModel>(
     []
   );
-  const productsMap = useSelector<GlobalState>(
+  const token = useSelector<GlobalState>(
+    (state) => state.login.token
+  ) as string;
+  const dispatch = useDispatch();
+
+  const products = useSelector<GlobalState>(
     (state) => state.product.products
-  ) as {};
-  const products: Product[] = Object.values(productsMap);
+  ) as { [index: number]: Product };
+
+  React.useEffect(() => {
+    dispatch(getAllProducts(token));
+  }, []);
 
   const handleSelectionChange = (
     rowSelectionModel: GridRowSelectionModel,
@@ -97,15 +115,19 @@ export default function Products() {
         />
       </div>
       <div className="table-header">
-      <h2>Todos los Productos</h2>
-      <div className="icon-container">
-        <BiEdit />
-        <RiDeleteBin6Line />
-         </div>
+        <h2>Todos los Productos</h2>
+        <div className="icon-container">
+          <IconButton>
+            <BiEdit />
+          </IconButton>
+          <IconButton>
+            <RiDeleteBin6Line />
+          </IconButton>
+        </div>
       </div>
       <div className="table-container">
         <DataGrid
-          rows={products}
+          rows={Object.values(products) as Product[]}
           columns={columns}
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}
@@ -129,4 +151,10 @@ type Product = {
   price: number;
   img_url: string;
   suppliers: string;
+  categories: {
+    id: string;
+    name: string;
+    description: string;
+    status: boolean;
+  }[];
 };

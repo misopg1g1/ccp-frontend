@@ -8,8 +8,8 @@ export function getAllProducts(token: string) {
 }
 
 export function createProduct(body: any, token: string) {
-    const headers = {
-        Authorization: `Bearer ${token}`
-    }
-    return post('/api/products', {}, body, headers)
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  return post("/api/products", {}, body, headers);
 }
