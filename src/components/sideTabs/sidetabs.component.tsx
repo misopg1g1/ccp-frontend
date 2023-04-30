@@ -80,7 +80,7 @@ const SideTabs = (props: SideTabsComponentProps) => {
             <h2>CPP</h2>
           </div>
         </Link>
-        <Link className="button-container" to="view2">
+        <Link className="button-container" to="products">
           <AiOutlineInbox />
           <div className="link-container">
             <h2>Productos</h2>

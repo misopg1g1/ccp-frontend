@@ -1,7 +1,7 @@
 import './dashboard.scss'
 import React from "react";
 import { connect } from "react-redux";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import SideTabs from '../../components/sideTabs/sidetabs.component';
 import Products from '../products/products';
 import Message from '../../components/layout/messages/message';
@@ -38,7 +38,7 @@ const DashboardPage = (props: DashboardPageProps) => {
         }
         <Routes>
           <Route path="view1" element={<Tab1 />} />
-          <Route path="view2" element={<Products />} />
+          <Route path="products" element={<Products />} />
           <Route path="view3" element={<Tab2 />} />
           <Route path="view4" element={<Tab3 />} />
         </Routes>

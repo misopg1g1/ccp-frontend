@@ -2,7 +2,7 @@ export interface UserData {
   created_at: string;
   enabled: boolean;
   id: number;
-  role: Roles
+  role: Roles;
   updated_at: string;
   user: string;
   verified: boolean;
@@ -12,12 +12,37 @@ export interface GlobalState {
   login: {
     userData: UserData;
   };
+  product: {
+    products: Product[];
+  };
 }
 
 export enum Roles {
-    ADMIN = "ADMIN",
-    SELLER = "SELLER",
-    TRANSPORTER = "TRANSPORTER",
-    MARKETING = "MARKETING",
-    CLIENT = "CLIENT",
+  ADMIN = "ADMIN",
+  SELLER = "SELLER",
+  TRANSPORTER = "TRANSPORTER",
+  MARKETING = "MARKETING",
+  CLIENT = "CLIENT",
+}
+
+enum ProductType {
+  PERISHABLE = "PERISHABLE",
+  NONPERISHABLE = "NONPERISHABLE",
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  sku: string;
+  array: number[];
+  type: ProductType[];
+  temperature_control: number;
+  expiration_date: Date;
+  fragility_conditions: string;
+  description: string;
+  status: boolean;
+  price: number;
+  img_url: string;
+  suppliers: string;
+  category: Record<string, any>;
 }

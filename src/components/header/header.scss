@@ -1,0 +1,29 @@
+.header-container {
+  display: flex;
+  flex-direction: column;
+  height: 99px;
+  margin-left: 22px;
+  margin-top: 19px;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .welcome-text {
+    font-family: Poppins;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 54px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .date-text {
+    font-family: Poppins;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 39px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+}

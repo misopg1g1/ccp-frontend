@@ -5,13 +5,15 @@ import storage from 'redux-persist/lib/storage';
 import login from './login'
 import inventory from './inventory'
 import user from './user'
+import product from './product'
 import message from './message'
 
 const persistRootConfig = {
     key: 'root',
     whitelist: [
         'inventory',
-        'user'
+        'user',
+        'product'
     ],
     storage
 };
@@ -27,6 +29,7 @@ const rootReducer = () =>
         login: persistReducer(loginPersistConfig, login),
         inventory,
         user,
+        product,
         message,
     });
 
