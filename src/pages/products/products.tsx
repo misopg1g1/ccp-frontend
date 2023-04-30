@@ -5,9 +5,16 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import "./products.scss";
 import { useSelector } from "react-redux";
 import { GlobalState } from "../../utils/types";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridRowSelectionModel,
+  GridCallbackDetails,
+} from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { BiEdit } from "react-icons/bi";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 const columns: GridColDef[] = [
   {
@@ -50,10 +57,20 @@ const columns: GridColDef[] = [
 
 export default function Products() {
   const [sortModel, setSortModel] = React.useState<any>([]);
+  const [selectedRows, setSelectedRows] = React.useState<GridRowSelectionModel>(
+    []
+  );
   const productsMap = useSelector<GlobalState>(
     (state) => state.product.products
   ) as {};
   const products: Product[] = Object.values(productsMap);
+
+  const handleSelectionChange = (
+    rowSelectionModel: GridRowSelectionModel,
+    details: GridCallbackDetails<any>
+  ) => {
+    setSelectedRows(rowSelectionModel);
+  };
 
   return (
     <div className="product-main-container">
@@ -79,6 +96,13 @@ export default function Products() {
           iconAction={(event) => console.log("clicked")}
         />
       </div>
+      <div className="table-header">
+      <h2>Todos los Productos</h2>
+      <div className="icon-container">
+        <BiEdit />
+        <RiDeleteBin6Line />
+         </div>
+      </div>
       <div className="table-container">
         <DataGrid
           rows={products}
@@ -86,6 +110,7 @@ export default function Products() {
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}
           checkboxSelection
+          onRowSelectionModelChange={handleSelectionChange}
         />
       </div>
     </div>
