@@ -25,7 +25,7 @@ export enum Roles {
   CLIENT = "CLIENT",
 }
 
-enum ProductType {
+export enum ProductType {
   PERISHABLE = "PERISHABLE",
   NONPERISHABLE = "NONPERISHABLE",
 }
