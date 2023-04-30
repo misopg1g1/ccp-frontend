@@ -12,7 +12,6 @@ import { useDispatch, useSelector, connect } from "react-redux";
 import { GlobalState, Roles, UserData } from "../../utils/types";
 import { RoleWrapper } from "../role-wrapper/role-wrapper.component";
 import { logout } from "../../actions/login";
-import useLogin from '../../hooks/useLogin';
 import CreateUserModal from "../user/createUserModal";
 import { deleteUserData } from "../../actions/user";
 
@@ -25,7 +24,6 @@ const SideTabs = (props: SideTabsComponentProps) => {
   const [openModalCreateUser, setOpenModalCreateUser] = React.useState<false | boolean>(false);
   const open = Boolean(anchorEl);
   const { deleteUserDataFunc } = props;
-  const { token }  = useLogin();
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -137,7 +135,6 @@ const SideTabs = (props: SideTabsComponentProps) => {
       <CreateUserModal
         isOpen={openModalCreateUser}
         handleCloseModal={toogleCreateUserModal}
-        token={token}
       />
     </div>
   );

@@ -22,20 +22,22 @@ interface AddInventoryComponentProps {
     handleCloseModal: any
     addInventoryFunc: any
     productData: ProductData
+    token: string
 }
 
 interface AddInventoryComponentState {
-    message?: string
-    stock: string
+    stock: string | undefined
     fieldIsValid: any
+    login: any
 }
 
 class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddInventoryComponentState> {
     constructor(props: AddInventoryComponentProps) {
         super(props);
         this.state = {
-          stock: '',
-          fieldIsValid: null
+          stock: undefined,
+          fieldIsValid: null,
+          login: null
         }
     }
 
@@ -46,22 +48,26 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
         }
     ]
 
+    clearModal = () => {
+        this.setState({ stock: undefined })
+    }
+
+    handleCloseModal = (event: any) => {
+        this.props.handleCloseModal(event)
+        this.clearModal();
+    }
+
     handleSubmit = (event: any) => {
         event.preventDefault()
-        const { addInventoryFunc, productData } = this.props
-        const { stock } = this.state
 
-        if (!stock) {
-            this.setState({
-                message: 'empty'
-            })
+        if (!this.state.fieldIsValid) {
+            this.setState({fieldIsValid: false})
             return
         }
-
-        this.setState({
-            message: ''
-        })
-        addInventoryFunc(productData.id, stock)
+        const { addInventoryFunc, productData } = this.props
+        const { stock } = this.state
+        addInventoryFunc(productData.id, Number(stock), this.props.token)
+        this.handleCloseModal(event)
     }
 
     handleValueChange = (name: string, value: string) => {
@@ -76,8 +82,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
     }
 
     render () {
-        const { isOpen, handleCloseModal, productData } = this.props
-
+        const { isOpen, productData } = this.props
         const customStyle = {
             overlay : {
                 background: 'rgba(0, 0, 0, 0.7)'
@@ -94,11 +99,11 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
         }
 
         return (
-            <Modal isOpen={isOpen} onRequestClose={handleCloseModal} style={customStyle} ariaHideApp={false} >
+            <Modal isOpen={isOpen} onRequestClose={this.handleCloseModal} style={customStyle} ariaHideApp={false} >
                 <div className='ContentModal'>
                     <div>
                         <span className='ModalTitle'>{productData.name}</span>
-                        <div className='CloseModalButton' onClick={handleCloseModal} role='button' tabIndex={0}>
+                        <div className='CloseModalButton' onClick={this.handleCloseModal} role='button' tabIndex={0}>
                             <Icons icon='close' className='left-icon' color='#000000' />
                         </div>
                     </div>
@@ -173,6 +178,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
 }
 
 const mapStateToProps = (state: AddInventoryComponentState) => ({
+    token: state.login.token
 })
 
 const mapDispatchToProps = {
