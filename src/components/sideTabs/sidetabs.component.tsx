@@ -8,14 +8,24 @@ import { RiSuitcaseLine } from "react-icons/ri";
 import { BiExit } from "react-icons/bi";
 import { RxGear } from "react-icons/rx";
 import { Menu, MenuItem } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import { GlobalState, Roles, UserData } from "../../utils/types";
 import { RoleWrapper } from "../role-wrapper/role-wrapper.component";
 import { logout } from "../../actions/login";
+import useLogin from '../../hooks/useLogin';
+import CreateUserModal from "../user/createUserModal";
+import { deleteUserData } from "../../actions/user";
 
-export const SideTabs = () => {
+interface SideTabsComponentProps {
+  deleteUserDataFunc: any
+}
+
+const SideTabs = (props: SideTabsComponentProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [openModalCreateUser, setOpenModalCreateUser] = React.useState<false | boolean>(false);
   const open = Boolean(anchorEl);
+  const { deleteUserDataFunc } = props;
+  const { token }  = useLogin();
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -33,9 +43,23 @@ export const SideTabs = () => {
     navigation("/");
     handleClose(event);
   };
+
+  const openModalUser = (event: React.MouseEvent<HTMLLIElement>) => {
+    event.preventDefault()
+    setAnchorEl(null)
+    setOpenModalCreateUser(!openModalCreateUser)
+  }
+
+  const toogleCreateUserModal = (event: React.MouseEvent<HTMLLIElement>) => {
+    event.preventDefault()
+    setOpenModalCreateUser(!openModalCreateUser)
+    deleteUserDataFunc()
+  }
+
   const globalState = useSelector<GlobalState>(
     (state) => state.login.userData
   ) as UserData;
+
   return (
     <div className="side-tabs-container">
       <div className="title-container">
@@ -94,7 +118,7 @@ export const SideTabs = () => {
             className="menu-container"
           >
             <RoleWrapper allowedRoles={[Roles.ADMIN]}>
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={openModalUser}>
                 <CgProfile />
                 Crear Usuario
               </MenuItem>
@@ -110,6 +134,19 @@ export const SideTabs = () => {
           </div>
         </div>
       </div>
+      <CreateUserModal
+        isOpen={openModalCreateUser}
+        handleCloseModal={toogleCreateUserModal}
+        token={token}
+      />
     </div>
   );
 };
+
+const mapStateToProps = () => ({})
+
+const mapDispatchToProps = {
+  deleteUserDataFunc: deleteUserData
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideTabs)

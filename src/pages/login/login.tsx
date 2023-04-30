@@ -3,12 +3,12 @@ import './login.css'
 import React, {FormEvent, useState} from 'react'
 import {connect} from 'react-redux'
 import {Navigate} from 'react-router-dom'
-import {login, cleanMessage } from '../../actions/login'
+import {login} from '../../actions/login'
+import {cleanMessage} from '../../actions/message'
 
 import Message from '../../components/layout/messages/message'
 import LoginForm from '../../components/login/loginForm'
 import getMessage from '../../utils/getMessage'
-import {DEFAULT_TIMEOUT_MESSAGE} from '../../constants/actionTypes'
 
 interface LoginPageProps {
     message?: any
@@ -22,6 +22,7 @@ interface LoginPageState {
         message: any
         isLoggedIn: boolean,
     }
+    message: any
 }
 
 const LoginPage = (props: LoginPageProps) => {
@@ -39,11 +40,6 @@ const LoginPage = (props: LoginPageProps) => {
         user: null,
         password: null
     })
-    
-    if (message) {
-        message.code = "Error en login"
-        message.timeout = DEFAULT_TIMEOUT_MESSAGE
-    }
 
     if (isLoggedIn) {
         return <Navigate to={'/dashboard'} />
@@ -115,7 +111,7 @@ const LoginPage = (props: LoginPageProps) => {
 }
 
 const mapStateToProps = (state: LoginPageState) => ({
-    message: state.login.message,
+    message: state.message.message,
     isLoggedIn: state.login.isLoggedIn,
 })
 

@@ -1,21 +1,17 @@
 import { useDispatch, useSelector } from "react-redux"
-import { login, cleanMessage } from '../actions/login'
+import { login } from '../actions/login'
 
 const useLogin = () => {
     const dispatch = useDispatch()
-    const { error, fetching, token, isLoggedIn, userComplete} = useSelector((state: any) => state.login)
-
-    const cleanMessageFunc = () => dispatch(cleanMessage())
+    const { fetching, token, isLoggedIn, userComplete} = useSelector((state: any) => state.login)
     const loginFunc = (credentials: any) => dispatch(login(credentials))
 
     return {
-        error,
         token,
         fetching,
         loginFunc,
         isLoggedIn,
-        userComplete,
-        cleanMessageFunc
+        userComplete
     }
 }
 
