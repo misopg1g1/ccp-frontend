@@ -2,10 +2,15 @@ import {
   GET_PRODUCT_REQUEST,
   GET_PRODUCT_SUCCESS,
   GET_PRODUCT_FAIL,
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAIL
 } from "../constants/actionTypes";
 
 const initialState = {
-  product: null,
+  fetching: false,
+  message: null,
+  product: null
 };
 
 export default function reducer(state = initialState, action: any) {
@@ -25,6 +30,12 @@ export default function reducer(state = initialState, action: any) {
         isLoggedIn: true,
         products: null,
       };
+    case CREATE_PRODUCT_REQUEST:
+        return { ...state, fetching: true, error: null }
+    case CREATE_PRODUCT_SUCCESS:
+        return { ...state, fetching: false, productData: action.product }
+    case CREATE_PRODUCT_FAIL:
+        return { ...state, fetching: false, message: action.message }
     default:
       return state;
   }

@@ -5,9 +5,11 @@ import {connect} from 'react-redux'
 import Modal from 'react-modal'
 import Icons from '../../libs/icons'
 import Input from '../../libs/input'
+import Select from '../../libs/select'
 import { createProduct } from '../../actions/product'
 import { onlyNumbersRegex } from '../../utils/regex'
 import { ProductCreate, ProductType } from '../../utils/types'
+
  
 interface CreateProductComponentProps {
     isOpen: boolean
@@ -20,10 +22,11 @@ interface CreateProductComponentState {
     product: ProductCreate
     fieldIsValid: any
     value: string
+    image: any
 }
 
 class CreateProductModal extends React.Component<CreateProductComponentProps, CreateProductComponentState> {
-    constructor(props: CreateProductComponentProps) {
+    constructor(props: any) {
         super(props);
         this.state = {
             product: {
@@ -37,10 +40,11 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
                 name: true,
                 description: true,
                 type: true,
-                category: true,
+                categories: true,
                 price: true
             },
-            value: ''
+            value: '',
+            image: null,
         }
     }
 
@@ -51,18 +55,50 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
         }
     ]
 
-    formIsValid = () => {
-        console.log('Validar si los campos son validos')
-        return false
+    formIsValid = (): boolean => {
+        const {product} = this.state
+        const isValid = []
+        const fieldIsValid = {
+            name: true,
+            description: true,
+            type: true,
+            categories: true,
+            price: true
+        }
+        if (product.name === '') {
+            fieldIsValid.name = false
+            isValid.push('name');
+        }
+        if (product.description === '') {
+            fieldIsValid.description = false
+            isValid.push('description');
+        }
+        if (product.type === '' || product.type === 'default') {
+            fieldIsValid.type = false
+            isValid.push('type');
+        }
+        if (product.categories === '' || product.categories === 'default') {
+            fieldIsValid.categories = false
+            isValid.push('categories');
+        }
+        if (product.price === '') {
+            fieldIsValid.price = false
+            isValid.push('price');
+        }
+        this.setState({fieldIsValid: fieldIsValid})
+        return isValid.length === 0 ? true : false
     }
 
     setDefault = () => {
         this.setState({product: {
             name: '',
             description: '',
-            type: '',
-            categories: '',
-            price: ''
+            type: 'default',
+            categories: 'default',
+            price: '',
+            expiration_date: '',
+            dimensions: '',
+            temperature_control: 0
         }})
     }
 
@@ -71,17 +107,29 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
         this.setDefault();
     }
 
+    imgTobase64(image: any) {
+        var reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = () => {
+            this.setState({ 
+                product: {
+                    ...this.state.product, 
+                    img_base64_data: reader.result 
+                }
+            })
+        }
+        reader.onerror = error => {
+          console.error("Error converting image: ", error)
+        }
+    }
+
     handleSubmit = (event: any) => {
         event.preventDefault()
-        console.log(this.state.product)
-        return
-
-        if (!this.formIsValid) {
-            this.setState({fieldIsValid: false})
+        if (!this.formIsValid()) {
             return
         }
-        const { createProductFunc } = this.props
         const { product } = this.state
+        const { createProductFunc } = this.props
         createProductFunc(product, this.props.token)
         this.handleCloseModal(event)
     }
@@ -101,21 +149,6 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
         })
     }
 
-    handleOptionChange = (event: any) => {
-        this.setState({ 
-            product: {
-                ...this.state.product, 
-                [event.target.name]: event.target.value 
-            }
-        })
-        this.setState({
-            fieldIsValid: {
-                ...this.state.fieldIsValid,
-                [event.target.name]: false
-            }
-        })
-    }
-
     handleValueValid = (name: string, valid: boolean) => {
         this.setState({
             fieldIsValid: {
@@ -125,9 +158,14 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
         })
     }
 
+    onImageChange = (event: any) => {
+        this.setState({image: URL.createObjectURL(event.target.files[0])})
+        this.imgTobase64(event.target.files[0])
+    }
+
     render () {
         const { isOpen } = this.props
-        const { product, fieldIsValid } = this.state
+        const { product, fieldIsValid, image } = this.state
         const customStyle = {
             overlay : {
                 background: 'rgba(0, 0, 0, 0.7)',
@@ -169,9 +207,10 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
                     <React.Fragment>
                         <img 
                             className='ProductImage mt-16'
-                            src='product.jpg'
-                            alt={'Imagen del producto'}>
+                            src={image}
+                        >
                         </img>
+                        <input className='mt-8' type="file" multiple accept="image/*" onChange={this.onImageChange} />
                         <Input
                             type='text'
                             name='name'
@@ -201,38 +240,35 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
                             forcedValid={fieldIsValid.description}
                         ></Input>
                         <div className='ModalContainerTwoColumns'>
-                        <div className='LoginFormInputs FormOption'>
-                                <label htmlFor='type' className='FormLabel'>Tipo de producto</label>
-                                <select 
-                                    key='type'
-                                    name='type' 
-                                    id='type' 
-                                    autoComplete='off' 
-                                    className='Input mt-8 required error' 
-                                    onChange={this.handleOptionChange}
-                                    value={product.type}
-                                >
-                                    {optionsType.map((type) => (
-                                        <option key={type.value} value={type.value}>{type.label}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className='LoginFormInputs FormOption' style={{marginLeft:'8%'}}>
-                            <label htmlFor="categories" className='FormLabel'>Categoria</label>
-                                <select 
-                                    key='category'
-                                    name='categories' 
-                                    id='categories' 
-                                    autoComplete='off' 
-                                    className='Input mt-8 required error' 
-                                    onChange={this.handleOptionChange}
-                                    value={product.categories}
-                                >
-                                    {optionsCategory.map((category) => (
-                                        <option key={category.value} value={category.value}>{category.label}</option>
-                                    ))}
-                                </select>
-                            </div>
+                            <Select
+                                name="type"
+                                label='Tipo de producto'
+                                handleValueValid={this.handleValueValid}
+                                handleValueChange={this.handleValueChange}
+                                value={product.type}
+                                defaultOption='Seleccione un tipo'
+                                options={optionsType}
+                                required={true}
+                                requiredMessage='Debe seleccionar una opción'
+                                forcedValid={fieldIsValid.type}
+                                width='46%'
+                                classSelect='Input mt-8' 
+                            />
+                            <Select
+                                name="categories"
+                                label='Categoria'
+                                handleValueValid={this.handleValueValid}
+                                handleValueChange={this.handleValueChange}
+                                value={product.categories}
+                                defaultOption='Seleccione una categoria'
+                                options={optionsCategory}
+                                required={true}
+                                requiredMessage='Debe seleccionar una opción'
+                                forcedValid={fieldIsValid.categories}
+                                classSelect='Input mt-8'
+                                width='46%'
+                                marginLeft='8%'
+                            />
                         </div>
                         <div className='ModalContainerTwoColumns'>
                             <Input
@@ -253,7 +289,7 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
                             ></Input>
                             <Input
                                 type='date'
-                                name='expiration-date'
+                                name='expiration_date'
                                 label='Fecha de expiración'
                                 placeholder='dd/mm/aaaa'
                                 value={product.expiration_date}

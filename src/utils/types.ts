@@ -58,6 +58,6 @@ export interface ProductCreate {
   temperature_control?: number;
   fragility_conditions?: string;
   status?: boolean;
-  img_base64_data?: string;
+  img_base64_data?: string | ArrayBuffer | null;
   suppliers?: [];
 }
