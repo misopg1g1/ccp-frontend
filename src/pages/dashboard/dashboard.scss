@@ -7,7 +7,8 @@
 }
 
 .tabs-container {
-  width: 130px;
+  width: 10vw;
+  min-width: 100px;
   height: 100%;
   background-color: #2f76e6;
   display: flex;
@@ -16,7 +17,7 @@
   transition-timing-function: ease-in;
 
   &:hover {
-    width: calc(171px * 1.2);
+    width: calc(10vw * 1.5);
   }
 
   :hover .button-container {
@@ -41,4 +42,5 @@
 .content-container {
   display: flex;
   flex: 1;
+  max-width: 85vw;
 }

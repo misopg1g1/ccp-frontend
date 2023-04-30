@@ -9,21 +9,11 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
 const columns: GridColDef[] = [
   {
     field: "img_url",
     headerName: "Imagen",
-    width: 250,
+    flex: 2,
     renderCell: (params) => (
       <img
         src={params.value as string}
@@ -32,25 +22,24 @@ const columns: GridColDef[] = [
       />
     ),
   },
-  { field: "name", headerName: "Nombre", width: 200 },
-  { field: "sku", headerName: "SKU", width: 200 },
+  { field: "name", headerName: "Nombre", flex: 2 },
+  { field: "sku", headerName: "SKU", flex: 2 },
   {
     field: "category",
     headerName: "Categoría",
-    width: 250,
+    flex: 2,
     valueGetter: (params) => params.value.name,
   },
   {
     field: "status",
     headerName: "Estado",
-    width: 250,
+    flex: 2,
     valueGetter: (params) => (params.value ? "Activo" : "Inactivo"),
   },
   {
     field: "actions",
     headerName: "",
     sortable: false,
-    width: 80,
     renderCell: () => (
       <IconButton>
         <BsThreeDotsVertical />
@@ -63,8 +52,8 @@ export default function Products() {
   const [sortModel, setSortModel] = React.useState<any>([]);
   const productsMap = useSelector<GlobalState>(
     (state) => state.product.products
-  ) as {}
-  const products: Product[] = Object.values(productsMap)
+  ) as {};
+  const products: Product[] = Object.values(productsMap);
 
   return (
     <div className="product-main-container">
