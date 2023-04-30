@@ -23,7 +23,7 @@ const columns: GridColDef[] = [
   {
     field: "img_url",
     headerName: "Imagen",
-    width: 200,
+    width: 250,
     renderCell: (params) => (
       <img
         src={params.value as string}
@@ -37,20 +37,20 @@ const columns: GridColDef[] = [
   {
     field: "category",
     headerName: "Categoría",
-    width: 200,
+    width: 250,
     valueGetter: (params) => params.value.name,
   },
   {
     field: "status",
     headerName: "Estado",
-    width: 200,
+    width: 250,
     valueGetter: (params) => (params.value ? "Activo" : "Inactivo"),
   },
   {
     field: "actions",
     headerName: "",
     sortable: false,
-    width: 200,
+    width: 80,
     renderCell: () => (
       <IconButton>
         <BsThreeDotsVertical />
