@@ -76,7 +76,7 @@ export default function Products() {
   const dispatch = useDispatch();
 
   const products = useSelector<GlobalState>(
-    (state) => state.product.products
+    (state) => state.product.products || {}
   ) as { [index: number]: Product };
 
   React.useEffect(() => {
