@@ -7,25 +7,40 @@ import Icons from '../../libs/icons'
 import Input from '../../libs/input'
 import { createProduct } from '../../actions/product'
 import { onlyNumbersRegex } from '../../utils/regex'
+import { ProductCreate, ProductType } from '../../utils/types'
  
 interface CreateProductComponentProps {
     isOpen: boolean
     handleCloseModal: any
     createProductFunc: any
+    token: string
 }
 
 interface CreateProductComponentState {
-    message?: string
-    product: any
+    product: ProductCreate
     fieldIsValid: any
+    value: string
 }
 
 class CreateProductModal extends React.Component<CreateProductComponentProps, CreateProductComponentState> {
     constructor(props: CreateProductComponentProps) {
         super(props);
         this.state = {
-          product: null,
-          fieldIsValid: null
+            product: {
+                name: '',
+                description: '',
+                type: '',
+                categories: '',
+                price: ''
+            },
+            fieldIsValid: {
+                name: true,
+                description: true,
+                type: true,
+                category: true,
+                price: true
+            },
+            value: ''
         }
     }
 
@@ -36,38 +51,83 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
         }
     ]
 
+    formIsValid = () => {
+        console.log('Validar si los campos son validos')
+        return false
+    }
+
+    setDefault = () => {
+        this.setState({product: {
+            name: '',
+            description: '',
+            type: '',
+            categories: '',
+            price: ''
+        }})
+    }
+
+    handleCloseModal = (event: any) => {
+        this.props.handleCloseModal(event)
+        this.setDefault();
+    }
+
     handleSubmit = (event: any) => {
         event.preventDefault()
-        const { createProductFunc } = this.props
-        const { product } = this.state
+        console.log(this.state.product)
+        return
 
-        if (!product) {
-            this.setState({
-                message: 'empty'
-            })
+        if (!this.formIsValid) {
+            this.setState({fieldIsValid: false})
             return
         }
-
-        this.setState({
-            message: ''
-        })
-        createProductFunc(product)
+        const { createProductFunc } = this.props
+        const { product } = this.state
+        createProductFunc(product, this.props.token)
+        this.handleCloseModal(event)
     }
 
     handleValueChange = (name: string, value: string) => {
-        //if (name === 'stock') {
-        //    this.setState({ stock: value })
-        //}
-        this.setState({fieldIsValid: false})
+        this.setState({ 
+            product: {
+                ...this.state.product, 
+                [name]: value 
+            }
+        })
+        this.setState({
+            fieldIsValid: {
+                  ...this.state.fieldIsValid,
+                  [name]: false
+            }
+        })
+    }
+
+    handleOptionChange = (event: any) => {
+        this.setState({ 
+            product: {
+                ...this.state.product, 
+                [event.target.name]: event.target.value 
+            }
+        })
+        this.setState({
+            fieldIsValid: {
+                ...this.state.fieldIsValid,
+                [event.target.name]: false
+            }
+        })
     }
 
     handleValueValid = (name: string, valid: boolean) => {
-        this.setState({fieldIsValid: valid})
+        this.setState({
+            fieldIsValid: {
+                  ...this.state.fieldIsValid,
+                  [name]: valid
+            }
+        })
     }
 
     render () {
-        const { isOpen, handleCloseModal } = this.props
-
+        const { isOpen } = this.props
+        const { product, fieldIsValid } = this.state
         const customStyle = {
             overlay : {
                 background: 'rgba(0, 0, 0, 0.7)',
@@ -84,13 +144,25 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
                 background: 'rgba(244, 245, 247, 1)',
             }
         }
+        const optionsType = [
+            { label: 'Seleccione un tipo', value: 'default' },
+            { label: 'Perecedero', value: ProductType.PERISHABLE },
+            { label: 'No Perecedero', value: ProductType.NONPERISHABLE },
+        ]
+        const optionsCategory = [
+            { label: 'Seleccione una categoria', value: 'default' },
+            { label: 'Volvo', value: 'volvo'},
+            { label: 'Saab', value: 'saab'},
+            { label: 'Opel', value: 'opel'},
+            { label: 'Audi', value: 'audi'},
+        ]
 
         return (
-            <Modal isOpen={isOpen} onRequestClose={handleCloseModal} style={customStyle} ariaHideApp={false} >
+            <Modal isOpen={isOpen} onRequestClose={this.handleCloseModal} style={customStyle} ariaHideApp={false} >
                 <div className='ContentModal'>
                     <div>
                         <span className='ModalTitle'>Nuevo producto</span>
-                        <div className='CloseModalButton' onClick={handleCloseModal} role='button' tabIndex={0}>
+                        <div className='CloseModalButton' onClick={this.handleCloseModal} role='button' tabIndex={0}>
                             <Icons icon='close' className='left-icon' color='#000000' />
                         </div>
                     </div>
@@ -105,109 +177,106 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
                             name='name'
                             label='Nombre del producto'
                             placeholder='Escribe el nombre del producto'
-                            value=''
+                            value={product.name}
                             handleValueChange={this.handleValueChange}
                             handleValueValid={this.handleValueValid}
                             classInput='Input mt-8'
                             marginTop='36px'
                             required={true}
                             requiredMessage='El campo es requerido'
-                            forcedValid={this.state.fieldIsValid}
+                            forcedValid={fieldIsValid.name}
                         ></Input>
                         <Input
                             type='text'
                             name='description'
                             label='Descripción del producto'
                             placeholder='Escribe la descripción del producto'
-                            value=''
+                            value={product.description}
                             handleValueChange={this.handleValueChange}
                             handleValueValid={this.handleValueValid}
                             classInput='Input mt-8'
                             marginTop='36px'
                             required={true}
                             requiredMessage='El campo es requerido'
-                            forcedValid={this.state.fieldIsValid}
+                            forcedValid={fieldIsValid.description}
                         ></Input>
                         <div className='ModalContainerTwoColumns'>
+                        <div className='LoginFormInputs FormOption'>
+                                <label htmlFor='type' className='FormLabel'>Tipo de producto</label>
+                                <select 
+                                    key='type'
+                                    name='type' 
+                                    id='type' 
+                                    autoComplete='off' 
+                                    className='Input mt-8 required error' 
+                                    onChange={this.handleOptionChange}
+                                    value={product.type}
+                                >
+                                    {optionsType.map((type) => (
+                                        <option key={type.value} value={type.value}>{type.label}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className='LoginFormInputs FormOption' style={{marginLeft:'8%'}}>
+                            <label htmlFor="categories" className='FormLabel'>Categoria</label>
+                                <select 
+                                    key='category'
+                                    name='categories' 
+                                    id='categories' 
+                                    autoComplete='off' 
+                                    className='Input mt-8 required error' 
+                                    onChange={this.handleOptionChange}
+                                    value={product.categories}
+                                >
+                                    {optionsCategory.map((category) => (
+                                        <option key={category.value} value={category.value}>{category.label}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                        <div className='ModalContainerTwoColumns'>
                             <Input
                                 type='text'
-                                name='sku'
-                                label='SKU'
-                                placeholder='SKU del producto'
-                                value=''
-                                handleValueChange={this.handleValueChange}
-                                handleValueValid={this.handleValueValid}
-                                classInput='Input mt-8'
-                                marginTop='36px'
-                                required={true}
-                                requiredMessage='El campo es requerido'
-                                forcedValid={this.state.fieldIsValid}
-                                width='46%'
-                            ></Input>
-                            <Input
-                                type='text'
-                                name='unit-price'
+                                name='price'
                                 label='Precio unitario'
                                 placeholder='100.000,00'
-                                value=''
+                                value={product.price}
                                 handleValueChange={this.handleValueChange}
                                 handleValueValid={this.handleValueValid}
                                 classInput='Input mt-8'
                                 marginTop='36px'
                                 required={true}
                                 requiredMessage='El campo es requerido'
-                                forcedValid={this.state.fieldIsValid}
-                                width='46%'
-                                marginLeft='8%'
-                            ></Input>
-                        </div>
-                        <div className='ModalContainerTwoColumns'>
-                            <Input
-                                type='text'
-                                name='product-type'
-                                label='Tipo de producto'
-                                placeholder='Seleccione un tipo'
-                                value=''
-                                handleValueChange={this.handleValueChange}
-                                handleValueValid={this.handleValueValid}
-                                classInput='Input mt-8'
-                                marginTop='36px'
-                                required={true}
-                                requiredMessage='El campo es requerido'
-                                forcedValid={this.state.fieldIsValid}
+                                forcedValid={fieldIsValid.price}
+                                validations={this.validationsStockField}
                                 width='46%'
                             ></Input>
                             <Input
-                                type='text'
-                                name='category'
-                                label='Categoria'
-                                placeholder='Seleccione una categoria'
-                                value=''
-                                handleValueChange={this.handleValueChange}
-                                handleValueValid={this.handleValueValid}
-                                classInput='Input mt-8'
-                                marginTop='36px'
-                                required={true}
-                                requiredMessage='El campo es requerido'
-                                forcedValid={this.state.fieldIsValid}
-                                width='46%'
-                                marginLeft='8%'
-                            ></Input>
-                        </div>
-                        <div className='ModalContainerTwoColumns'>
-                            <Input
-                                type='text'
+                                type='date'
                                 name='expiration-date'
-                                label='SKU'
-                                placeholder='Fecha de expiración'
-                                value=''
+                                label='Fecha de expiración'
+                                placeholder='dd/mm/aaaa'
+                                value={product.expiration_date}
                                 handleValueChange={this.handleValueChange}
                                 handleValueValid={this.handleValueValid}
                                 classInput='Input mt-8'
                                 marginTop='36px'
-                                required={true}
-                                requiredMessage='El campo es requerido'
-                                forcedValid={this.state.fieldIsValid}
+                                width='46%'
+                                marginLeft='8%'
+                            ></Input>
+                        </div>
+                        <div className='ModalContainerTwoColumns'>
+                            <Input
+                                type='text'
+                                name='temperature_control'
+                                label='Control de temperatura'
+                                placeholder='temperature_control'
+                                value={product.temperature_control}
+                                handleValueChange={this.handleValueChange}
+                                handleValueValid={this.handleValueValid}
+                                classInput='Input mt-8'
+                                marginTop='36px'
+                                validations={this.validationsStockField}
                                 width='46%'
                             ></Input>
                             <Input
@@ -215,14 +284,11 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
                                 name='dimensions'
                                 label='Dimensiones (cm)'
                                 placeholder='Ancho - Alto - Largo'
-                                value=''
+                                value={product.dimensions}
                                 handleValueChange={this.handleValueChange}
                                 handleValueValid={this.handleValueValid}
                                 classInput='Input mt-8'
                                 marginTop='36px'
-                                required={true}
-                                requiredMessage='El campo es requerido'
-                                forcedValid={this.state.fieldIsValid}
                                 width='46%'
                                 marginLeft='8%'
                             ></Input>
@@ -239,7 +305,8 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
     }
 }
 
-const mapStateToProps = (state: CreateProductComponentState) => ({
+const mapStateToProps = (state: any) => ({
+    token: state.login.token
 })
 
 const mapDispatchToProps = {

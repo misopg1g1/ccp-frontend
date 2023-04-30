@@ -46,3 +46,18 @@ export interface Product {
   suppliers: string;
   category: Record<string, any>;
 }
+
+export interface ProductCreate {
+  name: string;
+  description: string;
+  type: string;
+  categories: any;
+  price: string;
+  expiration_date?: string;
+  dimensions?: string;
+  temperature_control?: number;
+  fragility_conditions?: string;
+  status?: boolean;
+  img_base64_data?: string;
+  suppliers?: [];
+}
