@@ -16,6 +16,11 @@ export function getProduct({productId}) {
     return Request.get(url)
 }
 
+export function getAllProducts(token) {
+    const url = `${config.apiGateway}/products`
+    return Request.get(url,token)
+}
+
 export function addInventory({productId}, {stock}) {
     const url = `${config.apiGateway}/products/${productId}/inventories`
     return Request.put(url, {stock})

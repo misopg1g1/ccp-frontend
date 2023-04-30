@@ -1,65 +1,117 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-  
-const mock = {
-  id: "1",
-  name: "Product 1",
-  sku: "SKU12913131",
-  array: [],
-  type: [],
-  temperature_control: 25,
-  expiration_date: Date.now(),
-  fragility_conditions: "None",
-  description: "Description",
-  status: true,
-  price: 1500,
-  img_url: 'http://url.com',
-  suppliers: 'Zaragosa',
-  category: {},
-};
+import * as React from "react";
+import Header from "../../components/header/header.component";
+import { Widget } from "../../components/widget/widget.component";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import "./products.scss";
+import { useSelector } from "react-redux";
+import { GlobalState } from "../../utils/types";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { IconButton } from "@mui/material";
+import {BsThreeDotsVertical} from 'react-icons/bs'
 
 function createData(
   name: string,
   calories: number,
   fat: number,
   carbs: number,
-  protein: number,
+  protein: number
 ) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+const columns: GridColDef[] = [
+  {
+    field: "img_url",
+    headerName: "Imagen",
+    width: 150,
+    renderCell: (params) => (
+      <img
+        src={params.value as string}
+        alt="product"
+        style={{ width: "50px", height: "50px" }}
+      />
+    ),
+  },
+  { field: "name", headerName: "Nombre", width: 200 },
+  { field: "sku", headerName: "SKU", width: 150 },
+  {
+    field: "category",
+    headerName: "Categoría",
+    width: 150,
+    valueGetter: (params) => params.value.name,
+  },
+  {
+    field: "status",
+    headerName: "Estado",
+    width: 150,
+    valueGetter: (params) => (params.value ? "Activo" : "Inactivo"),
+  },
+  {
+    field: "actions",
+    headerName: "",
+    sortable: false,
+    width: 120,
+    renderCell: () => (
+      <IconButton>
+        <BsThreeDotsVertical />
+      </IconButton>
+    ),
+  },
 ];
 
 export default function Products() {
+  const [sortModel, setSortModel] = React.useState<any>([]);
+  const products = useSelector<GlobalState>(
+    (state) => state.product.products
+  ) as Product[];
+
   return (
-    <>
-    Productos
-    </>
+    <div className="product-main-container">
+      <Header></Header>
+      <div className="widget-container">
+        <Widget
+          icon={<AiOutlinePlusCircle />}
+          description="Total de Productos"
+          quantity={Object.values(products).length.toString()}
+          iconAction={(event) => console.log("clicked")}
+          background
+        />
+        <Widget
+          icon={<AiOutlinePlusCircle />}
+          description="Categorias"
+          quantity="3"
+          iconAction={(event) => console.log("clicked")}
+        />
+        <Widget
+          icon={<AiOutlinePlusCircle />}
+          description="Bodegas"
+          quantity="1"
+          iconAction={(event) => console.log("clicked")}
+        />
+      </div>
+      <div className="table-container">
+        <DataGrid
+          rows={Object.values(products)}
+          columns={columns}
+          sortModel={sortModel}
+          onSortModelChange={(model) => setSortModel(model)}
+          checkboxSelection
+        />
+      </div>
+    </div>
   );
 }
 
 type Product = {
-    id: string,
-    name: string,
-    sku: string,
-    temperature_control: number,
-    expiration_date: Date,
-    fragility_conditions: string,
-    description: string,
-    status: boolean,
-    price: number,
-    img_url: string,
-    suppliers: string,
-  };
+  id: string;
+  name: string;
+  sku: string;
+  temperature_control: number;
+  expiration_date: Date;
+  fragility_conditions: string;
+  description: string;
+  status: boolean;
+  price: number;
+  img_url: string;
+  suppliers: string;
+};

@@ -8,7 +8,7 @@ import {
 const initialState = {
     fetching: false,
     message: null,
-    userData: null
+    userData: null,
 };
 
 export default function reducer(state = initialState, action: any) {

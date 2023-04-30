@@ -36,12 +36,15 @@ export class Request {
         return true
     }
 
-    static async get(url) {
+    static async get(url,token = null) {
+        const headers = setHeaders(token)
         return fetch(url, {
-            method: 'GET'
+            method: 'GET',
+            headers
         })
         .then(response => response.json())
         .then(response => {
+            console.info(token)
             try {
                 if (response.error) {
                     console.error(`SERVER-APP-WEB[GET]: ${url}; RESPONSE-ERROR: ${JSON.stringify(response)}`)
