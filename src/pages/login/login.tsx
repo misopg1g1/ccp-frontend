@@ -1,37 +1,47 @@
 import './login.css'
-import {useState} from 'react'
+
+import React, {FormEvent, useState} from 'react'
 import {connect} from 'react-redux'
 import {Navigate} from 'react-router-dom'
-import {login, cleanError } from '../../actions/login'
-import PropTypes from 'prop-types'
+import {login} from '../../actions/login'
+import {cleanMessage} from '../../actions/message'
 
-import Error from '../../layout/messages/error'
+import Message from '../../components/layout/messages/message'
 import LoginForm from '../../components/login/loginForm'
-import getErrorMessage from '../../utils/getErrorMessage'
-import {DEFAULT_TIMEOUT_MESSAGE} from '../../constants/actionTypes'
+import getMessage from '../../utils/getMessage'
 
-const LoginPage = (props) => {
+interface LoginPageProps {
+    message?: any
+    loginFunc?: any
+    isLoggedIn?: boolean
+    cleanMessage: any
+}
+
+interface LoginPageState {
+    login: {
+        message: any
+        isLoggedIn: boolean,
+    }
+    message: any
+}
+
+const LoginPage = (props: LoginPageProps) => {
+    const {
+        message,
+        loginFunc,
+        isLoggedIn,
+        cleanMessage
+    } = props
+
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPasswword] = useState(false)
     const [fieldIsValid, setFieldIsValid] = useState({
         user: null,
         password: null
     })
-    const [showPassword, setShowPasswword] = useState(false)
-    const {
-        error,
-        loginFunc,
-        isLoggedIn,
-        cleanError
-    } = props
-
-    if (error) {
-        error.code = "Error en login"
-        error.timeout = DEFAULT_TIMEOUT_MESSAGE
-    }
 
     if (isLoggedIn) {
-        console.log('isLoggedIn_1', isLoggedIn)
         return <Navigate to={'/dashboard'} />
     }
 
@@ -42,22 +52,22 @@ const LoginPage = (props) => {
         return true
     }
     
-    const submit = event => {
-        event.preventDefault();
+    const submit = (event: FormEvent) => {
+        event.preventDefault()
         if (isValidFields()) {
             loginFunc({
                 credentials: {user, password}
             })
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
     const togglePasswordVisible = () => {
         setShowPasswword(!showPassword)
     }
     
-    const handleValueChange = (name, value) => {
+    const handleValueChange = (name: string, value: string) => {
         if (name === 'user') {
             setUser(value)
         }
@@ -67,13 +77,14 @@ const LoginPage = (props) => {
         setFieldIsValid({...fieldIsValid, [name]: null})
     }
 
-    const handleValueValid = (name, valid) => {
+    const handleValueValid = (name: string, valid: boolean) => {
         setFieldIsValid({...fieldIsValid, [name]: valid})
     }
 
     return (
+        <div className='login-container'>
         <form id='login' onSubmit={submit}>
-            {error && <Error key={error.code} error={getErrorMessage(error)} handleClose={cleanError} />}
+            {message && <Message key={message.code} message={getMessage(message)} handleClose={cleanMessage} />}
             <div className="LoginBoard">
                 <div className='LoginGreetingPanel'>
                     <div className='LoginGreetingPanelText'>
@@ -88,35 +99,25 @@ const LoginPage = (props) => {
                         handleValueValid={handleValueValid}
                         user={user}
                         password={password}
-                        submit={submit}
+                        onSubmit={submit}
                         showPassword={showPassword}
                         togglePasswordVisible={togglePasswordVisible}
                     />
                 </div>
             </div>
         </form>
+        </div>
     )
 }
 
-LoginPage.propTypes = {
-    error: PropTypes.object,
-    isLoggedIn: PropTypes.bool,
-    cleanError: PropTypes.func.isRequired
-}
-
-LoginPage.defaultProps = {
-    error: '',
-    isLoggedIn: false
-}
-
-const mapStateToProps = state => ({
-    error: state.login.error,
+const mapStateToProps = (state: LoginPageState) => ({
+    message: state.message.message,
     isLoggedIn: state.login.isLoggedIn,
 })
 
 const mapDispatchToProps = {
     loginFunc: login,
-    cleanError: cleanError
+    cleanMessage: cleanMessage
 }
    
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)

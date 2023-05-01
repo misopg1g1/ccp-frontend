@@ -1,4 +1,4 @@
-import { Consumer } from '../../consumers/selector.js'
+import { Consumer } from '../../consumers/index.js'
 import * as log from '../../util/log.js'
 
 export const login = (server) => {

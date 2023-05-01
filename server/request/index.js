@@ -1,58 +1,115 @@
 import CryptoJS from 'crypto-js';
 
-export const hashObject = (jsonBody) => {
+const hashObject = (jsonBody) => {
     const cleanJsonBody = Object.fromEntries(
       Object.entries(jsonBody).filter(([key]) => key !== 'hash'),
     );
-    const sortedKeys = Object.keys(cleanJsonBody).sort();
-    const jsonString = sortedKeys
-      .map(
-        (key, index) =>
-          `"${key}": "${cleanJsonBody[key]}"${
-            index < sortedKeys.length - 1 ? ', ' : ''
-          }`,
-      )
-      .join('');
-  
-    const wrappedJsonString = `{${jsonString}}`;
-    const md5Hash = CryptoJS.MD5(wrappedJsonString).toString();
-    console.log('here', md5Hash);
-    return {...cleanJsonBody, hash: md5Hash};
+    const sortDict = (obj) => {
+        if (typeof obj === 'object' && obj !== null) {
+          const sortedObj = {};
+          Object.keys(obj)
+            .sort()
+            .forEach(key => {
+              sortedObj[key] = obj[key];
+            });
+          return sortedObj;
+        }
+        return obj;
+      };
+      const sortedJson = sortDict(cleanJsonBody);
+      const md5Hash = CryptoJS.MD5(JSON.stringify(sortedJson)).toString();
+      return {...cleanJsonBody, hash: md5Hash};
 };
+
+const setHeaders = (token) => {
+    const headers = {
+        'Content-Type': 'application/json'
+    }
+    if (token) {
+        headers['Authorization'] = token
+    }
+    return headers
+}
 
 export class Request {
     constructor() {
         return true
     }
 
-    static async post(url, payload) {
-        const body = hashObject(payload);
+    static async get(url,token = null) {
+        const headers = setHeaders(token)
+        return fetch(url, {
+            method: 'GET',
+            headers
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.info(token)
+            try {
+                if (response.error) {
+                    console.error(`SERVER-APP-WEB[GET]: ${url}; RESPONSE-ERROR: ${JSON.stringify(response)}`)
+                    return response
+                }
+                console.info(`SERVER-APP-WEB[GET]: ${url}; SUCCESS`)
+                return response
+            } catch (error) {
+                console.error(`SERVER-APP-WEB[GET]: ${url}; EXCEPTION-ERROR: ${JSON.stringify(err)}`)
+                throw err
+            }
+        })
+    }
+
+    static async post(url, payload, token = null) {
+        const body = hashObject(payload)
+        const headers = setHeaders(token)
         return fetch(url, {
             method: 'POST',
             body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers
         })
-            .then(response => response.json())
-            .then(response => {
-                if (payload.password) {
-                    payload.password = '**********'
-                }
-                try {
-                    if (response.error) {
-                        console.log(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(payload)}; RESPONSE-ERROR: ${JSON.stringify(response)}`)
-                        return response
-                    }
-                    console.log(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(payload)}; SUCCESS`)
+        .then(response => response.json())
+        .then(response => {
+            try {
+                if (response.error) {
+                    console.error(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(body)}; RESPONSE-ERROR: ${JSON.stringify(response)}`)
                     return response
-                } catch (err) {
-                    console.error(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(payload)}; EXCEPTION; REQUEST: ${JSON.stringify(err)}`)
-                    return Promise.reject(err)
                 }
-            }).catch((err) => {
-                console.error(`SERVER-APP-WEB[POST]: ${url}; EXCEPTION-ERROR: ${JSON.stringify(err)}`)
-                throw err
-            })
+                console.info(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(body)}; SUCCESS`)
+                return response
+            } catch (err) {
+                console.error(`SERVER-APP-WEB[POST]: ${url}; BODY: ${JSON.stringify(body)}; EXCEPTION; REQUEST: ${JSON.stringify(err)}`)
+                return Promise.reject(err)
+            }
+        }).catch((err) => {
+            console.error(`SERVER-APP-WEB[POST]: ${url}; EXCEPTION-ERROR: ${JSON.stringify(err)}`)
+            throw err
+        })
+    }
+
+    static async put(url, payload, token = null) {
+        const body = hashObject(payload);
+        const headers = setHeaders(token)
+        return fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(body),
+            headers: headers
+        })
+        .then(response => response.json())
+        .then(response => {
+            try {
+                if (response.error) {
+                    console.error(`SERVER-APP-WEB[PUT]: ${url}; BODY: ${JSON.stringify(body)}; RESPONSE-ERROR: ${JSON.stringify(response)}`)
+                    return response
+                }
+                console.info(`SERVER-APP-WEB[PUT]: ${url}; BODY: ${JSON.stringify(body)}; SUCCESS`)
+                return response
+            } catch (err) {
+                console.error(`SERVER-APP-WEB[PUT]: ${url}; BODY: ${JSON.stringify(body)}; EXCEPTION; REQUEST: ${JSON.stringify(err)}`)
+                return Promise.reject(err)
+            }
+        }).catch((err) => {
+            console.error(`SERVER-APP-WEB[PUT]: ${url}; EXCEPTION-ERROR: ${JSON.stringify(err)}`)
+            throw err
+        })
     }
 }

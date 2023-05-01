@@ -1,0 +1,40 @@
+{
+    "extends": [
+        "airbnb",
+        "prettier",
+        "prettier/react"
+    ],
+    "plugings": [
+        "jest",
+        "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "no-underscore-dangle": 0,
+        "arrow-body-style": 0,
+        "spaced-comment": [
+            "error",
+            "always",
+            {
+                "line": {
+                    "markers": ["/"],
+                    "exceptions": ["-", "+"]
+                },
+                "block": {
+                    "markers": ["/"],
+                    "exceptions": ["-", "+"],
+                    "balanced": true
+                }
+            }
+        ],
+        "no-debugger": "warn"
+    },
+    "parser": "@babel/eslint-parser",
+    "env": {
+        "jest/globals": true,
+        "browser": true
+    },
+    "globals": {
+        "fetch": false
+    }
+}
