@@ -5,25 +5,11 @@ import {connect} from 'react-redux'
 import Modal from 'react-modal'
 import Icons from '../../libs/icons'
 import Input from '../../libs/input'
- 
-interface ProductData {
-    id: string
-    name: string
-    sku: string
-    image: string
-    description: string
-    stock: string
-    unitPrice: string
-    type: string
-    category: string
-    expirationDate: string
-    dimensions: string
-}
 
 interface DetailProductComponentProps {
     isOpen: boolean
     handleCloseModal: any
-    productData: ProductData
+    productData: any
 }
 
 interface DetailProductComponentState {}
@@ -54,7 +40,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
             <Modal isOpen={isOpen} onRequestClose={handleCloseModal} style={customStyle} ariaHideApp={false} >
                 <div className='ContentModal'>
                     <div>
-                        <span className='ModalTitle'>{productData.name}</span>
+                        <span className='ModalTitle'>{productData?.name}</span>
                         <div className='CloseModalButton' onClick={handleCloseModal} role='button' tabIndex={0}>
                             <Icons icon='close' className='left-icon' color='#000000' />
                         </div>
@@ -62,14 +48,14 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                     <React.Fragment>
                         <img 
                             className='ProductImage mt-16'
-                            src={productData.image}
-                            alt={'Imagen del producto con nombre: ' + productData.name}>
+                            src={productData?.img_url}
+                            alt={'Imagen del producto con nombre: ' + productData?.name}>
                         </img>
                         <Input
                             type='text'
                             name='description'
                             label='Descripción'
-                            value={productData.description}
+                            value={productData?.description}
                             maxLength={20}
                             classInput='ModalInput mt-8'
                             disabled={true}
@@ -80,7 +66,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                                 type='text'
                                 name='sku'
                                 label='SKU'
-                                value={productData.sku}
+                                value={productData?.sku}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'
@@ -90,7 +76,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                                 type='text'
                                 name='unit-price'
                                 label='Precio unitario'
-                                value={productData.unitPrice}
+                                value={productData?.price}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'
@@ -103,7 +89,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                                 type='text'
                                 name='type'
                                 label='Tipo'
-                                value={productData.type}
+                                value={productData?.type}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'
@@ -113,7 +99,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                                 type='text'
                                 name='category'
                                 label='Categoria'
-                                value={productData.category}
+                                value={productData?.category}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'
@@ -126,7 +112,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                                 type='text'
                                 name='expiration-date'
                                 label='Fecha de expiración'
-                                value={productData.expirationDate}
+                                value={productData?.expiration_date}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'
@@ -136,7 +122,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                                 type='text'
                                 name='dimensions'
                                 label='Dimensiones (cm)'
-                                value={productData.dimensions}
+                                value={productData?.dimensions}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'

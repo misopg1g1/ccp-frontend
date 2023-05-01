@@ -33,6 +33,7 @@ function* createProductSaga({ product, token }) {
     }
     yield put({ type: CREATE_PRODUCT_SUCCESS });
     data.code = "Proceso exitoso";
+    data.msg = `El producto ${product.name} fue creado exitosamente`
     yield put({ type: SET_MESSAGE_SUCCESS, message: data });
   } catch (error: any) {
     error.data.code = "Error creando el producto";
