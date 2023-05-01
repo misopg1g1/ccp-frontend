@@ -7,21 +7,12 @@ import Icons from '../../libs/icons'
 import Input from '../../libs/input'
 import { addInventory } from '../../actions/inventory'
 import { onlyNumbersRegex } from '../../utils/regex'
- 
-interface ProductData {
-    id: string
-    name: string
-    sku: string
-    image: string
-    description: string
-    stock: string
-}
 
 interface AddInventoryComponentProps {
     isOpen: boolean
     handleCloseModal: any
     addInventoryFunc: any
-    productData: ProductData
+    productData: any
     token: string
 }
 
@@ -102,7 +93,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
             <Modal isOpen={isOpen} onRequestClose={this.handleCloseModal} style={customStyle} ariaHideApp={false} >
                 <div className='ContentModal'>
                     <div>
-                        <span className='ModalTitle'>{productData.name}</span>
+                        <span className='ModalTitle'>{productData?.name}</span>
                         <div className='CloseModalButton' onClick={this.handleCloseModal} role='button' tabIndex={0}>
                             <Icons icon='close' className='left-icon' color='#000000' />
                         </div>
@@ -110,14 +101,14 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                     <React.Fragment>
                         <img 
                             className='ProductImage mt-16'
-                            src={productData.image}
-                            alt={'Imagen del producto con nombre: ' + productData.name}>
+                            src={productData?.img_url}
+                            alt={'Imagen del producto con nombre: ' + productData?.name}>
                         </img>
                         <Input
                             type='text'
                             name='description'
                             label='Descripción'
-                            value={productData.description}
+                            value={productData?.description}
                             maxLength={20}
                             classInput='ModalInput mt-8'
                             disabled={true}
@@ -128,7 +119,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                                 type='text'
                                 name='sku'
                                 label='SKU'
-                                value={productData.sku}
+                                value={productData?.sku}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'
@@ -138,7 +129,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                                 type='text'
                                 name='current-stock'
                                 label='Current stock'
-                                value={productData.stock}
+                                value='0'
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'

@@ -53,7 +53,7 @@ export interface ProductCreate {
   description: string;
   type: string;
   categories: any;
-  price: string;
+  price: number;
   expiration_date?: string;
   dimensions?: string;
   temperature_control?: number;
