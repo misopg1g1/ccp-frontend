@@ -34,7 +34,7 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
                 description: '',
                 type: '',
                 categories: '',
-                price: ''
+                price: 0
             },
             fieldIsValid: {
                 name: true,
@@ -81,7 +81,7 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
             fieldIsValid.categories = false
             isValid.push('categories');
         }
-        if (product.price === '') {
+        if (product.price === 0) {
             fieldIsValid.price = false
             isValid.push('price');
         }
@@ -95,7 +95,7 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
             description: '',
             type: 'default',
             categories: 'default',
-            price: '',
+            price: 0,
             expiration_date: '',
             dimensions: '',
             temperature_control: 0
@@ -129,6 +129,8 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
             return
         }
         const { product } = this.state
+        product.categories = ['Vegetales']
+        product.price = Number(product.price)
         const { createProductFunc } = this.props
         createProductFunc(product, this.props.token)
         this.handleCloseModal(event)
@@ -189,10 +191,7 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
         ]
         const optionsCategory = [
             { label: 'Seleccione una categoria', value: 'default' },
-            { label: 'Volvo', value: 'volvo'},
-            { label: 'Saab', value: 'saab'},
-            { label: 'Opel', value: 'opel'},
-            { label: 'Audi', value: 'audi'},
+            { label: 'Vegetales', value: 'Vegetales'},
         ]
 
         return (

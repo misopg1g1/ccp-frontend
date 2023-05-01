@@ -1,14 +1,14 @@
 $error: #b94141;
 
 .message {
-    position: relative;
+    position: absolute;
     color: $error;
     border: 1px solid #ffcccd;
     padding: 10px;
     background: #ffcccd;
-    width: 80%;
+    width: 700px;
     height: 50px;
-    margin-left: auto;
+    margin-left: 2%;
     margin-right: auto;
 
     &.success {
