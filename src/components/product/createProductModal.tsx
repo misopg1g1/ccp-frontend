@@ -111,12 +111,14 @@ class CreateProductModal extends React.Component<CreateProductComponentProps, Cr
         var reader = new FileReader();
         reader.readAsDataURL(image);
         reader.onload = () => {
-            this.setState({ 
-                product: {
-                    ...this.state.product, 
-                    img_base64_data: reader.result 
-                }
-            })
+            if (typeof reader.result === "string") {
+                this.setState({
+                    product: {
+                        ...this.state.product,
+                        img_base64_data: reader.result.split(',')[1]
+                    }
+                })
+            }
         }
         reader.onerror = error => {
           console.error("Error converting image: ", error)
