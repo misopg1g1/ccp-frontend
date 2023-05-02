@@ -140,7 +140,7 @@ class CreateProductModal extends React.Component<
     const { product } = this.state;
     product.price = Number(product.price);
     const { createProductFunc } = this.props;
-    this.props.createProductFunc(product, this.props.token);
+    createProductFunc(product, this.props.token);
     this.handleCloseModal(event);
   };
 
@@ -172,7 +172,6 @@ class CreateProductModal extends React.Component<
   };
 
   render() {
-    console.log(this.props);
     const { isOpen } = this.props;
     const { product, fieldIsValid, image } = this.state;
     const customStyle = {
@@ -204,8 +203,6 @@ class CreateProductModal extends React.Component<
         value: category.name,
       }))
     );
-
-    console.log(this.state);
 
     return (
       <Modal

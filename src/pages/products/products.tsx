@@ -93,8 +93,6 @@ export default function Products() {
     (state) => state.product.products || {}
   ) as { [index: number]: Product };
 
-  console.log(products);
-
   React.useEffect(() => {
     dispatch(getAllProducts(token));
     dispatch(getAllCategories(token));
