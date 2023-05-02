@@ -17,6 +17,10 @@ export class Consumer {
         return api.getProduct(productId)
     }
 
+    static getAllCategories(token) {
+        return api.getAllCategories(token)
+    }
+
     static getAllProducts(token) {
         return api.getAllProducts(token)
     }

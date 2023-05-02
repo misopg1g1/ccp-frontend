@@ -32,9 +32,10 @@ function* createProductSaga({ product, token }) {
       throw { data };
     }
     yield put({ type: CREATE_PRODUCT_SUCCESS });
-    data.code = "Proceso exitoso";
-    data.msg = `El producto ${product.name} fue creado exitosamente`
+    //data.code = "Proceso exitoso";
+    //data.msg = `El producto ${product.name} fue creado exitosamente`;
     yield put({ type: SET_MESSAGE_SUCCESS, message: data });
+    yield put({ type: GET_PRODUCT_REQUEST, token });
   } catch (error: any) {
     error.data.code = "Error creando el producto";
     yield put({ type: CREATE_PRODUCT_FAIL });
