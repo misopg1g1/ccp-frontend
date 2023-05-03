@@ -5,14 +5,41 @@ import Stack from '@mui/material/Stack';
 import { IconButton } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
+export type IdentificationType = {
+  number: string,
+  type: string,
+}
+
 export type Customer = {
-  name: string;
+  registered_name: string;
+  first_name: string;
+  last_name: string;
+  identification_type: IdentificationType;
   identification: string;
+  phone: string;
+  email: string;
+  country: string;
   city: string;
   zone: string;
   seller: string;
-
+  address: string;
+  postal_code?: string;
 };
+
+export type FieldsRequired = {
+  registered_name: boolean,
+  first_name: boolean;
+  last_name: boolean;
+  identification_type: boolean;
+  identification: boolean;
+  phone: boolean;
+  email: boolean
+  country: boolean;
+  city: boolean;
+  zone: boolean;
+  seller: boolean;
+  address: boolean;
+}
 
 export const columns: GridColDef[] = [
   {

@@ -72,3 +72,8 @@ export interface ProductCreate {
   img_base64_data?: string | ArrayBuffer | null;
   suppliers?: [];
 }
+
+export interface Seller {
+  id: string;
+  name: string;
+}

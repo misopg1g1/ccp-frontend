@@ -7,7 +7,6 @@ import Icons from "../../libs/icons";
 import Input from "../../libs/input";
 import Select from "../../libs/select";
 import { createProduct } from "../../actions/product";
-import { getAllProducts } from "../../actions/product";
 import { onlyNumbersRegex } from "../../utils/regex";
 import { Category, ProductCreate, ProductType } from "../../utils/types";
 

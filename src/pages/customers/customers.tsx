@@ -12,9 +12,11 @@ import { IconButton } from "@mui/material";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Customer, columns, noResultsOverlay } from "./customer";
+import CreateCustomerModal from "../../components/customer/createCustomerModal";
 
 export default function Customers() {
   const [sortModel, setSortModel] = React.useState<any>([]);
+  const [openModalCreateCustomer, setOpenModalCreateCustomer] = React.useState<boolean>(false);
 
   const token = useSelector<GlobalState>(
     (state) => state.login.token
@@ -29,9 +31,15 @@ export default function Customers() {
     dispatch(getAllCustomers(token));
   }, []);
 
-  const handleActionClik = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log("clicked")
-  }
+  const handleClicNewCustomer = (event: any) => {
+    event.preventDefault();
+    setOpenModalCreateCustomer(!openModalCreateCustomer);
+  };
+
+  const handleCloseModalCreateCustomer = (event: any) => {
+    event.preventDefault();
+    setOpenModalCreateCustomer(!openModalCreateCustomer);
+  };
 
   return (
     <div className="dashboard-main-container">
@@ -41,7 +49,7 @@ export default function Customers() {
           icon={<AiOutlinePlusCircle />}
           description="Total de clientes"
           quantity={Object.values(customers).length.toString()}
-          iconAction={handleActionClik}
+          iconAction={handleClicNewCustomer}
           background
         />
       </div>
@@ -73,6 +81,10 @@ export default function Customers() {
           pageSizeOptions={[5, 10, 25]}
         />
       </div>
+      <CreateCustomerModal 
+        isOpen={openModalCreateCustomer}
+        handleCloseModal={handleCloseModalCreateCustomer}
+      />
     </div>
   )
 }
