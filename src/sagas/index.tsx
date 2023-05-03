@@ -4,6 +4,7 @@ import inventory from './inventory'
 import user from './user'
 import product from './product'
 import category from './category'
+import customer from './customer'
 
 export default function* root() {
     yield fork(login)
@@ -11,4 +12,5 @@ export default function* root() {
     yield fork(user)
     yield fork(product)
     yield fork(category)
+    yield fork(customer)
 }

@@ -7,6 +7,7 @@ import {
     SET_MESSAGE_ERROR,
 } from '../constants/actionTypes'
 import { addInventory } from '../api/inventory'
+import { handledError } from './handledResponse'
 
 function* addInventorySaga({productId, stock, token}) {
     try {
@@ -20,9 +21,9 @@ function* addInventorySaga({productId, stock, token}) {
         data.msg = `El producto ${productId} fue actualizado exitosamente`
         yield put({ type: SET_MESSAGE_SUCCESS, message: data})
     } catch (error: any) {
-        error.data.code = 'Error actualizando el inventario'
-        yield put({type: ADD_INVENTORY_FAIL, message: error.data})
-        yield put({type: SET_MESSAGE_ERROR, message: error.data})
+        const message = handledError(error, 'Error actualizando el inventario');
+        yield put({type: ADD_INVENTORY_FAIL})
+        yield put({type: SET_MESSAGE_ERROR, message: message})
     }
 }
 

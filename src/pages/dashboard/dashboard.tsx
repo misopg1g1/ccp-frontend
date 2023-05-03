@@ -6,7 +6,6 @@ import SideTabs from '../../components/sideTabs/sidetabs.component';
 import Products from '../products/products';
 import Message from '../../components/layout/messages/message';
 import { cleanMessage } from '../../actions/message';
-import getMessage from '../../utils/getMessage';
 import Customers from '../customers/customers';
 
 interface DashboardPageProps {
@@ -33,7 +32,7 @@ const DashboardPage = (props: DashboardPageProps) => {
       <div className="content-container">
         {message && 
           <Message
-            message={getMessage(message)} 
+            message={message} 
             handleClose={cleanMessage}
           />
         }
