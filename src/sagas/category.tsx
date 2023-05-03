@@ -3,10 +3,7 @@ import {
   GET_CATEGORIES_FAIL,
   GET_CATEGORIES_REQUEST,
   GET_CATEGORIES_SUCCESS,
-  GET_PRODUCT_SUCCESS,
 } from "../constants/actionTypes";
-import { getAllProducts } from "../api/product";
-import { createProduct } from "../api/product";
 import { getAllCategories } from "../api/category";
 
 function* getAllCategoriesSaga({ token }: { token: string }) {

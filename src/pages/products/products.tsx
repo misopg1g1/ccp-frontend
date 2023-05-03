@@ -38,7 +38,6 @@ export default function Products() {
     (state) => state.login.token
   ) as string;
   const dispatch = useDispatch();
-  const [pageSize, setPageSize] = React.useState(8);
 
   const products = useSelector<GlobalState>(
     (state) => state.product.products || {}
@@ -55,7 +54,11 @@ export default function Products() {
   ) => {
     const productId = rowSelectionModel[0];
     if (productId) {
-      handleClickAddInventory(productId);
+      const productsArray = Object.values(products) as Product[];
+      setProductSelected(
+        productsArray.find((product: Product) => product.id === productId)
+      );
+      handleClickDetail();
     }
   };
 
@@ -63,7 +66,7 @@ export default function Products() {
     if (!productSelected) {
       return;
     }
-    handleClickDetail();
+    handleClickAddInventory();
   };
 
   const handleClickNewProduct = (event: any) => {
@@ -78,11 +81,7 @@ export default function Products() {
     setOpenModalCreateProduct(!openModalCreateProduct);
   };
 
-  const handleClickAddInventory = (productId: any) => {
-    const productsArray = Object.values(products) as Product[];
-    setProductSelected(
-      productsArray.find((product: Product) => product.id === productId)
-    );
+  const handleClickAddInventory = () => {
     setOpenModalAddInventory(!openModalAddInventory);
   };
 
@@ -94,7 +93,7 @@ export default function Products() {
   };
 
   const handleClickDetail = () => {
-    setOpenModalDetailProduct(!openModalDetailProduct);
+    setOpenModalDetailProduct(!openModalAddInventory);
   };
 
   const handleCloseModalDetailProduct = (
@@ -147,6 +146,8 @@ export default function Products() {
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}
           checkboxSelection
+          onRowClick={(event) => console.log("onRowClick")}
+          onCellClick={(event) => console.log("onCellClick")}
           onRowSelectionModelChange={handleSelectionChange}
           initialState={{
             pagination: { paginationModel: { pageSize: 5 } },

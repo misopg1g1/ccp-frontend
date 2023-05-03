@@ -186,6 +186,7 @@ class CreateProductModal extends React.Component<
         right: "auto",
         bottom: "auto",
         marginRight: "-50%",
+        width: '650px',
         transform: "translate(-50%, 0%)",
         background: "rgba(244, 245, 247, 1)",
       },
