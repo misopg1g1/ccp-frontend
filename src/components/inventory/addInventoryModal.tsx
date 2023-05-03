@@ -130,7 +130,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                                 type='text'
                                 name='current-stock'
                                 label='Current stock'
-                                value='0'
+                                value={productData?.stock}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'
