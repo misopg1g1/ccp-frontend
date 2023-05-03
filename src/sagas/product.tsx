@@ -9,8 +9,8 @@ import {
   SET_MESSAGE_ERROR,
   SET_MESSAGE_SUCCESS,
 } from "../constants/actionTypes";
-import { getAllProducts } from "../api/product";
-import { createProduct } from "../api/product";
+import { getAllProducts, createProduct } from "../api/product";
+import { handledError } from './handledResponse';
 
 function* getAllProductsSaga({ token }: { token: string }) {
   try {
@@ -20,11 +20,12 @@ function* getAllProductsSaga({ token }: { token: string }) {
     }
     yield put({ type: GET_PRODUCT_SUCCESS, products: data });
   } catch (error: any) {
-    yield put({ type: GET_PRODUCT_FAIL, message: error.data });
+    const message = handledError(error);
+    yield put({ type: GET_PRODUCT_FAIL, message: message });
   }
 }
 
-function* createProductSaga({ product, token }) {
+function* createProductSaga({ product, token }: {product: any, token: string}) {
   try {
     const body = { ...product };
     const { data } = yield call(createProduct, body, token);
@@ -37,7 +38,7 @@ function* createProductSaga({ product, token }) {
     yield put({ type: SET_MESSAGE_SUCCESS, message: data });
     yield put({ type: GET_PRODUCT_REQUEST, token });
   } catch (error: any) {
-    error.data.code = "Error creando el producto";
+    const message = handledError(error, 'Error creando el producto');
     yield put({ type: CREATE_PRODUCT_FAIL });
     yield put({ type: SET_MESSAGE_ERROR, message: error.data });
   }

@@ -11,7 +11,10 @@ interface WidgetProps {
 
 export const Widget = (props: WidgetProps) => {
   const personalizedIcon = React.cloneElement(props.icon, {
-    style: { color: !props.background ? "#2f76e6" : "white" },
+    style: {
+      color: !props.background ? "#2f76e6" : "white",
+      cursor: "pointer" 
+    },
   });
   return (
     <div

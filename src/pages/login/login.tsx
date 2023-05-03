@@ -5,10 +5,8 @@ import {connect} from 'react-redux'
 import {Navigate} from 'react-router-dom'
 import {login} from '../../actions/login'
 import {cleanMessage} from '../../actions/message'
-
 import Message from '../../components/layout/messages/message'
 import LoginForm from '../../components/login/loginForm'
-import getMessage from '../../utils/getMessage'
 
 interface LoginPageProps {
     message?: any
@@ -84,7 +82,7 @@ const LoginPage = (props: LoginPageProps) => {
     return (
         <div className='login-container'>
         <form id='login' onSubmit={submit}>
-            {message && <Message key={message.code} message={getMessage(message)} handleClose={cleanMessage} />}
+            {message && <Message key={message.code} message={message} handleClose={cleanMessage} />}
             <div className="LoginBoard">
                 <div className='LoginGreetingPanel'>
                     <div className='LoginGreetingPanelText'>

@@ -43,14 +43,14 @@ function request(method: string, url: string, params: any = {}, body: any = null
     return fetchRetry(reqParams, retriesNumber).catch((error: any) => Promise.reject(error.response))
 }
 
-export function get(url: string, query: any, headers: any = null, retrieNumber: number = 2) {
+export function get(url: string, query: any, headers: any = null, retrieNumber: number = 1) {
     return request('get', url, query, null, headers, retrieNumber)
 }
 
-export function post(url: string, query: any, body: any = {}, headers: any = null, retrieNumber: number = 2) {
+export function post(url: string, query: any, body: any = {}, headers: any = null, retrieNumber: number = 1) {
     return request('post', url, query, body, headers, retrieNumber)
 }
 
-export function put(url: string, query: any, body: any = {}, headers: any = null, retrieNumber: number = 2) {
+export function put(url: string, query: any, body: any = {}, headers: any = null, retrieNumber: number = 1) {
     return request('put', url, query, body, headers, retrieNumber)
 }

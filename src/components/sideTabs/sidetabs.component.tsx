@@ -84,7 +84,7 @@ const SideTabs = (props: SideTabsComponentProps) => {
             <h2>Productos</h2>
           </div>
         </Link>
-        <Link className="button-container" to="view3">
+        <Link className="button-container" to="customers">
           <CgProfile />
           <div className="link-container">
             <h2>Clientes</h2>

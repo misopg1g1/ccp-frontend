@@ -6,8 +6,9 @@ import {
     SET_MESSAGE_ERROR
 } from '../constants/actionTypes'
 import {login} from '../api/login'
+import { handledError } from './handledResponse';
 
-function* loginSaga({credentials}) {
+function* loginSaga({credentials}: {credentials: any}) {
     try {
         const body = {...credentials}
         const {data} = yield call(login, body)
@@ -16,9 +17,9 @@ function* loginSaga({credentials}) {
         }
         yield put({ type: LOGIN_SUCCESS, token: data.access_token, userData: data.data })
     } catch (error: any) {
-        error.data.code = 'Error en login'
+        const message = handledError(error, 'Error de autenticación');
         yield put({type: LOGIN_FAIL});
-        yield put({type: SET_MESSAGE_ERROR, message: error.data})
+        yield put({type: SET_MESSAGE_ERROR, message: message})
     }
 }
 

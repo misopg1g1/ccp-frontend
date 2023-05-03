@@ -7,12 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { GlobalState } from "../../utils/types";
 import {
   DataGrid,
-  GridColDef,
   GridRowSelectionModel,
   GridCallbackDetails,
 } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { getAllProducts } from "../../actions/product";
@@ -20,54 +18,7 @@ import CreateProductModal from "../../components/product/createProductModal";
 import AddInventoryModal from "../../components/inventory/addInventoryModal";
 import DetailProductModal from "../../components/product/detailProductModal";
 import { getAllCategories } from "../../actions/category";
-
-const columns: GridColDef[] = [
-  {
-    field: "img_url",
-    headerName: "Imagen",
-    flex: 2,
-    renderCell: (params) => (
-      <img
-        src={params.value as string}
-        alt="product"
-        style={{ width: "50px", height: "50px" }}
-      />
-    ),
-  },
-  { field: "name", headerName: "Nombre", flex: 2 },
-  { field: "sku", headerName: "SKU", flex: 2 },
-  {
-    field: "categories",
-    headerName: "Categoría",
-    flex: 2,
-    valueGetter: (params) => {
-      const names = (params.value as Product["categories"]).map(
-        (category) => category.name
-      );
-      let resultConcat = "";
-      names.forEach(
-        (name) => (resultConcat = resultConcat.concat(` ${name} `))
-      );
-      return resultConcat;
-    },
-  },
-  {
-    field: "status",
-    headerName: "Estado",
-    flex: 2,
-    valueGetter: (params) => (params.value ? "Activo" : "Inactivo"),
-  },
-  {
-    field: "actions",
-    headerName: "",
-    sortable: false,
-    renderCell: () => (
-      <IconButton>
-        <BsThreeDotsVertical />
-      </IconButton>
-    ),
-  },
-];
+import { Product, columns, noResultsOverlay } from "./product";
 
 export default function Products() {
   const [sortModel, setSortModel] = React.useState<any>([]);
@@ -154,7 +105,7 @@ export default function Products() {
   };
 
   return (
-    <div className="product-main-container">
+    <div className="dashboard-main-container">
       <Header></Header>
       <div className="widget-container">
         <Widget
@@ -192,6 +143,7 @@ export default function Products() {
         <DataGrid
           rows={Object.values(products) as Product[]}
           columns={columns}
+          slots={{noRowsOverlay: noResultsOverlay}}
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}
           checkboxSelection
@@ -219,23 +171,3 @@ export default function Products() {
     </div>
   );
 }
-
-type Product = {
-  id: string;
-  name: string;
-  sku: string;
-  temperature_control: number;
-  expiration_date: Date;
-  fragility_conditions: string;
-  description: string;
-  status: boolean;
-  price: number;
-  img_url: string;
-  suppliers: string;
-  categories: {
-    id: string;
-    name: string;
-    description: string;
-    status: boolean;
-  }[];
-};
