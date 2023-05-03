@@ -20,7 +20,14 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
     }
 
     render () {
-        const { isOpen, handleCloseModal, productData } = this.props
+        const { isOpen, handleCloseModal, productData } = this.props;
+        let categories: string = '';
+        if (productData && productData.categories) {
+            categories = Array.prototype.map.call(
+                    productData.categories, c => c.name
+                ).toString()
+        }
+
         const customStyle = {
             overlay : {
                 background: 'rgba(0, 0, 0, 0.7)'
@@ -31,6 +38,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                 right: 'auto',
                 bottom: 'auto',
                 marginRight: '-50%',
+                width: '650px',
                 transform: 'translate(-50%, 0%)', 
                 background: 'rgba(244, 245, 247, 1)'
             }
@@ -99,7 +107,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                                 type='text'
                                 name='category'
                                 label='Categoria'
-                                value={productData?.category}
+                                value={categories}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'

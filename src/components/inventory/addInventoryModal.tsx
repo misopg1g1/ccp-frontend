@@ -84,6 +84,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                 right: 'auto',
                 bottom: 'auto',
                 marginRight: '-50%',
+                width: '650px',
                 transform: 'translate(-50%, 0%)', 
                 background: 'rgba(244, 245, 247, 1)'
             }

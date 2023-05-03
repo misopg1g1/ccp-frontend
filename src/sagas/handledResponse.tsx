@@ -4,7 +4,15 @@ type Message = {
   type: string,
 };
 
-//success
+export function handleSucces(content: string, title: string = '') {
+  const message: Message = {
+    title: title ? title : 'Proceso exitoso',
+    type: 'success',
+    content: getContent(content)
+  }
+  return message;
+}
+
 const getContent = (message: string): string => {
   const array = message.split('|');
   return array.length > 1 ? array[1] : message
@@ -12,7 +20,6 @@ const getContent = (message: string): string => {
 
 export function handledError(error: any, title: string = ''): Message {
   console.log('handle_error', error);
-  console.log('title', title)
   let content = '';
   if (error.data) {
     content = error.data.error;

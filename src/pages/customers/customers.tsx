@@ -67,6 +67,10 @@ export default function Customers() {
           onRowClick={(event) => console.log("onRowClick")}
           onCellClick={(event) => console.log("onCellClick")}
           onRowSelectionModelChange={(event) => console.log("onRowSelectionModelChange")}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 5 } },
+          }}
+          pageSizeOptions={[5, 10, 25]}
         />
       </div>
     </div>

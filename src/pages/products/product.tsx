@@ -9,7 +9,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 export type Product = {
   id: string;
   name: string;
-  sku: string;
+  sku: number;
   temperature_control: number;
   expiration_date: Date;
   fragility_conditions: string;
@@ -30,7 +30,7 @@ export const columns: GridColDef[] = [
   {
     field: "img_url",
     headerName: "Imagen",
-    flex: 2,
+    width: 100,
     renderCell: (params) => (
       <img
         src={params.value as string}
@@ -38,6 +38,8 @@ export const columns: GridColDef[] = [
         style={{ width: "50px", height: "50px" }}
       />
     ),
+    sortable: false,
+    disableColumnMenu: true,
   },
   { field: "name", headerName: "Nombre", flex: 2 },
   { field: "sku", headerName: "SKU", flex: 2 },
@@ -57,15 +59,23 @@ export const columns: GridColDef[] = [
     },
   },
   {
+    field: "stock",
+    headerName: "Stock",
+    flex: 1,
+    valueGetter: (params) => {
+      return params.value ? params.value : 0;
+    },
+  },
+  {
     field: "status",
     headerName: "Estado",
-    flex: 2,
+    flex: 1,
     valueGetter: (params) => (params.value ? "Activo" : "Inactivo"),
   },
   {
     field: "actions",
     headerName: "",
-    flex:1,
+    width: 5,
     sortable: false,
     disableColumnMenu: true,
     renderCell: () => (

@@ -43,7 +43,7 @@ export const columns: GridColDef[] = [
   {
     field: "actions",
     headerName: "",
-    flex:1,
+    width: 5,
     sortable: false,
     disableColumnMenu: true,
     renderCell: () => (
