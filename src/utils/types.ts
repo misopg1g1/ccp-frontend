@@ -18,6 +18,13 @@ export interface GlobalState {
   };
 }
 
+export interface Category {
+  description: string;
+  id: string;
+  name: string;
+  products: Product[];
+}
+
 export enum Roles {
   ADMIN = "ADMIN",
   SELLER = "SELLER",

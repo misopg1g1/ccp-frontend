@@ -16,6 +16,11 @@ export function getProduct({productId}) {
     return Request.get(url)
 }
 
+export function getAllCategories(token) {
+    const url = `${config.apiGateway}/categories`
+    return Request.get(url,token)
+}
+
 export function getAllProducts(token) {
     const url = `${config.apiGateway}/products`
     return Request.get(url,token)

@@ -19,6 +19,7 @@ import { getAllProducts } from "../../actions/product";
 import CreateProductModal from "../../components/product/createProductModal";
 import AddInventoryModal from "../../components/inventory/addInventoryModal";
 import DetailProductModal from "../../components/product/detailProductModal";
+import { getAllCategories } from "../../actions/category";
 
 const columns: GridColDef[] = [
   {
@@ -73,14 +74,20 @@ export default function Products() {
   const [selectedRows, setSelectedRows] = React.useState<GridRowSelectionModel>(
     []
   );
-  const [openModalCreateProduct, setOpenModalCreateProduct] = React.useState<boolean>(false);
-  const [openModalAddInventory, setOpenModalAddInventory] = React.useState<boolean>(false);
-  const [openModalDetailProduct, setOpenModalDetailProduct] = React.useState<boolean>(false);
-  const [productSelected, setProductSelected] = React.useState<Product | undefined>(undefined);
+  const [openModalCreateProduct, setOpenModalCreateProduct] =
+    React.useState<boolean>(false);
+  const [openModalAddInventory, setOpenModalAddInventory] =
+    React.useState<boolean>(false);
+  const [openModalDetailProduct, setOpenModalDetailProduct] =
+    React.useState<boolean>(false);
+  const [productSelected, setProductSelected] = React.useState<
+    Product | undefined
+  >(undefined);
   const token = useSelector<GlobalState>(
     (state) => state.login.token
   ) as string;
   const dispatch = useDispatch();
+  const [pageSize, setPageSize] = React.useState(8);
 
   const products = useSelector<GlobalState>(
     (state) => state.product.products || {}
@@ -88,42 +95,49 @@ export default function Products() {
 
   React.useEffect(() => {
     dispatch(getAllProducts(token));
+    dispatch(getAllCategories(token));
   }, []);
 
   const handleSelectionChange = (
     rowSelectionModel: GridRowSelectionModel,
     details: GridCallbackDetails<any>
   ) => {
-    const productId = rowSelectionModel[0]
+    const productId = rowSelectionModel[0];
     if (productId) {
-      handleClickAddInventory(productId)
+      handleClickAddInventory(productId);
     }
   };
 
   const handledEdit = () => {
     if (!productSelected) {
-      return
+      return;
     }
     handleClickDetail();
-  }
+  };
 
   const handleClickNewProduct = (event: any) => {
-    event.preventDefault()
+    event.preventDefault();
     setOpenModalCreateProduct(!openModalCreateProduct);
   };
 
-  const handleCloseModalCreateProduct = (event: React.MouseEvent<HTMLLIElement>) => {
+  const handleCloseModalCreateProduct = (
+    event: React.MouseEvent<HTMLLIElement>
+  ) => {
     event.preventDefault();
     setOpenModalCreateProduct(!openModalCreateProduct);
   };
 
   const handleClickAddInventory = (productId: any) => {
-    const productsArray = Object.values(products) as Product[]
-    setProductSelected(productsArray.find((product: Product) => product.id === productId));
+    const productsArray = Object.values(products) as Product[];
+    setProductSelected(
+      productsArray.find((product: Product) => product.id === productId)
+    );
     setOpenModalAddInventory(!openModalAddInventory);
   };
 
-  const handleCloseModalAddInventory = (event: React.MouseEvent<HTMLLIElement>) => {
+  const handleCloseModalAddInventory = (
+    event: React.MouseEvent<HTMLLIElement>
+  ) => {
     event.preventDefault();
     setOpenModalAddInventory(!openModalAddInventory);
   };
@@ -132,7 +146,9 @@ export default function Products() {
     setOpenModalDetailProduct(!openModalDetailProduct);
   };
 
-  const handleCloseModalDetailProduct = (event: React.MouseEvent<HTMLLIElement>) => {
+  const handleCloseModalDetailProduct = (
+    event: React.MouseEvent<HTMLLIElement>
+  ) => {
     event.preventDefault();
     setOpenModalDetailProduct(!openModalDetailProduct);
   };
@@ -180,6 +196,10 @@ export default function Products() {
           onSortModelChange={(model) => setSortModel(model)}
           checkboxSelection
           onRowSelectionModelChange={handleSelectionChange}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 5 } },
+          }}
+          pageSizeOptions={[5, 10, 25]}
         />
       </div>
       <CreateProductModal
