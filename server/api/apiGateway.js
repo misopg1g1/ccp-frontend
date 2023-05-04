@@ -40,3 +40,8 @@ export function getAllCustomers(token) {
     const url = `${config.apiGateway}/customers`
     return Request.get(url, token)
 }
+
+export function createCustome(customer, token) {
+    const url = `${config.apiGateway}/customers`
+    return Request.post(url, customer, token)
+}
