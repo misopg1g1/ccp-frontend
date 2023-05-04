@@ -6,7 +6,7 @@ export interface UserData {
   updated_at: string;
   user: string;
   verified: boolean;
-}
+};
 
 export interface GlobalState {
   login: {
@@ -16,6 +16,16 @@ export interface GlobalState {
   product: {
     products: Product[];
   };
+  customer: {
+    customers: any;
+  };
+};
+
+export interface Category {
+  description: string;
+  id: string;
+  name: string;
+  products: Product[];
 }
 
 export enum Roles {
@@ -24,12 +34,12 @@ export enum Roles {
   TRANSPORTER = "TRANSPORTER",
   MARKETING = "MARKETING",
   CLIENT = "CLIENT",
-}
+};
 
 export enum ProductType {
   PERISHABLE = "PERISHABLE",
   NONPERISHABLE = "NONPERISHABLE",
-}
+};
 
 export interface Product {
   id: string;
@@ -46,7 +56,7 @@ export interface Product {
   img_url: string;
   suppliers: string;
   category: Record<string, any>;
-}
+};
 
 export interface ProductCreate {
   name: string;

@@ -5,10 +5,11 @@ import {
     CREATE_USER_FAIL,
     SET_MESSAGE_ERROR,
     SET_MESSAGE_SUCCESS,
-} from '../constants/actionTypes'
-import { createUser } from '../api/user'
+} from '../constants/actionTypes';
+import { createUser } from '../api/user';
+import { handledError, handleSucces } from './handledResponse';
 
-function* createUserSaga({user, token}) {
+function* createUserSaga({user, token}: {user: any, token: string}) {
     try {
         const body = {...user}
         const {data} = yield call(createUser, body, token)
@@ -17,12 +18,12 @@ function* createUserSaga({user, token}) {
             throw { data }
         }
         yield put({ type: CREATE_USER_SUCCESS })
-        data.code = 'Proceso exitoso'
-        yield put({ type: SET_MESSAGE_SUCCESS, message: data})
+        const msg = `El usuario ${user.user} fue creado exitosamente`;
+        yield put({ type: SET_MESSAGE_SUCCESS, message: handleSucces(msg) });
     } catch (error: any) {
-        error.data.code = 'Error creando el usuario'
+        const message = handledError(error, 'Error creando el usuario')
         yield put({type: CREATE_USER_FAIL});
-        yield put({type: SET_MESSAGE_ERROR, message: error.data})
+        yield put({type: SET_MESSAGE_ERROR, message: message})
     }
 }
 

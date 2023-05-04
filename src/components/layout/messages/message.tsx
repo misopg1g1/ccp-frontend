@@ -32,7 +32,7 @@ const Message: FC<MessageComponentProps> = ({ message, handleClose = {}, disable
         setTimeout(handleClose, message.timeout)
     }
 
-    const color = message.type === 'success' ? '#3cbdaf' : '#ff0320'
+    const color = message.type === 'error' ? '#ff0320' : '#3cbdaf';
 
     return (
         <div className={`message ${message.type}`}>

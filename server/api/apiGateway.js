@@ -16,9 +16,14 @@ export function getProduct({productId}) {
     return Request.get(url)
 }
 
+export function getAllCategories(token) {
+    const url = `${config.apiGateway}/categories`
+    return Request.get(url, token)
+}
+
 export function getAllProducts(token) {
     const url = `${config.apiGateway}/products`
-    return Request.get(url,token)
+    return Request.get(url, token)
 }
 
 export function createProduct(product, token) {
@@ -29,4 +34,9 @@ export function createProduct(product, token) {
 export function addInventory({productId}, {stock}, token) {
     const url = `${config.apiGateway}/products/${productId}/inventory`
     return Request.put(url, {stock}, token)
+}
+
+export function getAllCustomers(token) {
+    const url = `${config.apiGateway}/customers`
+    return Request.get(url, token)
 }
