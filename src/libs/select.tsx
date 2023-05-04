@@ -10,6 +10,7 @@ interface SelectComponentProps extends SelectHTMLAttributes<HTMLSelectElement> {
   forcedValid?: boolean;
   options?: any;
   width?: string;
+  marginTop?: string,
   marginRight?: string;
   marginLeft?: string;
   paddingBottom?: string;
@@ -49,6 +50,7 @@ class Select extends React.Component<
     width: "",
     marginRight: "",
     marginLeft: "",
+    marginTop: "",
     paddingBottom: "",
     disabled: false,
     label: "",
@@ -126,6 +128,7 @@ class Select extends React.Component<
       reference,
       additionalProp,
       width,
+      marginTop,
       marginRight,
       marginLeft,
       paddingBottom,
@@ -173,12 +176,13 @@ class Select extends React.Component<
 
     return (
       <div
-        className="LoginFormInputs FormOption"
+        className="LoginFormInputs"
         style={{
           width: width || "100%",
           marginRight,
           marginLeft,
           paddingBottom,
+          marginTop,
         }}
       >
         <label htmlFor="type" className="FormLabel">

@@ -173,7 +173,10 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
         const { isOpen } = this.props
         const customStyle = {
             overlay: {
-                background: 'rgba(0, 0, 0, 0.7)'
+                background: "rgba(0, 0, 0, 0.7)",
+                maxHeight: "100vh",
+                overflowY: "auto",
+                zIndex: 5
             },
             content: {
                 top: '10%',

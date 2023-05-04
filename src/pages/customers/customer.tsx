@@ -14,8 +14,7 @@ export type Customer = {
   registered_name: string;
   first_name: string;
   last_name: string;
-  identification_type: IdentificationType;
-  identification: string;
+  identification: IdentificationType;
   phone: string;
   email: string;
   country: string;
@@ -25,6 +24,26 @@ export type Customer = {
   address: string;
   postal_code?: string;
 };
+
+const defaultIdentificationType: IdentificationType = {
+  number: '',
+  type: '',
+}
+
+export const defaultCustomer: Customer = {
+  registered_name: '',
+  first_name: '',
+  last_name: '',
+  identification: defaultIdentificationType,
+  phone: '',
+  email: '',
+  country: '',
+  city: '',
+  zone: '',
+  seller: '',
+  address: '',
+  postal_code: '',
+}
 
 export type FieldsRequired = {
   registered_name: boolean,
@@ -40,6 +59,21 @@ export type FieldsRequired = {
   seller: boolean;
   address: boolean;
 }
+
+export const defaultFieldsRequired: FieldsRequired = {
+    registered_name: true,
+    first_name: true,
+    last_name: true,
+    identification_type: true,
+    identification: true,
+    phone: true,
+    email: true,
+    country: true,
+    city: true,
+    zone: true,
+    seller: true,
+    address: true,
+};
 
 export const columns: GridColDef[] = [
   {

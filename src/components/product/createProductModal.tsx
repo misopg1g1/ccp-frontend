@@ -178,6 +178,7 @@ class CreateProductModal extends React.Component<
         background: "rgba(0, 0, 0, 0.7)",
         maxHeight: "100vh",
         overflowY: "auto",
+        zIndex: 5
       },
       content: {
         top: "3%",
@@ -272,6 +273,7 @@ class CreateProductModal extends React.Component<
                 required={true}
                 requiredMessage="Debe seleccionar una opción"
                 forcedValid={fieldIsValid.type}
+                marginTop="36px"
                 width="46%"
                 classSelect="Input mt-8"
               />
@@ -289,6 +291,7 @@ class CreateProductModal extends React.Component<
                 requiredMessage="Debe seleccionar una opción"
                 forcedValid={fieldIsValid.categories}
                 classSelect="Input mt-8"
+                marginTop="36px"
                 width="46%"
                 marginLeft="8%"
               />
