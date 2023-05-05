@@ -6,16 +6,22 @@ import Modal from "react-modal";
 import Icons from "../../libs/icons";
 import Input from "../../libs/input";
 import Select from "../../libs/select";
-import { Seller } from "../../utils/types";
-import { Customer, FieldsRequired, defaultFieldsRequired, defaultCustomer } from "../../pages/customers/customer";
+import { Seller, DocumentType, Zone } from "../../utils/types";
+import { Customer, FieldsRequired, defaultFieldsRequired, defaultCustomer, Address, IdentificationType } from "../../pages/customers/customer";
 import { createCustomer } from "../../actions/customer";
+import { getCitiesByCountry, cleanCities } from "../../actions/country";
+import { emailRegex } from "../../utils/regex";
 
 interface CreateCustomerComponentProps {
   isOpen: boolean;
   handleCloseModal: (event: any) => void;
   createCustomerFunc: (customer: Customer, tokne: string) => void;
+  getCitiesByCountryFunc: (country: string) => any;
+  cleanCitiesFunc: () => void;
   token: string;
   sellers: Seller[];
+  countries: string[];
+  cities: string[];
 };
 
 interface CreateCustomerComponentState {
@@ -36,12 +42,23 @@ class CreateCustomerModal extends React.Component<
   }
 
   formIsValid = (): boolean => {
-    const { customer, fieldIsValid } = this.state;
-    const isValid = [];
-    Object.entries(fieldIsValid).forEach(([key, value]) => {
-      console.log(key, ':', value);
-    });
-    return true;
+    const { customer } = this.state;
+    const fieldIsValid = defaultFieldsRequired;
+    fieldIsValid.registered_name = customer.registered_name != "";
+    fieldIsValid.first_name = customer.first_name != "";
+    fieldIsValid.last_name = customer.last_name != "";
+    fieldIsValid.identification_type = customer.identification.type != "default";
+    fieldIsValid.identification_number = customer.identification.number != "";
+    fieldIsValid.phone = customer.phone != "";
+    fieldIsValid.email = customer.email != "";
+    fieldIsValid.seller_id = customer.seller_id != "default";
+    fieldIsValid.address_country = customer.address.country != "default";
+    fieldIsValid.address_city = customer.address.city != "default";
+    fieldIsValid.address_zone = customer.address.zone != "default";
+    fieldIsValid.address_address = customer.address.address != "";
+    this.setState({ fieldIsValid: fieldIsValid });
+    const invalidFields = Object.entries(fieldIsValid).filter(([, value]) => value === false);
+    return !(invalidFields.length > 0);
   };
 
   handleCloseModal = (event: any) => {
@@ -60,18 +77,70 @@ class CreateCustomerModal extends React.Component<
     this.handleCloseModal(event);
   };
 
+  handleValueChangeCountry = (name: string, value: string) => {
+    const { getCitiesByCountryFunc, cleanCitiesFunc } = this.props;
+    cleanCitiesFunc();
+    if (value !== 'default') {
+      getCitiesByCountryFunc(value);
+    }
+    this.handleValueChange(name, value);
+  }
+
   handleValueChange = (name: string, value: string) => {
+    const objectFields = [
+      'identification_type',
+      'identification_number',
+      'address_address', 
+      'address_postal_code',
+      'address_city',
+      'address_country',
+      'address_zone',
+    ];
+    if(objectFields.includes(name)) {
+      this.setStateObject(name, value);
+    } else {
+      this.setState({
+        customer: {
+          ...this.state.customer,
+          [name]: value,
+        },
+      });
+    };
+  };
+
+  setStateObject = (name: string, value: string) => {
+    const transform: string[] = name.split("_");
+    const nameProperty = transform.length > 2 ? 'postal_code' : transform[1]
+    if (transform[0] === 'identification') {
+      this.setStateIdentification(nameProperty, value);
+    } else if (transform[0] === 'address') {
+      this.setStateAddress(nameProperty, value)
+    }
+  };
+
+  setStateIdentification = (name: string, value: string) => {
     this.setState({
       customer: {
         ...this.state.customer,
-        [name]: value,
+        identification: {
+          ...this.state.customer.identification,
+          [name]: value
+        },
       },
-      fieldIsValid: {
-        ...this.state.fieldIsValid,
-        [name]: false,
-      }
     });
-  };
+  }
+
+  setStateAddress = (name: string, value: string) => {
+    this.setState({
+      customer: {
+        ...this.state.customer,
+        address: {
+          ...this.state.customer.address,
+          [name]: value
+        },
+      },
+    });
+  }
 
   handleValueValid = (name: string, valid: boolean) => {
     this.setState({
@@ -79,8 +148,15 @@ class CreateCustomerModal extends React.Component<
         ...this.state.fieldIsValid,
         [name]: valid,
       }
-    })
+    });
   };
+
+  validationsEmailField: any = [
+    {
+        fn: (value: string) => emailRegex.test(value),
+        message: 'Ingrese un email valido'
+    }
+  ];
 
   render() {
     const { isOpen } = this.props;
@@ -103,24 +179,45 @@ class CreateCustomerModal extends React.Component<
         background: "rgba(244, 245, 247, 1)",
       },
     };
-    const optionsIdType = [
+    const optionsDocumentType = [
       { value: "default", label: "Seleccione un tipo de documento" },
-      { value: "CC", label: "Cedula de ciudadania" },
-      { value: "RUT", label: "RUT" },
+      { value: DocumentType.DNI, label: "Documento nacional de identidad" },
+      { value: DocumentType.NIT, label: "Número de identificación tributaria" },
+      { value: DocumentType.RUT, label: "Registro único tributario" },
+      { value: DocumentType.CEDULA_DE_EXTRANJERIA, label: "Cedula de extranjeria" },
+      { value: DocumentType.PASAPORTE, label: "Pasaporte" },
+    ];
+    const optionsZone = [
+      { value: "default", label: "Seleccione una zona" },
+      { value: Zone.ZONA_NORTE, label: "Norte" },
+      { value: Zone.ZONA_ESTE, label: "Este" },
+      { value: Zone.ZONA_CENTRO, label: "Centro" },
+      { value: Zone.ZONA_OESTE, label: "Oeste" },
+      { value: Zone.ZONA_SUR, label: "Sur" },
     ];
     const optionsCountry = [
-      { value: "default", label: "Seleccione una ciudad" },
-      { value: "BOG", label: "Bogotá D.C." },
-      { value: "MED", label: "Medellin" },
-    ];
+      { value: "default", label: "Seleccione un país" },
+    ].concat(
+      Object.values(this.props.countries || []).map((country) => ({
+        label: country,
+        value: country,
+      }))
+    );
     const optionsCity = [
-      { value: "default", label: "Seleccione una país" },
-      { value: "CO", label: "Colombia" },
-      { value: "CL", label: "Chile" },
-      { value: "AR", label: "Argentina" },
-    ];
+      { value: "default", label: "Seleccione una ciudad" },
+    ].concat(
+      Object.values(this.props.cities || []).map((city) => ({
+        label: city,
+        value: city,
+      }))
+    );
     const optionsSellers = [
-      { value: "default", label: "Seleccione una vendedor" },
+      { value: "default", label: "Seleccione un vendedor" },
+      { value: "seller 1", label: "Vendedor 1" },
+      { value: "seller 2", label: "Vendedor 2" },
+      { value: "seller 3", label: "Vendedor 3" },
+      { value: "seller 4", label: "Vendedor 4" },
+      { value: "seller 5", label: "Vendedor 5" },
     ].concat(
       Object.values(this.props.sellers || []).map((seller) => ({
         label: seller.name,
@@ -180,7 +277,7 @@ class CreateCustomerModal extends React.Component<
               />
               <Input
                 type="text"
-                name="last_names"
+                name="last_name"
                 label="Apellidos"
                 placeholder="Apellidos del contacto"
                 value={customer.last_name}
@@ -190,7 +287,7 @@ class CreateCustomerModal extends React.Component<
                 marginTop="24px"
                 required={true}
                 requiredMessage="El campo es requerido"
-                forcedValid={fieldIsValid.identification_type}
+                forcedValid={fieldIsValid.last_name}
                 width="48%"
                 marginLeft="4%"
               />
@@ -202,7 +299,7 @@ class CreateCustomerModal extends React.Component<
                 handleValueValid={this.handleValueValid}
                 handleValueChange={this.handleValueChange}
                 value={customer.identification.type}
-                options={optionsIdType}
+                options={optionsDocumentType}
                 required={true}
                 requiredMessage="Debe seleccionar una opción"
                 forcedValid={fieldIsValid.identification_type}
@@ -212,7 +309,7 @@ class CreateCustomerModal extends React.Component<
               />
               <Input
                 type="text"
-                name="identification"
+                name="identification_number"
                 label="Número"
                 placeholder="Número de documento"
                 value={customer.identification.number}
@@ -222,7 +319,7 @@ class CreateCustomerModal extends React.Component<
                 marginTop="24px"
                 required={true}
                 requiredMessage="El campo es requerido"
-                forcedValid={fieldIsValid.identification}
+                forcedValid={fieldIsValid.identification_number}
                 width="48%"
                 marginLeft="4%"
               />
@@ -258,33 +355,34 @@ class CreateCustomerModal extends React.Component<
                 forcedValid={fieldIsValid.email}
                 width="48%"
                 marginLeft="4%"
+                validations={this.validationsEmailField}
               />
             </div>
             <div className="ModalContainerTwoColumns">
               <Select
-                name="country"
+                name="address_country"
                 label="País"
                 handleValueValid={this.handleValueValid}
-                handleValueChange={this.handleValueChange}
-                value={customer.country}
+                handleValueChange={this.handleValueChangeCountry}
+                value={customer.address.country}
                 options={optionsCountry}
                 required={true}
                 requiredMessage="Debe seleccionar una opción"
-                forcedValid={fieldIsValid.country}
+                forcedValid={fieldIsValid.address_country}
                 width="48%"
                 marginTop="24px"
                 classSelect="Input mt-8"
               />
               <Select
-                name="city"
+                name="address_city"
                 label="Ciudad"
                 handleValueValid={this.handleValueValid}
                 handleValueChange={this.handleValueChange}
-                value={customer.city}
+                value={customer.address.city}
                 options={optionsCity}
                 required={true}
                 requiredMessage="Debe seleccionar una opción"
-                forcedValid={fieldIsValid.city}
+                forcedValid={fieldIsValid.address_city}
                 width="48%"
                 marginTop="24px"
                 classSelect="Input mt-8"
@@ -293,29 +391,29 @@ class CreateCustomerModal extends React.Component<
             </div>
             <div className="ModalContainerTwoColumns">
               <Select
-                name="zone"
+                name="address_zone"
                 label="Zona"
                 handleValueValid={this.handleValueValid}
                 handleValueChange={this.handleValueChange}
-                value={customer.zone}
-                options={optionsSellers}
+                value={customer.address.zone}
+                options={optionsZone}
                 required={true}
                 requiredMessage="Debe seleccionar una opción"
-                forcedValid={fieldIsValid.zone}
+                forcedValid={fieldIsValid.address_zone}
                 width="48%"
                 marginTop="24px"
                 classSelect="Input mt-8"
               />
               <Select
-                name="city"
-                label="Ciudad"
+                name="seller_id"
+                label="Vendedor"
                 handleValueValid={this.handleValueValid}
                 handleValueChange={this.handleValueChange}
-                value={customer.country}
-                options={optionsCountry}
+                value={customer.seller_id}
+                options={optionsSellers}
                 required={true}
                 requiredMessage="Debe seleccionar una opción"
-                forcedValid={fieldIsValid.country}
+                forcedValid={fieldIsValid.seller_id}
                 width="48%"
                 marginTop="24px"
                 classSelect="Input mt-8"
@@ -325,25 +423,25 @@ class CreateCustomerModal extends React.Component<
             <div className="ModalContainerTwoColumns">
               <Input
                 type="text"
-                name="address"
+                name="address_address"
                 label="Dirección"
                 placeholder="Dirección de entrega"
-                value={customer.address}
+                value={customer.address.address}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
                 classInput="Input mt-8"
                 marginTop="24px"
                 required={true}
                 requiredMessage="El campo es requerido"
-                forcedValid={fieldIsValid.phone}
+                forcedValid={fieldIsValid.address_address}
                 width="48%"
               />
               <Input
                 type="text"
-                name="postal_code"
+                name="address_postal_code"
                 label="Código postal"
                 placeholder="Código postal"
-                value={customer.postal_code}
+                value={customer.address.postal_code}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
                 classInput="Input mt-8"
@@ -370,11 +468,15 @@ class CreateCustomerModal extends React.Component<
 
 const mapStateToProps = (state: any) => ({
   token: state.login.token,
-  sellers: state.seller?.sellers
+  sellers: state.seller?.sellers,
+  countries: state.country.countries,
+  cities: state.country?.cities,
 });
 
 const mapDispatchToProps = {
   createCustomerFunc: createCustomer,
+  getCitiesByCountryFunc: getCitiesByCountry,
+  cleanCitiesFunc: cleanCities,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCustomerModal);

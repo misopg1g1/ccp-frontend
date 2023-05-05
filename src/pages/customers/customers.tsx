@@ -13,6 +13,7 @@ import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Customer, columns, noResultsOverlay } from "./customer";
 import CreateCustomerModal from "../../components/customer/createCustomerModal";
+import { getAllCountries } from "../../actions/country";
 
 export default function Customers() {
   const [sortModel, setSortModel] = React.useState<any>([]);
@@ -29,6 +30,7 @@ export default function Customers() {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getAllCustomers(token));
+    dispatch(getAllCountries());
   }, []);
 
   const handleClicNewCustomer = (event: any) => {

@@ -198,8 +198,8 @@ class Select extends React.Component<
           {...(disabled && { disabled: "disabled" })}
           {...(additionalProp && { ...additionalProp })}
         >
-          {options.map((option: any) => (
-            <option key={option.value} value={option.value}>
+          {options.map((option: any, key: number) => (
+            <option key={key} value={option.value}>
               {option.label}
             </option>
           ))}

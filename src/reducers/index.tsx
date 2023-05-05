@@ -8,10 +8,11 @@ import user from "./user";
 import product from "./product";
 import message from "./message";
 import category from "./category";
+import country from "./country";
 
 const persistRootConfig = {
   key: "root",
-  whitelist: ["inventory", "user", "product"],
+  whitelist: ["inventory", "user", "product", "country"],
   storage,
 };
 
@@ -29,6 +30,7 @@ const rootReducer = () =>
     product,
     message,
     category,
+    country,
   });
 
 export default () => persistReducer(persistRootConfig, rootReducer());

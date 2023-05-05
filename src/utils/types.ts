@@ -41,6 +41,22 @@ export enum ProductType {
   NONPERISHABLE = "NONPERISHABLE",
 };
 
+export enum Zone {
+  ZONA_CENTRO = "ZONA CENTRO",
+  ZONA_ESTE = "ZONA ESTE",
+  ZONA_OESTE = "ZONA OESTE",
+  ZONA_NORTE = "ZONA NORTE",
+  ZONA_SUR = "ZONA SUR",
+}
+
+export enum DocumentType {
+  PASAPORTE = "PASAPORTE",
+  NIT = "NIT",
+  DNI = "DNI",
+  RUT = "RUT",
+  CEDULA_DE_EXTRANJERIA = "CEDULA DE EXTRANJERIA",
+}
+
 export interface Product {
   id: string;
   name: string;

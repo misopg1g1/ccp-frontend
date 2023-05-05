@@ -8,7 +8,7 @@ export const customer = (server) => {
     .then(r => {
       let response = { ...r };
       if (response.error) {
-        log.response('customer', req, response.error);
+        log.response_error('customer', req, response.error);
       }
       res.json(response);
     }).catch((err) => {
@@ -23,7 +23,7 @@ export const customer = (server) => {
     .then(r => {
       let response = { ...r };
       if (response.error) {
-        log.response('customer', req, response.error);
+        log.response_error('customer', req, response.error);
       }
       res.json(response);
     }).catch((err) => {
