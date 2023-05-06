@@ -36,4 +36,16 @@ export class Consumer {
     static getAllCustomers(token) {
         return api.getAllCustomers(token)
     }
+
+    static createCustomer(customer, token) {
+        return api.createProduct(customer, token)
+    }
+
+    static getAllCountries() {
+        return api.getAllCountries()
+    }
+
+    static getCitiesByCountry(country) {
+        return api.getCitiesByCountry(country)
+    }
 }
