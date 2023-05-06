@@ -2,7 +2,7 @@ import './createUserModal.css'
 
 import React from 'react'
 import Modal from 'react-modal'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import Icons from '../../libs/icons'
 import Input from '../../libs/input'
 import { createUser } from '../../actions/user'
@@ -36,7 +36,7 @@ interface CreateUserModalComponentState {
 }
 
 class CreateUserModal extends React.Component<CreateUserModalComponentProps, CreateUserModalComponentState> {
-        constructor(props: CreateUserModalComponentProps) {
+    constructor(props: CreateUserModalComponentProps) {
         super(props)
         this.state = {
             fieldIsValid: {
@@ -91,7 +91,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     handleSubmit = (event: any) => {
         event.preventDefault()
         if (!this.state.userData.role) {
-            this.setState({hasError: true})
+            this.setState({ hasError: true })
             return
         }
         const { createUserFunc, token } = this.props
@@ -101,18 +101,18 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
 
     handleValueChange = (name: string, value: string) => {
         if (name === 'username') {
-            this.setState({ userData: {...this.state.userData, user: value }})
+            this.setState({ userData: { ...this.state.userData, user: value } })
         }
         if (name == 'password') {
-            this.setState({ userData: {...this.state.userData, password: value }})
+            this.setState({ userData: { ...this.state.userData, password: value } })
         }
         if (name == 'confirmPassword') {
-            this.setState({ userData: {...this.state.userData, verify_password: value }})
+            this.setState({ userData: { ...this.state.userData, verify_password: value } })
         }
         this.setState({
             fieldIsValid: {
-                  ...this.state.fieldIsValid,
-                  [name]: false
+                ...this.state.fieldIsValid,
+                [name]: false
             }
         })
     }
@@ -120,8 +120,8 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     handleValueValid = (name: string, valid: boolean) => {
         this.setState({
             fieldIsValid: {
-                  ...this.state.fieldIsValid,
-                  [name]: valid
+                ...this.state.fieldIsValid,
+                [name]: valid
             }
         })
     }
@@ -147,18 +147,20 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
 
     handleClick = (selectedRole: string) => {
         this.setStateRole(selectedRole)
-        this.setState({ userData: {...this.state.userData, role: selectedRole }})
+        this.setState({ userData: { ...this.state.userData, role: selectedRole } })
         this.setState({ hasError: false })
     }
 
     clearModal = () => {
-        this.setState({ userData: {
-            ...this.state.userData,
-            user: '',
-            password: '',
-            verify_password: '',
-            role: ''
-        }})
+        this.setState({
+            userData: {
+                ...this.state.userData,
+                user: '',
+                password: '',
+                verify_password: '',
+                role: ''
+            }
+        })
         this.setStateRole('')
     }
 
@@ -167,11 +169,14 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
         this.clearModal();
     }
 
-    render () {
+    render() {
         const { isOpen } = this.props
         const customStyle = {
-            overlay : {
-                background: 'rgba(0, 0, 0, 0.7)'
+            overlay: {
+                background: "rgba(0, 0, 0, 0.7)",
+                maxHeight: "100vh",
+                overflowY: "auto",
+                zIndex: 5
             },
             content: {
                 top: '10%',
@@ -179,7 +184,8 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                 right: 'auto',
                 bottom: 'auto',
                 marginRight: '-50%',
-                transform: 'translate(-50%, 0%)', 
+                width: '650px',
+                transform: 'translate(-50%, 0%)',
                 background: 'rgba(244, 245, 247, 1)'
             }
         }
@@ -207,7 +213,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     requiredMessage='El campo usuario es requerido'
                                     required={true}
                                     maxLength={20}
-                                    classInput='Input mt-8'                                    
+                                    classInput='Input mt-8'
                                     forcedValid={this.state.fieldIsValid.username}
                                     width='300px'
                                 ></Input>
@@ -227,10 +233,10 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     forcedValid={this.state.fieldIsValid.password}
                                     icon={
                                         <Icon
-                                        className={"LoginIconInput"}
-                                        icon={this.state.showPassword ? "eyeClosed" : "eye"}
-                                        color="black"
-                                        onClick={this.togglePasswordVisible}
+                                            className={"LoginIconInput"}
+                                            icon={this.state.showPassword ? "eyeClosed" : "eye"}
+                                            color="black"
+                                            onClick={this.togglePasswordVisible}
                                         />
                                     }
                                     width='300px'
@@ -252,10 +258,10 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                     forcedValid={this.state.fieldIsValid.confirmPassword}
                                     icon={
                                         <Icon
-                                        className={"LoginIconInput"}
-                                        icon={this.state.showConfirmPassword ? "eyeClosed" : "eye"}
-                                        color="black"
-                                        onClick={this.togglePasswordConfirmVisible}
+                                            className={"LoginIconInput"}
+                                            icon={this.state.showConfirmPassword ? "eyeClosed" : "eye"}
+                                            color="black"
+                                            onClick={this.togglePasswordConfirmVisible}
                                         />
                                     }
                                     validations={this.validationsConfirmPasswordField}
@@ -266,8 +272,8 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                             <div className='CategoryPanel'>
                                 <div className='AddRolePanel'>
                                     <span className='AddRoleTitle'>Agregar Role</span>
-                                    {this.state.roles.map((rol: any) => 
-                                        <div 
+                                    {this.state.roles.map((rol: any) =>
+                                        <div
                                             key={rol.name}
                                             data-name={rol.name}
                                             style={{
@@ -276,7 +282,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                             }}
                                             className='RoleOption mt-16'
                                             onClick={((e) => this.handleClick(rol.name))}>
-                                                {rol.text}
+                                            {rol.text}
                                         </div>
                                     )}
                                 </div>

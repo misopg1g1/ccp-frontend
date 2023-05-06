@@ -76,7 +76,10 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
         const { isOpen, productData } = this.props
         const customStyle = {
             overlay : {
-                background: 'rgba(0, 0, 0, 0.7)'
+                background: "rgba(0, 0, 0, 0.7)",
+                maxHeight: "100vh",
+                overflowY: "auto",
+                zIndex: 5
             },
             content: {
                 top: '5%',
@@ -84,6 +87,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                 right: 'auto',
                 bottom: 'auto',
                 marginRight: '-50%',
+                width: '650px',
                 transform: 'translate(-50%, 0%)', 
                 background: 'rgba(244, 245, 247, 1)'
             }
@@ -129,7 +133,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                                 type='text'
                                 name='current-stock'
                                 label='Current stock'
-                                value='0'
+                                value={productData?.stock}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
                                 marginTop='36px'

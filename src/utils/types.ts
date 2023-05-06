@@ -6,7 +6,7 @@ export interface UserData {
   updated_at: string;
   user: string;
   verified: boolean;
-}
+};
 
 export interface GlobalState {
   login: {
@@ -16,6 +16,16 @@ export interface GlobalState {
   product: {
     products: Product[];
   };
+  customer: {
+    customers: any;
+  };
+};
+
+export interface Category {
+  description: string;
+  id: string;
+  name: string;
+  products: Product[];
 }
 
 export enum Roles {
@@ -24,11 +34,27 @@ export enum Roles {
   TRANSPORTER = "TRANSPORTER",
   MARKETING = "MARKETING",
   CLIENT = "CLIENT",
-}
+};
 
 export enum ProductType {
   PERISHABLE = "PERISHABLE",
   NONPERISHABLE = "NONPERISHABLE",
+};
+
+export enum Zone {
+  ZONA_CENTRO = "ZONA CENTRO",
+  ZONA_ESTE = "ZONA ESTE",
+  ZONA_OESTE = "ZONA OESTE",
+  ZONA_NORTE = "ZONA NORTE",
+  ZONA_SUR = "ZONA SUR",
+}
+
+export enum DocumentType {
+  PASAPORTE = "PASAPORTE",
+  NIT = "NIT",
+  DNI = "DNI",
+  RUT = "RUT",
+  CEDULA_DE_EXTRANJERIA = "CEDULA DE EXTRANJERIA",
 }
 
 export interface Product {
@@ -46,7 +72,7 @@ export interface Product {
   img_url: string;
   suppliers: string;
   category: Record<string, any>;
-}
+};
 
 export interface ProductCreate {
   name: string;
@@ -61,4 +87,9 @@ export interface ProductCreate {
   status?: boolean;
   img_base64_data?: string | ArrayBuffer | null;
   suppliers?: [];
+}
+
+export interface Seller {
+  id: string;
+  name: string;
 }
