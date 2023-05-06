@@ -38,7 +38,7 @@ export class Consumer {
     }
 
     static createCustomer(customer, token) {
-        return api.createProduct(customer, token)
+        return api.createCustomer(customer, token)
     }
 
     static getAllCountries() {

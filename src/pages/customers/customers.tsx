@@ -24,7 +24,7 @@ export default function Customers() {
   ) as string;
 
   const customers = useSelector<GlobalState>(
-    (state) => state.customer?.customers || []
+    (state) => state.customer.customers || {}
   ) as { [index: number]: Customer};
 
   const dispatch = useDispatch();

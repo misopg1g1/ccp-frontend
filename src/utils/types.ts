@@ -1,3 +1,5 @@
+import { Customer } from "../pages/customers/customer";
+
 export interface UserData {
   created_at: string;
   enabled: boolean;
@@ -17,7 +19,7 @@ export interface GlobalState {
     products: Product[];
   };
   customer: {
-    customers: any;
+    customers: Customer[];
   };
 };
 
