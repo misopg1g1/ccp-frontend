@@ -28,7 +28,7 @@ export default function Visits() {
 
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getAllVisits(token));
+    //dispatch(getAllVisits(token));
   }, []);
 
   const handleRowClick: GridEventListener<'rowClick'> = 
