@@ -46,6 +46,11 @@ export const GET_CITIES_SUCCESS = "GET_CITIES_SUCCESS";
 export const GET_CITIES_FAIL = "GET_CITIES_FAIL";
 export const CLEAN_CITIES = "CLEAN_CITIES";
 
+// Visits
+export const GET_VISITS_REQUEST = "GET_VISITS_REQUEST";
+export const GET_VISITS_SUCCESS = "GET_VISITS_SUCCESS";
+export const GET_VISITS_FAIL = "GET_VISITS_FAIL";
+
 // Messages
 export const CLEAN_MESSAGE = "CLEAN_MESSAGE";
 export const DEFAULT_TIMEOUT_MESSAGE = 10000;

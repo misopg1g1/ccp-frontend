@@ -55,3 +55,8 @@ export function getCitiesByCountry({country}) {
     const url = `${config.apiGateway}/countries/${country}/cities`
     return Request.get(url)
 }
+
+export function getAllVisits(token) {
+    const url = `${config.apiGateway}/visits`
+    return Request.get(url, token)
+}

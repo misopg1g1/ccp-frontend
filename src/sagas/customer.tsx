@@ -1,4 +1,4 @@
-import { call, put, takeLatest, delay, takeEvery } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import { 
   GET_CUSTOMERS_REQUEST,
   GET_CUSTOMERS_SUCCESS,
@@ -19,7 +19,7 @@ function* getAllCustomerSaga({ token }: { token: string}) {
     if (data.error) {
       throw { data };
     }
-    yield put({ type: GET_CUSTOMERS_SUCCESS, customers: data })
+    yield put({ type: GET_CUSTOMERS_SUCCESS, customers: data });
   } catch (error: any) {
     const message = handledError(error);
     yield put({ type: GET_CUSTOMERS_FAIL, customers: [] });
