@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 import Modal from "react-modal";
 import Icons from "../../libs/icons";
 import Input from "../../libs/input";
-import Select from "../../libs/select";
-import { Seller, DocumentType, Zone } from "../../utils/types";
 import { Customer } from "../../pages/customers/customer";
 
 interface DetailCustomerComponentProps {

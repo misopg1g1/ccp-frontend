@@ -48,4 +48,8 @@ export class Consumer {
     static getCitiesByCountry(country) {
         return api.getCitiesByCountry(country)
     }
+
+    static getAllVisits(token) {
+        return api.getAllVisits(token);
+    }
 }

@@ -6,6 +6,7 @@ import product from './product'
 import category from './category'
 import customer from './customer'
 import country from './country'
+import visit from './visit'
 
 export default function* root() {
     yield fork(login)
@@ -15,4 +16,5 @@ export default function* root() {
     yield fork(category)
     yield fork(customer)
     yield fork(country)
+    yield fork(visit)
 }
