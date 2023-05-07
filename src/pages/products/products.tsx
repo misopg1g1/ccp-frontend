@@ -8,7 +8,7 @@ import { GlobalState } from "../../utils/types";
 import {
   DataGrid,
   GridRowSelectionModel,
-  GridCallbackDetails,
+  GridEventListener,
 } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
 import { BiEdit } from "react-icons/bi";
@@ -22,9 +22,8 @@ import { Product, columns, noResultsOverlay } from "./product";
 
 export default function Products() {
   const [sortModel, setSortModel] = React.useState<any>([]);
-  const [selectedRows, setSelectedRows] = React.useState<GridRowSelectionModel>(
-    []
-  );
+  const [rowSelectionModel, setRowSelectionModel] =
+    React.useState<GridRowSelectionModel>([]);
   const [openModalCreateProduct, setOpenModalCreateProduct] =
     React.useState<boolean>(false);
   const [openModalAddInventory, setOpenModalAddInventory] =
@@ -49,24 +48,28 @@ export default function Products() {
   }, []);
 
   const handleSelectionChange = (
-    rowSelectionModel: GridRowSelectionModel,
-    details: GridCallbackDetails<any>
+    checkedRow: GridRowSelectionModel
   ) => {
-    const productId = rowSelectionModel[0];
-    if (productId) {
-      const productsArray = Object.values(products) as Product[];
-      setProductSelected(
-        productsArray.find((product: Product) => product.id === productId)
-      );
-      handleClickDetail();
+    if (checkedRow.length > 1) {
+      const selectionSet = new Set(rowSelectionModel);
+      const result = checkedRow.filter((s) => !selectionSet.has(s));
+      setRowSelectionModel(result);
+    } else {
+      setRowSelectionModel(checkedRow);
     }
   };
 
-  const handledEdit = () => {
-    if (!productSelected) {
+  const handleClickDetail = () => {
+    if (!rowSelectionModel) {
       return;
     }
-    handleClickAddInventory();
+    const productId = rowSelectionModel[0];
+    if (productId) {
+      setProductSelected(
+        Object.values(products).find((product: Product) => product.id === productId),
+      );
+      setOpenModalAddInventory(!openModalAddInventory);
+    }
   };
 
   const handleClickNewProduct = (event: any) => {
@@ -81,10 +84,6 @@ export default function Products() {
     setOpenModalCreateProduct(!openModalCreateProduct);
   };
 
-  const handleClickAddInventory = () => {
-    setOpenModalAddInventory(!openModalAddInventory);
-  };
-
   const handleCloseModalAddInventory = (
     event: React.MouseEvent<HTMLLIElement>
   ) => {
@@ -92,14 +91,15 @@ export default function Products() {
     setOpenModalAddInventory(!openModalAddInventory);
   };
 
-  const handleClickDetail = () => {
-    setOpenModalDetailProduct(!openModalAddInventory);
-  };
-
   const handleCloseModalDetailProduct = (
     event: React.MouseEvent<HTMLLIElement>
   ) => {
     event.preventDefault();
+    setOpenModalDetailProduct(!openModalDetailProduct);
+  };
+
+  const handleRowClick: GridEventListener<'rowClick'> = (params) => {
+    setProductSelected(params.row);
     setOpenModalDetailProduct(!openModalDetailProduct);
   };
 
@@ -130,7 +130,7 @@ export default function Products() {
       <div className="table-header">
         <h2>Todos los Productos</h2>
         <div className="icon-container">
-          <IconButton onClick={handledEdit}>
+          <IconButton onClick={handleClickDetail}>
             <BiEdit />
           </IconButton>
           <IconButton>
@@ -146,8 +146,9 @@ export default function Products() {
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}
           checkboxSelection
-          onRowClick={(event) => console.log("onRowClick")}
-          onCellClick={(event) => console.log("onCellClick")}
+          disableRowSelectionOnClick
+          onRowClick={handleRowClick}
+          rowSelectionModel={rowSelectionModel}
           onRowSelectionModelChange={handleSelectionChange}
           initialState={{
             pagination: { paginationModel: { pageSize: 5 } },

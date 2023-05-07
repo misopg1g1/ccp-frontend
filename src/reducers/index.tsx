@@ -9,6 +9,7 @@ import product from "./product";
 import message from "./message";
 import category from "./category";
 import country from "./country";
+import customer from "./customer";
 
 const persistRootConfig = {
   key: "root",
@@ -31,6 +32,7 @@ const rootReducer = () =>
     message,
     category,
     country,
+    customer,
   });
 
 export default () => persistReducer(persistRootConfig, rootReducer());

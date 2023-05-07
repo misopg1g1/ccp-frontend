@@ -3,7 +3,7 @@ import "./customers.scss";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalState } from "../../utils/types";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridEventListener } from "@mui/x-data-grid";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { getAllCustomers } from "../../actions/customer";
 import Header from "../../components/header/header.component";
@@ -11,20 +11,23 @@ import { Widget } from "../../components/widget/widget.component";
 import { IconButton } from "@mui/material";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { Customer, columns, noResultsOverlay } from "./customer";
+import { Customer, columns, defaultCustomer, noResultsOverlay } from "./customer";
 import CreateCustomerModal from "../../components/customer/createCustomerModal";
 import { getAllCountries } from "../../actions/country";
+import DetailCustomerModal from "../../components/customer/detailCustomerModal";
 
 export default function Customers() {
   const [sortModel, setSortModel] = React.useState<any>([]);
   const [openModalCreateCustomer, setOpenModalCreateCustomer] = React.useState<boolean>(false);
+  const [openModalDetailCustomer, setOpenModalDetailCustomer] = React.useState<boolean>(false);
+  const [customerSelected, setCustomerSelected] = React.useState<Customer>(defaultCustomer);
 
   const token = useSelector<GlobalState>(
     (state) => state.login.token
   ) as string;
 
   const customers = useSelector<GlobalState>(
-    (state) => state.customer?.customers || []
+    (state) => state.customer.customers || {}
   ) as { [index: number]: Customer};
 
   const dispatch = useDispatch();
@@ -41,6 +44,18 @@ export default function Customers() {
   const handleCloseModalCreateCustomer = (event: any) => {
     event.preventDefault();
     setOpenModalCreateCustomer(!openModalCreateCustomer);
+  };
+
+  const handleCloseModalDetailCustomer = (
+    event: React.MouseEvent<HTMLLIElement>
+  ) => {
+    event.preventDefault();
+    setOpenModalDetailCustomer(!openModalDetailCustomer);
+  }
+
+  const handleRowClick: GridEventListener<'rowClick'> = (params) => {
+    setCustomerSelected(params.row);
+    setOpenModalDetailCustomer(!openModalDetailCustomer);
   };
 
   return (
@@ -74,9 +89,8 @@ export default function Customers() {
           sortModel={sortModel}
           onSortModelChange={(model) => setSortModel(model)}
           checkboxSelection
-          onRowClick={(event) => console.log("onRowClick")}
-          onCellClick={(event) => console.log("onCellClick")}
-          onRowSelectionModelChange={(event) => console.log("onRowSelectionModelChange")}
+          disableRowSelectionOnClick
+          onRowClick={handleRowClick}
           initialState={{
             pagination: { paginationModel: { pageSize: 5 } },
           }}
@@ -86,6 +100,11 @@ export default function Customers() {
       <CreateCustomerModal 
         isOpen={openModalCreateCustomer}
         handleCloseModal={handleCloseModalCreateCustomer}
+      />
+      <DetailCustomerModal
+        isOpen={openModalDetailCustomer}
+        handleCloseModal={handleCloseModalDetailCustomer}
+        customer={customerSelected}
       />
     </div>
   )

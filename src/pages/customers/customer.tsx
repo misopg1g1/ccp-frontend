@@ -25,6 +25,7 @@ export type Customer = {
   last_name: string;
   identification: IdentificationType;
   seller_id: string;
+  seller_name?: string
   address: Address;
   phone: string,
 	email: string,
@@ -86,7 +87,7 @@ export const defaultFieldsRequired: FieldsRequired = {
 
 export const columns: GridColDef[] = [
   {
-    field: "name",
+    field: "registered_name",
     headerName: "Nombre",
     flex: 2,
   },
@@ -94,19 +95,28 @@ export const columns: GridColDef[] = [
     field: "identification",
     headerName: "Identificación",
     flex: 2,
+    valueGetter: (params) => {
+      return (params.value as Customer["identification"]).number;
+    },
   },
   {
-    field: "city",
+    field: "address.city",
     headerName: "Ciudad",
     flex: 2,
+    valueGetter: (params) => {
+      return `${params.row.address.city}`;
+    },
   },
   {
-    field: "zone",
+    field: "address.zone",
     headerName: "Zona",
     flex: 2,
+    valueGetter: (params) => {
+      return `${params.row.address.zone}`;
+    }
   },
   {
-    field: "seller",
+    field: "seller_name",
     headerName: "Vendedor",
     flex: 2,
   },
