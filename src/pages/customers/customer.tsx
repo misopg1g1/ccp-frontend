@@ -25,6 +25,7 @@ export type Customer = {
   last_name: string;
   identification: IdentificationType;
   seller_id: string;
+  seller_name?: string
   address: Address;
   phone: string,
 	email: string,
