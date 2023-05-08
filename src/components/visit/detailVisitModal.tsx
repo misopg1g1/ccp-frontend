@@ -5,6 +5,7 @@ import { Visit } from "../../pages/visits/visit";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import Input from "../../libs/input";
+import Icons from "../../libs/icons";
 
 interface DetailVisitComponentProps {
   isOpen: boolean;
@@ -32,7 +33,7 @@ class DetailVisitModal extends React.Component<
         zIndex: 5
       },
       content: {
-        top: "3%",
+        top: "10%",
         left: "50%",
         right: "auto",
         bottom: "auto",
@@ -59,15 +60,16 @@ class DetailVisitModal extends React.Component<
               role="button"
               tabIndex={0}
             >
+              <Icons icon="close" className="left-icon" color="#000000" />
             </div>
           </div>
           <React.Fragment>
             <img
-              className="VisitImage"
+              className="VisitImage mt-32"
               src={visit.img_url}
               alt={'Imagen de la visita'}
             />
-            <div className="ModalContainerTwoColumns">
+            <div className="ModalContainerTwoColumns mt-16">
               <Input
                 type="text"
                 name="date"

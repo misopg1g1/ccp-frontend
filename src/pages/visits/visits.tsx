@@ -28,7 +28,7 @@ export default function Visits() {
 
   const dispatch = useDispatch();
   React.useEffect(() => {
-    //dispatch(getAllVisits(token));
+    dispatch(getAllVisits(token));
   }, []);
 
   const handleRowClick: GridEventListener<'rowClick'> = 
@@ -74,7 +74,7 @@ export default function Visits() {
         </div>
       </div>
       <div className="table-container">
-        <DataGrid 
+        <DataGrid
           rows={Object.values(visits) as Visit[]}
           columns={columns}
           slots={{noRowsOverlay: noResultsOverlay}}
