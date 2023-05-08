@@ -35,7 +35,7 @@ function* createCustomerSaga({ customer, token }: {customer: Customer, token: st
       throw { data };
     }
     yield put({ type: CREATE_CUSTOMER_SUCCESS });
-    const msg = `El cliente ${customer.first_name} fue creado exitosamente`;
+    const msg = `El cliente ${customer.registered_name} fue creado exitosamente`;
     yield put({ type: SET_MESSAGE_SUCCESS, message: handleSucces(msg) });
     yield put({ type: GET_CUSTOMERS_REQUEST, token });
   } catch (error: any) {

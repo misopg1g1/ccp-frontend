@@ -3,16 +3,28 @@ import { GridColDef } from "@mui/x-data-grid";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 export type Visit = {
-
+  img_url: string;
+  date: string;
+  seller: string;
+  customer: string;
+  order_id: string;
+  zone: string;
+  comments: string;
 };
 
 export const defaultVisit: Visit = {
-
+  img_url: "",
+  date: "",
+  seller: "",
+  customer: "",
+  order_id: "",
+  zone: "",
+  comments: "",
 };
 
 export const columns: GridColDef[] = [
   {
-    field: "customer_name",
+    field: "customer",
     headerName: "Cliente",
     flex: 2
   },
