@@ -28,7 +28,7 @@ export default function Visits() {
 
   const dispatch = useDispatch();
   React.useEffect(() => {
-    //dispatch(getAllVisits(token));
+    dispatch(getAllVisits(token));
   }, []);
 
   const handleRowClick: GridEventListener<'rowClick'> = 
@@ -42,6 +42,18 @@ export default function Visits() {
   ) => {
     event.preventDefault();
     setOpenModalDetailVisit(!openModalDetailVisit);
+  };
+
+  const sellersCount = (): string => {
+    const sellers: string[] = [];
+    if (visits) {
+      Object.values(visits).forEach((visit) => {
+        if (!sellers.includes(visit.seller.id)) {
+          sellers.push(visit.seller.id);
+        }
+      });
+    }
+    return String(sellers.length);
   };
 
   return (
@@ -58,7 +70,7 @@ export default function Visits() {
         <Widget 
           icon={<AiOutlinePlusCircle />}
           description="Vendedores"
-          quantity="1"
+          quantity={sellersCount()}
           iconAction={(event) => console.log("onClick from Add Seller")}
         />
       </div>
@@ -74,7 +86,7 @@ export default function Visits() {
         </div>
       </div>
       <div className="table-container">
-        <DataGrid 
+        <DataGrid
           rows={Object.values(visits) as Visit[]}
           columns={columns}
           slots={{noRowsOverlay: noResultsOverlay}}

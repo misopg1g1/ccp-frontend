@@ -16,7 +16,8 @@ export default function reducer(state = initialState, action: any) {
       return { 
         ...state,
         fetching: true,
-        error: null };
+        error: null
+      };
     case GET_VISITS_SUCCESS:
       return {
         ...state,
