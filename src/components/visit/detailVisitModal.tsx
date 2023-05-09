@@ -66,7 +66,7 @@ class DetailVisitModal extends React.Component<
           <React.Fragment>
             <img
               className="VisitImage mt-32"
-              src={visit.img_url}
+              src={visit.image_url}
               alt={'Imagen de la visita'}
             />
             <div className="ModalContainerTwoColumns mt-16">
@@ -74,7 +74,7 @@ class DetailVisitModal extends React.Component<
                 type="text"
                 name="date"
                 label="Fecha"
-                value={visit.date}
+                value={visit.visit_date}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
                 disabled={true}
@@ -84,7 +84,7 @@ class DetailVisitModal extends React.Component<
                 type="text"
                 name="seller"
                 label="Vendedor"
-                value={visit.seller}
+                value={`${visit.seller.first_name} ${visit.seller.last_name}`}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
                 disabled={true}
@@ -96,7 +96,7 @@ class DetailVisitModal extends React.Component<
               type="text"
               name="customer"
               label="Cliente"
-              value={visit.customer}
+              value={visit.customer_id}
               classInput="ModalInput mt-8"
               disabled={true}
               marginTop="24px"
@@ -128,7 +128,7 @@ class DetailVisitModal extends React.Component<
               type="text"
               name="comments"
               label="Comentarios"
-              value={visit.comments}
+              value={visit.description}
               classInput="ModalInput mt-8"
               disabled={true}
               marginTop="24px"

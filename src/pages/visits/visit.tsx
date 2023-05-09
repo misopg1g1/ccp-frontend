@@ -1,35 +1,37 @@
 import { IconButton, Stack } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { Seller, defaultSeller } from "../../utils/types";
 
 export type Visit = {
-  img_url: string;
-  date: string;
-  seller: string;
-  customer: string;
+  id?: string;
+  visit_date: string;
+  image_url: string;
+  description: string;
   order_id: string;
+  customer_id: string;
   zone: string;
-  comments: string;
+  seller: Seller;
 };
 
 export const defaultVisit: Visit = {
-  img_url: "",
-  date: "",
-  seller: "",
-  customer: "",
+  visit_date: "",
+  image_url: "",
+  description: "",
   order_id: "",
+  customer_id: "",
   zone: "",
-  comments: "",
+  seller: defaultSeller,
 };
 
 export const columns: GridColDef[] = [
   {
-    field: "customer",
+    field: "customer_id",
     headerName: "Cliente",
     flex: 2
   },
   {
-    field: "date",
+    field: "visit_date",
     headerName: "Fecha",
     flex: 2,
   },
@@ -47,6 +49,9 @@ export const columns: GridColDef[] = [
     field: "seller",
     headerName: "Vendedor",
     flex: 2,
+    valueGetter: (params) => {
+      return `${params.row.seller.first_name} ${params.row.seller.last_name}`;
+    },
   },
   {
     field: "actions",

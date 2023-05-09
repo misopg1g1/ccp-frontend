@@ -97,5 +97,12 @@ export interface ProductCreate {
 
 export interface Seller {
   id: string;
-  name: string;
+  first_name: string;
+  last_name: string;
+}
+
+export const defaultSeller: Seller = {
+  id: "",
+  first_name: "",
+  last_name: "",
 }

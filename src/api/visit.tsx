@@ -2,7 +2,7 @@ import { get } from "./request";
 
 export function getAllVisits(token: string) {
   const headers = {
-    Authorizarion:  `Bearer ${token}`,
+    Authorization:  `Bearer ${token}`,
   };
   return get("/api/visits", {}, headers);
 };
