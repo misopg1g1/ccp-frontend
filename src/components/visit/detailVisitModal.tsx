@@ -96,7 +96,7 @@ class DetailVisitModal extends React.Component<
               type="text"
               name="customer"
               label="Cliente"
-              value={visit.customer_id}
+              value={visit.customer.registered_name}
               classInput="ModalInput mt-8"
               disabled={true}
               marginTop="24px"
@@ -116,7 +116,7 @@ class DetailVisitModal extends React.Component<
                 type="text"
                 name="zone"
                 label="Zona"
-                value={visit.zone}
+                value={visit.customer.address.zone}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
                 disabled={true}

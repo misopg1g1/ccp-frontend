@@ -44,6 +44,18 @@ export default function Visits() {
     setOpenModalDetailVisit(!openModalDetailVisit);
   };
 
+  const sellersCount = (): string => {
+    const sellers: string[] = [];
+    if (visits) {
+      Object.values(visits).forEach((visit) => {
+        if (!sellers.includes(visit.seller.id)) {
+          sellers.push(visit.seller.id);
+        }
+      });
+    }
+    return String(sellers.length);
+  };
+
   return (
     <div className="dashboard-main-container">
       <Header></Header>
@@ -58,7 +70,7 @@ export default function Visits() {
         <Widget 
           icon={<AiOutlinePlusCircle />}
           description="Vendedores"
-          quantity="1"
+          quantity={sellersCount()}
           iconAction={(event) => console.log("onClick from Add Seller")}
         />
       </div>
