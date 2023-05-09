@@ -52,4 +52,8 @@ export class Consumer {
     static getAllVisits(token) {
         return api.getAllVisits(token);
     }
+
+    static getAllSellers(token) {
+        return api.getAllSellers(token);
+    }
 }

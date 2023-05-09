@@ -11,10 +11,17 @@ import category from "./category";
 import country from "./country";
 import customer from "./customer";
 import visit from "./visit";
+import seller from "./seller";
 
 const persistRootConfig = {
   key: "root",
-  whitelist: ["inventory", "user", "product", "country"],
+  whitelist: [
+    "inventory",
+    "user",
+    "product",
+    "country",
+    "seller"
+  ],
   storage,
 };
 
@@ -35,6 +42,7 @@ const rootReducer = () =>
     country,
     customer,
     visit,
+    seller,
   });
 
 export default () => persistReducer(persistRootConfig, rootReducer());

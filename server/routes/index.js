@@ -7,6 +7,7 @@ import { user } from "./user/index.js";
 import { customer } from "./customer/index.js";
 import { country } from "./countries/index.js";
 import { visit } from "./visit/index.js";
+import { seller } from "./seller/index.js";
 
 export default function loadRoutes(server) {
   inventory(server);
@@ -17,4 +18,5 @@ export default function loadRoutes(server) {
   customer(server);
   country(server);
   visit(server);
+  seller(server);
 }
