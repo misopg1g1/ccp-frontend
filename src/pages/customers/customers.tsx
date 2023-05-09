@@ -14,6 +14,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { Customer, columns, defaultCustomer, noResultsOverlay } from "./customer";
 import CreateCustomerModal from "../../components/customer/createCustomerModal";
 import { getAllCountries } from "../../actions/country";
+import { getAllSellers } from "../../actions/seller";
 import DetailCustomerModal from "../../components/customer/detailCustomerModal";
 
 export default function Customers() {
@@ -33,6 +34,7 @@ export default function Customers() {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getAllCustomers(token));
+    dispatch(getAllSellers(token));
     dispatch(getAllCountries());
   }, []);
 

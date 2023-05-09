@@ -213,15 +213,10 @@ class CreateCustomerModal extends React.Component<
     );
     const optionsSellers = [
       { value: "default", label: "Seleccione un vendedor" },
-      { value: "seller 1", label: "Vendedor 1" },
-      { value: "seller 2", label: "Vendedor 2" },
-      { value: "seller 3", label: "Vendedor 3" },
-      { value: "seller 4", label: "Vendedor 4" },
-      { value: "seller 5", label: "Vendedor 5" },
     ].concat(
       Object.values(this.props.sellers || []).map((seller) => ({
-        label: seller.name,
-        value: seller.name,
+        label: `${seller.first_name} ${seller.last_name}`,
+        value: seller.id,
       }))
     );
 
@@ -468,7 +463,7 @@ class CreateCustomerModal extends React.Component<
 
 const mapStateToProps = (state: any) => ({
   token: state.login.token,
-  sellers: state.seller?.sellers,
+  sellers: state.seller.sellers,
   countries: state.country.countries,
   cities: state.country?.cities,
 });
