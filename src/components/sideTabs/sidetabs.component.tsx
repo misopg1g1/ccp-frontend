@@ -72,10 +72,10 @@ const SideTabs = (props: SideTabsComponentProps) => {
         </div>
       </div>
       <div className="list-container">
-        <Link className="button-container" to="view1">
+        <Link className="button-container" to="orders">
           <BsCalculator />
           <div className="link-container">
-            <h2>CPP</h2>
+            <h2>Ordenes</h2>
           </div>
         </Link>
         <Link className="button-container" to="products">

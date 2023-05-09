@@ -56,4 +56,8 @@ export class Consumer {
     static getAllSellers(token) {
         return api.getAllSellers(token);
     }
+
+    static getAllOrders(token) {
+        return api.getAllOrders(token);
+    }
 }

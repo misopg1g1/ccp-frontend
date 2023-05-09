@@ -8,6 +8,7 @@ import Message from '../../components/layout/messages/message';
 import { cleanMessage } from '../../actions/message';
 import Customers from '../customers/customers';
 import Visits from '../visits/visits';
+import Orders from '../orders/orders';
 
 interface DashboardPageProps {
   cleanMessage: any
@@ -36,7 +37,7 @@ const DashboardPage = (props: DashboardPageProps) => {
           />
         }
         <Routes>
-          <Route path="view1" element={<Tab1 />} />
+          <Route path="orders" element={<Orders />} />
           <Route path="products" element={<Products />} />
           <Route path="customers" element={<Customers />} />
           <Route path="visits" element={<Visits />} />

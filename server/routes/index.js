@@ -8,6 +8,7 @@ import { customer } from "./customer/index.js";
 import { country } from "./countries/index.js";
 import { visit } from "./visit/index.js";
 import { seller } from "./seller/index.js";
+import { order } from "./order/index.js";
 
 export default function loadRoutes(server) {
   inventory(server);
@@ -19,4 +20,5 @@ export default function loadRoutes(server) {
   country(server);
   visit(server);
   seller(server);
+  order(server);
 }

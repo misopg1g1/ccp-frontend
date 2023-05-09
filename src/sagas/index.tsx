@@ -8,6 +8,7 @@ import customer from './customer';
 import country from './country';
 import visit from './visit';
 import seller from "./seller";
+import order from './order';
 
 export default function* root() {
     yield fork(login);
@@ -19,4 +20,5 @@ export default function* root() {
     yield fork(country);
     yield fork(visit);
     yield fork(seller);
+    yield fork(order); 
 }

@@ -1,37 +1,36 @@
-import { 
-  GET_VISITS_REQUEST,
-  GET_VISITS_SUCCESS,
-  GET_VISITS_FAIL,
+import {
+  GET_ORDERS_REQUEST,
+  GET_ORDERS_SUCCESS,
+  GET_ORDERS_FAIL,
 } from "../constants/actionTypes";
 
 const initialState = {
   fetching: false,
   message: null,
-  visit: null,
+  orders: null,
 };
 
 export default function reducer(state = initialState, action: any) {
   switch (action.type) {
-    case GET_VISITS_REQUEST:
+    case GET_ORDERS_REQUEST:
       return { 
         ...state,
         fetching: true,
-        error: null
       };
-    case GET_VISITS_SUCCESS:
+    case GET_ORDERS_SUCCESS:
       return {
         ...state,
         fetching: false,
-        visits: action.visits,
+        orders: action.orders,
       };
-    case GET_VISITS_FAIL:
+    case GET_ORDERS_FAIL:
       return {
         ...state,
         fetching: false,
-        isLoggedIn: true,
-        visits: null,
+        orders: null,
+        message: action.message
       };
     default:
       return state;
   }
-}
+};

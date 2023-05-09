@@ -63,5 +63,9 @@ export function getAllVisits(token) {
 
 export function getAllSellers(token) {
     const url = `${config.apiGateway}/sellers`
+}
+
+export function getAllOrders(token) {
+    const url = `${config.apiGateway}/orders`
     return Request.get(url, token)
 }
