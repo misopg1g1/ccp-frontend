@@ -1,5 +1,6 @@
 import { Customer } from "../pages/customers/customer";
 import { Visit } from "../pages/visits/visit";
+import { Order } from "../pages/orders/order";
 
 export interface UserData {
   created_at: string;
@@ -25,6 +26,9 @@ export interface GlobalState {
   visit: {
     visits: Visit[];
   };
+  order: {
+    orders: Order[];
+  }
 };
 
 export interface Category {
