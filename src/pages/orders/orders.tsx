@@ -86,7 +86,7 @@ export default function Orders() {
         />
       </div>
       <DetailOrderModal 
-        isOpen={true}
+        isOpen={openModalDetailOrder}
         handleCloseModal={handleCloseModalDetailOrder}
         order={orderSelected}
       />
