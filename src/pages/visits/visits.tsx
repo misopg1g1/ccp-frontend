@@ -13,7 +13,7 @@ import {
   DataGrid,
   GridEventListener,
 } from "@mui/x-data-grid";
-import DetailVisitModal from "../../components/visit/detailVisitModal"
+import DetailVisitModal from "../../components/visit/detailVisitModal";
 
 export default function Visits() {
   const [sortModel, setSortModel] = React.useState<any>([]);

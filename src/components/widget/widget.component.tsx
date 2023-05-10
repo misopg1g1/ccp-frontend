@@ -4,18 +4,21 @@ import "./widget.scss";
 interface WidgetProps {
   quantity: string;
   description: string;
-  icon: JSX.Element;
-  iconAction: MouseEventHandler<HTMLDivElement>;
+  icon?: JSX.Element;
+  iconAction?: MouseEventHandler<HTMLDivElement>;
   background?: boolean;
 }
 
 export const Widget = (props: WidgetProps) => {
-  const personalizedIcon = React.cloneElement(props.icon, {
-    style: {
-      color: !props.background ? "#2f76e6" : "white",
-      cursor: "pointer" 
-    },
-  });
+  let personalizedIcon: any = null;
+  if (props.icon) {
+    personalizedIcon = React.cloneElement(props.icon, {
+      style: {
+        color: !props.background ? "#2f76e6" : "white",
+        cursor: "pointer" 
+      },
+    });
+  }
   return (
     <div
       className="widget-root"

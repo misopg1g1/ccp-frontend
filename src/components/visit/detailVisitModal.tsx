@@ -2,7 +2,6 @@ import "./detailVisitModal.css";
 
 import React from "react";
 import { Visit } from "../../pages/visits/visit";
-import { connect } from "react-redux";
 import Modal from "react-modal";
 import Input from "../../libs/input";
 import Icons from "../../libs/icons";
@@ -140,8 +139,5 @@ class DetailVisitModal extends React.Component<
   }
 };
 
-const mapStateToProps = () => ({});
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DetailVisitModal);
+export default DetailVisitModal;
