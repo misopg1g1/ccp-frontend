@@ -5,4 +5,4 @@ export function getAllOrders(token: string) {
     Authorization: `Bearer ${token}`,
   };
   return get("/api/orders", {}, headers);
-};
+}

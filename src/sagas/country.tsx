@@ -9,14 +9,13 @@ import {
   CLEAN_CITIES,
 } from "../constants/actionTypes";
 import { getAllCountries, getCitiesByCountry  } from "../api/country";
+import {checkData} from "../utils/handledResponse";
 
 function* getAllCountriesSaga() {
   try {
     yield put({ type: CLEAN_CITIES });
     const { data } = yield call(getAllCountries);
-    if (data.error) {
-      throw { data };
-    }
+    checkData(data);
     yield put({ type: GET_COUNTRIES_SUCCESS, countries: data });
   } catch (error: any) {
     yield put({ type: GET_COUNTRIES_FAIL, message: error.data });
@@ -26,9 +25,7 @@ function* getAllCountriesSaga() {
 function* getCitiesByCountrySaga({ country }: { country: string }) {
   try {
     const { data } = yield call(getCitiesByCountry, country);
-    if (data.error) {
-      throw { data };
-    }
+    checkData(data);
     yield put({ type: GET_CITIES_SUCCESS, cities: data });
   } catch (error: any) {
     yield put({ type: GET_CITIES_FAIL, message: error.data });

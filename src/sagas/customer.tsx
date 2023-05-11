@@ -10,15 +10,13 @@ import {
   CREATE_CUSTOMER_FAIL,
 } from "../constants/actionTypes";
 import { getCustomers, createCustomer } from "../api/customer"
-import { handledError, handleSucces } from "./handledResponse";
+import { handledError, checkData, handleSuccess } from "../utils/handledResponse";
 import { Customer } from "../pages/customers/customer";
 
 function* getAllCustomerSaga({ token }: { token: string}) {
   try {
     const { data } = yield call(getCustomers, token);
-    if (data.error) {
-      throw { data };
-    }
+    checkData(data);
     yield put({ type: GET_CUSTOMERS_SUCCESS, customers: data });
   } catch (error: any) {
     const message = handledError(error);
@@ -31,12 +29,10 @@ function* createCustomerSaga({ customer, token }: {customer: Customer, token: st
   try {
     const body = { ...customer };
     const { data } = yield call(createCustomer, body, token);
-    if (data.error) {
-      throw { data };
-    }
+    checkData(data);
     yield put({ type: CREATE_CUSTOMER_SUCCESS });
     const msg = `El cliente ${customer.registered_name} fue creado exitosamente`;
-    yield put({ type: SET_MESSAGE_SUCCESS, message: handleSucces(msg) });
+    yield put({ type: SET_MESSAGE_SUCCESS, message: handleSuccess(msg) });
     yield put({ type: GET_CUSTOMERS_REQUEST, token });
   } catch (error: any) {
     const message = handledError(error, 'Error creando el producto');

@@ -213,14 +213,13 @@ class Input extends React.Component<InputComponentProps, InputComponentState> {
     }
 
     render() {
-        let classValid = ''
-
         const {required, requiredMessage, invalidMessage, fixedLabel, forcedValid} = this.props
         const {width, marginTop, marginBottom, marginRight, marginLeft, paddingBottom, display} = this.props
         const {backgroundInput, reference, maxLength, minLength, max, min, hasError} = this.props
         const {name, type, placeholder, label, searchValue, labelWidth, autocomplete} = this.props
         const {minDate, maxDate, checked, disabled, align, additionalProp, icon, onFocus} = this.props
         let {classInput} = this.props
+        let classValid: string
         const {error, errorRegex, errorMessage, valid, value} = this.state
 
         if (required) {
@@ -292,7 +291,7 @@ class Input extends React.Component<InputComponentProps, InputComponentState> {
                 />
                 {icon}
                 <div>
-                    {!hasError && classValid === ' error' && errorRegex === false && (
+                    {!hasError && classValid === ' error' && !errorRegex && (
                         <p className="ErrorMessage">
                             {!value ? requiredMessage : invalidMessage}
                         </p>

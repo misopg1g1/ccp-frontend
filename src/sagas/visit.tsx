@@ -6,14 +6,12 @@ import {
   SET_MESSAGE_ERROR,
 } from "../constants/actionTypes";
 import { getAllVisits } from "../api/visit";
-import { handledError } from "./handledResponse";
+import {checkData, handledError} from "../utils/handledResponse";
 
 function* getAllVisitsSaga({ token }: { token: string }) {
   try {
     const { data } = yield call(getAllVisits, token);
-    if (data.error) {
-      throw { data };
-    }
+    checkData(data);
     yield put({ type: GET_VISITS_SUCCESS, visits: data });
   } catch (error: any) {
     const message = handledError(error);
