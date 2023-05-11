@@ -75,10 +75,10 @@ export default function Customers() {
       <div className="table-header">
         <h2>Todos los clientes</h2>
         <div className="icon-container">
-          <IconButton onClick={(event) => console.log("onClick from Edit")}>
+          <IconButton onClick={() => console.log("onClick from Edit")}>
               <BiEdit />
             </IconButton>
-            <IconButton onClick={(event) => console.log("onClick from Delete")}>
+            <IconButton onClick={() => console.log("onClick from Delete")}>
               <RiDeleteBin6Line />
           </IconButton>
         </div>

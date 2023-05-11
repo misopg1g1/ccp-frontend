@@ -11,9 +11,9 @@ interface DetailOrderComponentProps {
   isOpen: boolean;
   handleCloseModal: (event: any) => void;
   order: Order;
-};
+}
 
-interface DetailOrderComponentState {};
+interface DetailOrderComponentState {}
 
 class DetailOrderModal extends React.Component<
   DetailOrderComponentProps,
@@ -153,6 +153,6 @@ class DetailOrderModal extends React.Component<
       </Modal>
     );
   }
-};
+}
 
 export default DetailOrderModal;

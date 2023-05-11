@@ -7,7 +7,7 @@ import Icons from "../../libs/icons";
 import Input from "../../libs/input";
 import Select from "../../libs/select";
 import { Seller, DocumentType, Zone } from "../../utils/types";
-import { Customer, FieldsRequired, defaultFieldsRequired, defaultCustomer, Address, IdentificationType } from "../../pages/customers/customer";
+import { Customer, FieldsRequired, defaultFieldsRequired, defaultCustomer } from "../../pages/customers/customer";
 import { createCustomer } from "../../actions/customer";
 import { getCitiesByCountry, cleanCities } from "../../actions/country";
 import { emailRegex } from "../../utils/regex";
@@ -22,12 +22,12 @@ interface CreateCustomerComponentProps {
   sellers: Seller[];
   countries: string[];
   cities: string[];
-};
+}
 
 interface CreateCustomerComponentState {
   customer: Customer;
   fieldIsValid: FieldsRequired;
-};
+}
 
 class CreateCustomerModal extends React.Component<
   CreateCustomerComponentProps,
@@ -57,7 +57,7 @@ class CreateCustomerModal extends React.Component<
     fieldIsValid.address_zone = customer.address.zone != "default";
     fieldIsValid.address_address = customer.address.address != "";
     this.setState({ fieldIsValid: fieldIsValid });
-    const invalidFields = Object.entries(fieldIsValid).filter(([, value]) => value === false);
+    const invalidFields = Object.entries(fieldIsValid).filter(([, value]) => !value);
     return !(invalidFields.length > 0);
   };
 
@@ -105,7 +105,7 @@ class CreateCustomerModal extends React.Component<
           [name]: value,
         },
       });
-    };
+    }
   };
 
   setStateObject = (name: string, value: string) => {
@@ -459,7 +459,7 @@ class CreateCustomerModal extends React.Component<
       </Modal>
     );
   };
-};
+}
 
 const mapStateToProps = (state: any) => ({
   token: state.login.token,

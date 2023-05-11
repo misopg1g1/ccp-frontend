@@ -12,7 +12,7 @@ interface DetailVisitComponentProps {
   visit: Visit;
 }
 
-interface DetailVisitComponentState {};
+interface DetailVisitComponentState {}
 
 class DetailVisitModal extends React.Component<
   DetailVisitComponentProps,
@@ -137,7 +137,7 @@ class DetailVisitModal extends React.Component<
       </Modal>
     );
   }
-};
+}
 
 
 export default DetailVisitModal;

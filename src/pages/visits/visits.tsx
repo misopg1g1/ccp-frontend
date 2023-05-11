@@ -64,14 +64,14 @@ export default function Visits() {
           icon={<AiOutlinePlusCircle />}
           description="Total de visitas"
           quantity={Object.values(visits).length.toString()}
-          iconAction={(event) => console.log("onClick from Add Visit")}
+          iconAction={() => console.log("onClick from Add Visit")}
           background
         />
         <Widget 
           icon={<AiOutlinePlusCircle />}
           description="Vendedores"
           quantity={sellersCount()}
-          iconAction={(event) => console.log("onClick from Add Seller")}
+          iconAction={() => console.log("onClick from Add Seller")}
         />
       </div>
       <div className="table-header">
