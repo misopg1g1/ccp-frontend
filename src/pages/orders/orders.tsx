@@ -24,7 +24,7 @@ export default function Orders() {
 
   const dispatch = useDispatch();
   React.useEffect(() => {
-    //dispatch(getAllOrders(token));
+    dispatch(getAllOrders(token));
   }, []);
 
   const handleRowClick: GridEventListener<'rowClick'> =
@@ -40,22 +40,30 @@ export default function Orders() {
     setOpenModalDetailOrder(!openModalDetailOrder);
   }
 
+  const getTotalProducts = () => {
+    return Object.values(orders).length;
+  }
+
+  const getTotalProductsDelivered = () => {
+    return Object.values(orders).filter(item => item.status === "DELIVERED").length;
+  }
+
   return (
     <div className="dashboard-main-container">
       <Header></Header>
       <div className="widget-container">
         <Widget
           description="Total de ordenes"
-          quantity={Object.values(orders).length.toString()}
+          quantity={getTotalProducts().toString()}
           background
         />
         <Widget 
           description="Ordenes entregadas"
-          quantity="0"
+          quantity={getTotalProductsDelivered().toString()}
         />
         <Widget 
           description="Ordenes pendientes por entregar"
-          quantity="0"
+          quantity={(getTotalProducts() - getTotalProductsDelivered()).toString()}
         />
       </div>
       <div className="table-header">

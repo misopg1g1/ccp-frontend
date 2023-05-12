@@ -63,6 +63,7 @@ export function getAllVisits(token) {
 
 export function getAllSellers(token) {
     const url = `${config.apiGateway}/sellers`
+    return Request.get(url, token)
 }
 
 export function getAllOrders(token) {

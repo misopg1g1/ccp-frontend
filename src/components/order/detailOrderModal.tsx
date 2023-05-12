@@ -102,7 +102,7 @@ class DetailOrderModal extends React.Component<
                 type="text"
                 name="discount"
                 label="Descuento"
-                value={order.discount}
+                value={order.discount.toString()}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
                 disabled={true}
@@ -115,7 +115,7 @@ class DetailOrderModal extends React.Component<
                 type="text"
                 name="state"
                 label="Estado"
-                value={order.state}
+                value={order.status}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
                 disabled={true}
