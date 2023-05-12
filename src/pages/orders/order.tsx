@@ -6,7 +6,7 @@ import { Seller, defaultSeller } from "../../utils/types";
 
 export type Order = {
   id: string;
-  state: string;
+  status: string;
   grand_total: number;
   discount: number;
   delivery_date: string;
@@ -17,7 +17,7 @@ export type Order = {
 
 export const defaultOrder: Order = {
   id: "",
-  state: "",
+  status: "",
   grand_total: 0,
   discount: 0,
   delivery_date: "",
@@ -56,11 +56,11 @@ export const columns: GridColDef[] = [
     headerName: "Items",
     flex: 2,
     valueGetter: (params) => {
-      return params.row.items.lenght();
+      return params.row.items.length;
     }
   },
   {
-    field: "state",
+    field: "status",
     headerName: "Estado",
     flex: 2,
   },
