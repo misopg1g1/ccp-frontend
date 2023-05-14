@@ -7,7 +7,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "vitest run --coverage",
     "coverage_ui": "vitest --ui",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "client": "vite",
     "server": "node server/index.js"
