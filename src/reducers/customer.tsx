@@ -1,3 +1,4 @@
+import { act } from "react-dom/test-utils";
 import {
   GET_CUSTOMERS_REQUEST,
   GET_CUSTOMERS_SUCCESS,
@@ -16,7 +17,7 @@ const initialState = {
 export default function reducer(state = initialState, action: any) {
   switch (action.type) {
     case GET_CUSTOMERS_REQUEST:
-      return { ...state, fetching: true, error: null };
+      return { ...state, fetching: true, error: null, customer: null };
     case GET_CUSTOMERS_SUCCESS:
       return {
         ...state,
@@ -31,7 +32,7 @@ export default function reducer(state = initialState, action: any) {
         customers: null,
       };
     case CREATE_CUSTOMER_REQUEST:
-      return { ...state, fetching: true, error: null };
+      return { ...state, fetching: true, error: null, customer: action.customer };
     case CREATE_CUSTOMER_SUCCESS:
       return { ...state, fetching: false, customerData: action.customer };
     case CREATE_CUSTOMER_FAIL:

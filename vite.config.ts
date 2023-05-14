@@ -1,7 +1,9 @@
 /// <reference types="vite/client" />
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import sassDts from 'vite-plugin-sass-dts'
+import { configDefaults } from 'vitest/config'
 
 export default defineConfig({
   plugins: [
@@ -10,6 +12,20 @@ export default defineConfig({
     }),
     sassDts(),
   ],
+
+  test: {
+    environment: "jsdom",
+    exclude:[
+      ...configDefaults.exclude, 
+      'server/*'
+    ],
+    globals: true,
+    setupFiles: './tests/setup.tsx',
+    coverage: {
+      provider: 'istanbul',
+      reporter: ['text', 'json', 'html'],
+    },
+  },
 
   server: {
     port: 3000,

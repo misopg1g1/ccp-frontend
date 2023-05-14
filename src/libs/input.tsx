@@ -1,5 +1,4 @@
 import React, { InputHTMLAttributes} from 'react'
-import boldTextWithString from '../utils/boldTextWithString'
 
 interface InputComponentProps extends InputHTMLAttributes<HTMLInputElement> {
     align?: string,
@@ -257,7 +256,7 @@ class Input extends React.Component<InputComponentProps, InputComponentState> {
                         style: {width: labelWidth || width}
                     })}
                 >
-                    {searchValue ? boldTextWithString(label, searchValue) : label}
+                    {label}
                 </label>
                 <input
                     className={classInput + classValid}

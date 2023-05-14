@@ -272,6 +272,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                         <div
                                             key={rol.name}
                                             data-name={rol.name}
+                                            role="button"
                                             style={{
                                                 backgroundColor: rol.isActive ? '#2F76E6' : '',
                                                 color: rol.isActive ? '#FFFFFF' : '',

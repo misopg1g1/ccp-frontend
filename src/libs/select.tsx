@@ -147,7 +147,7 @@ class Select extends React.Component<
           marginTop,
         }}
       >
-        <label htmlFor="type" className="FormLabel">
+        <label htmlFor={name} className="FormLabel">
           {label}
         </label>
         <select

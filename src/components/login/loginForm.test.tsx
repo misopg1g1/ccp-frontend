@@ -1,6 +1,6 @@
 import React from 'react'
 import {fireEvent, render} from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
+import { describe, expect, test, vi } from "vitest";
 import LoginForm from '../login/loginForm'
 
 const loginDataMock = {
@@ -16,9 +16,9 @@ const fieldIsValid = {
 describe('<LoginForm />', () => {
 
   test('renders with the correct fields', () => {
-    const handleValueChange = jest.fn()
-    const handleValueValid = jest.fn()
-    const handleClick = jest.fn()
+    const handleValueChange = vi.fn()
+    const handleValueValid = vi.fn()
+    const handleClick = vi.fn()
     const { getByText, getByLabelText } = render(<LoginForm 
       fieldIsValid={fieldIsValid}
       handleValueChange={handleValueChange}
