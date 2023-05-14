@@ -118,13 +118,13 @@ export default function Products() {
           icon={<AiOutlinePlusCircle />}
           description="Categorias"
           quantity="3"
-          iconAction={(event) => console.log("clicked")}
+          iconAction={() => console.log("clicked")}
         />
         <Widget
           icon={<AiOutlinePlusCircle />}
           description="Bodegas"
           quantity="1"
-          iconAction={(event) => console.log("clicked")}
+          iconAction={() => console.log("clicked")}
         />
       </div>
       <div className="table-header">

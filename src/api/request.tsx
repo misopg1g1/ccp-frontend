@@ -3,12 +3,11 @@ import fetch from 'axios';
 const fetchRetry: any = (reqParams: any, n: number) =>
     fetch(reqParams).catch((errorResponse: any) => {
         if (errorResponse instanceof Error) {
-            const error = {
+            throw {
                 response: {
-                    message: 'No se pudo procesar la solicitud'
+                    message: "The request could not be processed"
                 }
             };
-            throw error;
         }
         const error = errorResponse.response.data || {};
         if (n === 0 || error.code) {
@@ -43,14 +42,14 @@ function request(method: string, url: string, params: any = {}, body: any = null
     return fetchRetry(reqParams, retriesNumber).catch((error: any) => Promise.reject(error.response))
 }
 
-export function get(url: string, query: any, headers: any = null, retrieNumber: number = 1) {
-    return request('get', url, query, null, headers, retrieNumber)
+export function get(url: string, query: any, headers: any = null, retriesNumber: number = 1) {
+    return request('get', url, query, null, headers, retriesNumber)
 }
 
-export function post(url: string, query: any, body: any = {}, headers: any = null, retrieNumber: number = 1) {
-    return request('post', url, query, body, headers, retrieNumber)
+export function post(url: string, query: any, body: any = {}, headers: any = null, retriesNumber: number = 1) {
+    return request('post', url, query, body, headers, retriesNumber)
 }
 
-export function put(url: string, query: any, body: any = {}, headers: any = null, retrieNumber: number = 1) {
-    return request('put', url, query, body, headers, retrieNumber)
+export function put(url: string, query: any, body: any = {}, headers: any = null, retriesNumber: number = 1) {
+    return request('put', url, query, body, headers, retriesNumber)
 }

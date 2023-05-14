@@ -19,8 +19,6 @@ interface DashboardPageState {
   message: any
 }
 
-const Tab1 = () => <h1>Contenido de la pestaña 1</h1>;
-
 const DashboardPage = (props: DashboardPageProps) => {
   const { cleanMessage, message } = props
 

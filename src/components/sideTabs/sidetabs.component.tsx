@@ -48,7 +48,7 @@ const SideTabs = (props: SideTabsComponentProps) => {
     setOpenModalCreateUser(!openModalCreateUser)
   }
 
-  const toogleCreateUserModal = (event: React.MouseEvent<HTMLLIElement>) => {
+  const toggleCreateUserModal = (event: React.MouseEvent<HTMLLIElement>) => {
     event.preventDefault()
     setOpenModalCreateUser(!openModalCreateUser)
     deleteUserDataFunc()
@@ -134,7 +134,7 @@ const SideTabs = (props: SideTabsComponentProps) => {
       </div>
       <CreateUserModal
         isOpen={openModalCreateUser}
-        handleCloseModal={toogleCreateUserModal}
+        handleCloseModal={toggleCreateUserModal}
       />
     </div>
   );

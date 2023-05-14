@@ -5,4 +5,4 @@ export function getAllVisits(token: string) {
     Authorization:  `Bearer ${token}`,
   };
   return get("/api/visits", {}, headers);
-};
+}

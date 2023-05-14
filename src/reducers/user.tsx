@@ -14,7 +14,7 @@ const initialState = {
 export default function reducer(state = initialState, action: any) {
     switch (action.type) {
         case CREATE_USER_REQUEST:
-            return { ...state, fetching: true, error: null }
+            return { ...state, fetching: true, error: null, userData: action.user }
         case CREATE_USER_SUCCESS:
             return { ...state, fetching: false, userData: action.user }
         case CREATE_USER_FAIL:

@@ -5,13 +5,12 @@ import {
   GET_CATEGORIES_SUCCESS,
 } from "../constants/actionTypes";
 import { getAllCategories } from "../api/category";
+import {checkData} from "../utils/handledResponse";
 
 function* getAllCategoriesSaga({ token }: { token: string }) {
   try {
     const { data } = yield call(getAllCategories, token);
-    if (data.error) {
-      throw { data };
-    }
+    checkData(data);
     yield put({ type: GET_CATEGORIES_SUCCESS, products: data });
   } catch (error: any) {
     yield put({ type: GET_CATEGORIES_FAIL, message: error.data });

@@ -56,7 +56,7 @@ export class Request {
                 }
                 console.info(`SERVER-APP-WEB[GET]: ${url}; SUCCESS`)
                 return response
-            } catch (error) {
+            } catch (err) {
                 console.error(`SERVER-APP-WEB[GET]: ${url}; EXCEPTION-ERROR: ${JSON.stringify(err)}`)
                 throw err
             }

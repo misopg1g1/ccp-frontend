@@ -89,7 +89,7 @@ class CreateProductModal extends React.Component<
       isValid.push("price");
     }
     this.setState({ fieldIsValid: fieldIsValid });
-    return isValid.length === 0 ? true : false;
+    return isValid.length === 0;
   };
 
   setDefault = () => {
@@ -113,8 +113,8 @@ class CreateProductModal extends React.Component<
     this.setDefault();
   };
 
-  imgTobase64(image: any) {
-    var reader = new FileReader();
+  imgToBase64(image: any) {
+    let reader = new FileReader();
     reader.readAsDataURL(image);
     reader.onload = () => {
       if (typeof reader.result === "string") {
@@ -167,7 +167,7 @@ class CreateProductModal extends React.Component<
 
   onImageChange = (event: any) => {
     this.setState({ image: URL.createObjectURL(event.target.files[0]) });
-    this.imgTobase64(event.target.files[0]);
+    this.imgToBase64(event.target.files[0]);
   };
 
   render() {
@@ -225,7 +225,7 @@ class CreateProductModal extends React.Component<
             </div>
           </div>
           <React.Fragment>
-            <img className="ProductImage mt-16" src={image}></img>
+            <img className="ProductImage mt-16" src={image} alt="Product Image"></img>
             <input
               className="mt-8"
               type="file"

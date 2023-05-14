@@ -4,16 +4,14 @@ import {
   GET_SELLERS_REQUEST,
   GET_SELLERS_SUCCESS 
 } from "../constants/actionTypes";
-import { handledError } from "./handledResponse";
+import { checkData, handledError } from "../utils/handledResponse";
 import { getAllSellers } from "../api/seller";
 
 
 function* getAllSellersSaga({ token }: { token: string }) {
   try {
     const { data } = yield call(getAllSellers, token);
-    if (data.error) {
-      throw { data };
-    }
+    checkData(data);
     yield put({ type: GET_SELLERS_SUCCESS, sellers: data });
   } catch (error: any) {
     const message = handledError(error);

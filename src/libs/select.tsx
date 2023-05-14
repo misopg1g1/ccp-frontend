@@ -111,67 +111,29 @@ class Select extends React.Component<
   render() {
     const {
       id,
-      required,
-      fixedLabel,
       value,
       forcedValid,
       options,
       name,
       disabled,
       label,
-      defaultOption,
-      defaultDisable,
       classSelect,
-      stylesSelect,
       requiredMessage,
       hideError,
-      reference,
       additionalProp,
       width,
       marginTop,
       marginRight,
       marginLeft,
       paddingBottom,
-      showOptions,
     } = this.props;
     const { valid } = this.state;
-    let classElement = "";
-    let classValid = "";
-    let optionsToRender = "";
-
-    if (classSelect) {
-      classElement += classSelect;
-    }
-
-    if (required) {
-      classElement += " required";
-    }
-
-    if (fixedLabel) {
-      classElement += " fixedLabel";
-    } else if (value !== "") {
-      classElement += " used";
-    }
+    let classValid: string;
 
     if (forcedValid === false) {
       classValid = " error";
     } else {
       classValid = valid ? " valid" : "";
-    }
-
-    if (options.length || (showOptions && options.length)) {
-      optionsToRender = options.map((option: any) => {
-        return (
-          <option
-            value={option.value}
-            key={option.value}
-            className={option.class}
-          >
-            {" "}
-            {option.name}
-          </option>
-        );
-      });
     }
 
     return (
@@ -185,7 +147,7 @@ class Select extends React.Component<
           marginTop,
         }}
       >
-        <label htmlFor="type" className="FormLabel">
+        <label htmlFor={name} className="FormLabel">
           {label}
         </label>
         <select

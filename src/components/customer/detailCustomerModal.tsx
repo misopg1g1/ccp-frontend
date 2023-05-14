@@ -11,9 +11,9 @@ interface DetailCustomerComponentProps {
   isOpen: boolean;
   handleCloseModal: (event: any) => void;
   customer: Customer;
-};
+}
 
-interface DetailCustomerComponentState {};
+interface DetailCustomerComponentState {}
 
 class DetailCustomerModal extends React.Component<
   DetailCustomerComponentProps,
@@ -216,7 +216,7 @@ class DetailCustomerModal extends React.Component<
       </Modal>
     );
   };
-};
+}
 
 const mapStateToProps = (state: any) => ({
   token: state.login.token,

@@ -5,7 +5,6 @@ import Stack from '@mui/material/Stack';
 import { IconButton } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-
 export type Product = {
   id: string;
   name: string;
