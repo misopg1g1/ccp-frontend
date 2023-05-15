@@ -23,7 +23,7 @@ export default defineConfig({
     setupFiles: './tests/setup.tsx',
     coverage: {
       provider: 'istanbul',
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'lcov', 'html'],
     },
   },
 
