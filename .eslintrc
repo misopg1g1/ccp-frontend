@@ -2,10 +2,11 @@
     "extends": [
         "airbnb",
         "prettier",
-        "prettier/react"
+        "prettier/react",
+        "plugin:vitest/recommended"
     ],
     "plugings": [
-        "jest",
+        "vitest",
         "prettier"
     ],
     "rules": {
@@ -27,11 +28,16 @@
                 }
             }
         ],
-        "no-debugger": "warn"
+        "no-debugger": "warn",
+        "vitest/max-nested-describe": [
+            "error",
+            {
+              "max": 3
+            }
+        ]
     },
     "parser": "@babel/eslint-parser",
     "env": {
-        "jest/globals": true,
         "browser": true
     },
     "globals": {

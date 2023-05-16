@@ -137,11 +137,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
     setStateRole = (selectedRole: string) => {
         const roles = this.state.roles
         roles.map((role: any) => {
-            if (role.name === selectedRole) {
-                role.isActive = true
-            } else {
-                role.isActive = false
-            }
+            role.isActive = role.name === selectedRole;
         })
     }
 
@@ -276,12 +272,13 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                         <div
                                             key={rol.name}
                                             data-name={rol.name}
+                                            role="button"
                                             style={{
                                                 backgroundColor: rol.isActive ? '#2F76E6' : '',
                                                 color: rol.isActive ? '#FFFFFF' : '',
                                             }}
                                             className='RoleOption mt-16'
-                                            onClick={((e) => this.handleClick(rol.name))}>
+                                            onClick={(() => this.handleClick(rol.name))}>
                                             {rol.text}
                                         </div>
                                     )}

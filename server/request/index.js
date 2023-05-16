@@ -10,7 +10,11 @@ const hashObject = (jsonBody) => {
           Object.keys(obj)
             .sort()
             .forEach(key => {
-              sortedObj[key] = obj[key];
+              let insideObj = obj[key]
+              if(typeof insideObj === "object" && obj !== null && !Array.isArray(insideObj)){
+                insideObj = sortDict(insideObj)
+              }
+              sortedObj[key] = insideObj;
             });
           return sortedObj;
         }
@@ -52,7 +56,7 @@ export class Request {
                 }
                 console.info(`SERVER-APP-WEB[GET]: ${url}; SUCCESS`)
                 return response
-            } catch (error) {
+            } catch (err) {
                 console.error(`SERVER-APP-WEB[GET]: ${url}; EXCEPTION-ERROR: ${JSON.stringify(err)}`)
                 throw err
             }

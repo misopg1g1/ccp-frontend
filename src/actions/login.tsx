@@ -1,10 +1,9 @@
 import {
   LOGIN_REQUEST,
-  INIT_LOGIN,
   LOGOUT,
 } from "../constants/actionTypes";
 
-export const login = ({ credentials }) => ({
+export const login = ({ credentials }: { credentials: any }) => ({
   type: LOGIN_REQUEST,
   credentials,
 });
@@ -13,5 +12,3 @@ export const logout = () => {
     type: LOGOUT,
   };
 };
-
-export const initLogin = () => ({ type: INIT_LOGIN });

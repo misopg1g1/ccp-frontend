@@ -7,7 +7,6 @@ body > #root > div {
   height: 100vh;
 }
 
-
 .medium {
   color:  #FFFFFF;
   margin: 2px;
@@ -92,7 +91,6 @@ body > #root > div {
 }
 
 .ModalTitle {
-  font-family: 'Poppins';
   font-style: normal;
   font-weight: 700;
   font-size: 17px;
@@ -117,9 +115,8 @@ body > #root > div {
   width: 100%;
   height: 43px;
   background: #EBECEF;
-  border: 0px;
-  border-radius: 0px;
-  font-family: 'Poppins';
+  border: 0;
+  border-radius: 0;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -177,11 +174,10 @@ body > #root > div {
     margin-bottom: 10px;
 
     h2 {
-      font-family: Poppins;
       font-size: 24px;
       font-weight: 600;
       line-height: 36px;
-      letter-spacing: 0em;
+      letter-spacing: 0;
       text-align: left;
       margin: 0;
     }
@@ -191,7 +187,7 @@ body > #root > div {
       height: 21px;
       margin-left: 5px;
       margin-right: 5px;
-      color: "#DADADA";
+      color: #DADADA;
     }
   }
 }

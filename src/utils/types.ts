@@ -1,3 +1,7 @@
+import { Customer } from "../pages/customers/customer";
+import { Visit } from "../pages/visits/visit";
+import { Order } from "../pages/orders/order";
+
 export interface UserData {
   created_at: string;
   enabled: boolean;
@@ -6,7 +10,7 @@ export interface UserData {
   updated_at: string;
   user: string;
   verified: boolean;
-};
+}
 
 export interface GlobalState {
   login: {
@@ -17,9 +21,15 @@ export interface GlobalState {
     products: Product[];
   };
   customer: {
-    customers: any;
+    customers: Customer[];
   };
-};
+  visit: {
+    visits: Visit[];
+  };
+  order: {
+    orders: Order[];
+  }
+}
 
 export interface Category {
   description: string;
@@ -34,12 +44,12 @@ export enum Roles {
   TRANSPORTER = "TRANSPORTER",
   MARKETING = "MARKETING",
   CLIENT = "CLIENT",
-};
+}
 
 export enum ProductType {
   PERISHABLE = "PERISHABLE",
   NONPERISHABLE = "NONPERISHABLE",
-};
+}
 
 export enum Zone {
   ZONA_CENTRO = "ZONA CENTRO",
@@ -72,7 +82,7 @@ export interface Product {
   img_url: string;
   suppliers: string;
   category: Record<string, any>;
-};
+}
 
 export interface ProductCreate {
   name: string;
@@ -91,5 +101,12 @@ export interface ProductCreate {
 
 export interface Seller {
   id: string;
-  name: string;
+  first_name: string;
+  last_name: string;
+}
+
+export const defaultSeller: Seller = {
+  id: "",
+  first_name: "",
+  last_name: "",
 }

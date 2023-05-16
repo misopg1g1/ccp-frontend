@@ -14,7 +14,7 @@ export default () => {
         sagaMiddleware
     ];
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
         middlewares.push(logger);
     }
     store = legacy_createStore(persistedReducer(), compose(applyMiddleware(...middlewares)));

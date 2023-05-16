@@ -33,7 +33,7 @@ const LoginPage = (props: LoginPageProps) => {
 
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
-    const [showPassword, setShowPasswword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
     const [fieldIsValid, setFieldIsValid] = useState({
         user: null,
         password: null
@@ -44,10 +44,7 @@ const LoginPage = (props: LoginPageProps) => {
     }
 
     const isValidFields = () => {
-        if (!fieldIsValid.password || !fieldIsValid.user) {
-            return false
-        }
-        return true
+        return !(!fieldIsValid.password || !fieldIsValid.user);
     }
     
     const submit = (event: FormEvent) => {
@@ -62,7 +59,7 @@ const LoginPage = (props: LoginPageProps) => {
     }
 
     const togglePasswordVisible = () => {
-        setShowPasswword(!showPassword)
+        setShowPassword(!showPassword)
     }
     
     const handleValueChange = (name: string, value: string) => {

@@ -14,7 +14,7 @@
         linear-gradient(
             218.96deg, #2F76E5 24.52%, #7644D1 74.41%);
     border-radius: 8px;
-    box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
     height: 473px;
     width: 734px;

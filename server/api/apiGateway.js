@@ -41,7 +41,7 @@ export function getAllCustomers(token) {
     return Request.get(url, token)
 }
 
-export function createCustome(customer, token) {
+export function createCustomer(customer, token) {
     const url = `${config.apiGateway}/customers`
     return Request.post(url, customer, token)
 }
@@ -54,4 +54,19 @@ export function getAllCountries() {
 export function getCitiesByCountry({country}) {
     const url = `${config.apiGateway}/countries/${country}/cities`
     return Request.get(url)
+}
+
+export function getAllVisits(token) {
+    const url = `${config.apiGateway}/visits`
+    return Request.get(url, token)
+}
+
+export function getAllSellers(token) {
+    const url = `${config.apiGateway}/sellers`
+    return Request.get(url, token)
+}
+
+export function getAllOrders(token) {
+    const url = `${config.apiGateway}/orders`
+    return Request.get(url, token)
 }

@@ -38,7 +38,7 @@ export class Consumer {
     }
 
     static createCustomer(customer, token) {
-        return api.createProduct(customer, token)
+        return api.createCustomer(customer, token)
     }
 
     static getAllCountries() {
@@ -47,5 +47,17 @@ export class Consumer {
 
     static getCitiesByCountry(country) {
         return api.getCitiesByCountry(country)
+    }
+
+    static getAllVisits(token) {
+        return api.getAllVisits(token);
+    }
+
+    static getAllSellers(token) {
+        return api.getAllSellers(token);
+    }
+
+    static getAllOrders(token) {
+        return api.getAllOrders(token);
     }
 }

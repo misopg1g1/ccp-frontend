@@ -4,7 +4,7 @@ type Message = {
   type: string,
 };
 
-export function handleSucces(content: string, title: string = '') {
+export function handleSuccess(content: string, title: string = '') {
   const message: Message = {
     title: title ? title : 'Proceso exitoso',
     type: 'success',
@@ -19,7 +19,6 @@ const getContent = (message: string): string => {
 }
 
 export function handledError(error: any, title: string = ''): Message {
-  console.log('handle_error', error);
   let content = '';
   if (error.data) {
     content = error.data.error;
@@ -27,10 +26,15 @@ export function handledError(error: any, title: string = ''): Message {
   if (error.message) {
     content = error.message;
   }
-  const message: Message = {
-    title: title ? title : 'Error al ejecutar el proceso',
+  return {
+    title: title !== '' ? title : 'Error al ejecutar el proceso',
     type: 'error',
     content: getContent(content)
   }
-  return message;
+}
+
+export function checkData(data: any) {
+  if (data.error) {
+    throw { data };
+  }
 }

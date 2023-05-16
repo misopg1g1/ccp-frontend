@@ -7,6 +7,8 @@ import Products from '../products/products';
 import Message from '../../components/layout/messages/message';
 import { cleanMessage } from '../../actions/message';
 import Customers from '../customers/customers';
+import Visits from '../visits/visits';
+import Orders from '../orders/orders';
 
 interface DashboardPageProps {
   cleanMessage: any
@@ -16,10 +18,6 @@ interface DashboardPageProps {
 interface DashboardPageState {
   message: any
 }
-
-const Tab1 = () => <h1>Contenido de la pestaña 1</h1>;
-const Tab2 = () => <h1>Contenido de la pestaña 2</h1>;
-const Tab3 = () => <h1>Contenido de la pestaña 3</h1>;
 
 const DashboardPage = (props: DashboardPageProps) => {
   const { cleanMessage, message } = props
@@ -37,10 +35,10 @@ const DashboardPage = (props: DashboardPageProps) => {
           />
         }
         <Routes>
-          <Route path="view1" element={<Tab1 />} />
+          <Route path="orders" element={<Orders />} />
           <Route path="products" element={<Products />} />
           <Route path="customers" element={<Customers />} />
-          <Route path="view4" element={<Tab3 />} />
+          <Route path="visits" element={<Visits />} />
         </Routes>
       </div>
     </div>

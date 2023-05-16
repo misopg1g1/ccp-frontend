@@ -7,7 +7,7 @@ import Icons from "../../libs/icons";
 import Input from "../../libs/input";
 import Select from "../../libs/select";
 import { Seller, DocumentType, Zone } from "../../utils/types";
-import { Customer, FieldsRequired, defaultFieldsRequired, defaultCustomer, Address, IdentificationType } from "../../pages/customers/customer";
+import { Customer, FieldsRequired, defaultFieldsRequired, defaultCustomer } from "../../pages/customers/customer";
 import { createCustomer } from "../../actions/customer";
 import { getCitiesByCountry, cleanCities } from "../../actions/country";
 import { emailRegex } from "../../utils/regex";
@@ -22,12 +22,12 @@ interface CreateCustomerComponentProps {
   sellers: Seller[];
   countries: string[];
   cities: string[];
-};
+}
 
 interface CreateCustomerComponentState {
   customer: Customer;
   fieldIsValid: FieldsRequired;
-};
+}
 
 class CreateCustomerModal extends React.Component<
   CreateCustomerComponentProps,
@@ -57,7 +57,7 @@ class CreateCustomerModal extends React.Component<
     fieldIsValid.address_zone = customer.address.zone != "default";
     fieldIsValid.address_address = customer.address.address != "";
     this.setState({ fieldIsValid: fieldIsValid });
-    const invalidFields = Object.entries(fieldIsValid).filter(([, value]) => value === false);
+    const invalidFields = Object.entries(fieldIsValid).filter(([, value]) => !value);
     return !(invalidFields.length > 0);
   };
 
@@ -105,7 +105,7 @@ class CreateCustomerModal extends React.Component<
           [name]: value,
         },
       });
-    };
+    }
   };
 
   setStateObject = (name: string, value: string) => {
@@ -213,15 +213,10 @@ class CreateCustomerModal extends React.Component<
     );
     const optionsSellers = [
       { value: "default", label: "Seleccione un vendedor" },
-      { value: "seller 1", label: "Vendedor 1" },
-      { value: "seller 2", label: "Vendedor 2" },
-      { value: "seller 3", label: "Vendedor 3" },
-      { value: "seller 4", label: "Vendedor 4" },
-      { value: "seller 5", label: "Vendedor 5" },
     ].concat(
       Object.values(this.props.sellers || []).map((seller) => ({
-        label: seller.name,
-        value: seller.name,
+        label: `${seller.first_name} ${seller.last_name}`,
+        value: seller.id,
       }))
     );
 
@@ -464,11 +459,11 @@ class CreateCustomerModal extends React.Component<
       </Modal>
     );
   };
-};
+}
 
 const mapStateToProps = (state: any) => ({
   token: state.login.token,
-  sellers: state.seller?.sellers,
+  sellers: state.seller.sellers,
   countries: state.country.countries,
   cities: state.country?.cities,
 });

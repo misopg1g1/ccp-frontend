@@ -48,7 +48,7 @@ const SideTabs = (props: SideTabsComponentProps) => {
     setOpenModalCreateUser(!openModalCreateUser)
   }
 
-  const toogleCreateUserModal = (event: React.MouseEvent<HTMLLIElement>) => {
+  const toggleCreateUserModal = (event: React.MouseEvent<HTMLLIElement>) => {
     event.preventDefault()
     setOpenModalCreateUser(!openModalCreateUser)
     deleteUserDataFunc()
@@ -72,10 +72,10 @@ const SideTabs = (props: SideTabsComponentProps) => {
         </div>
       </div>
       <div className="list-container">
-        <Link className="button-container" to="view1">
+        <Link className="button-container" to="orders">
           <BsCalculator />
           <div className="link-container">
-            <h2>CPP</h2>
+            <h2>Ordenes</h2>
           </div>
         </Link>
         <Link className="button-container" to="products">
@@ -90,7 +90,7 @@ const SideTabs = (props: SideTabsComponentProps) => {
             <h2>Clientes</h2>
           </div>
         </Link>
-        <Link className="button-container" to="view4">
+        <Link className="button-container" to="visits">
           <RiSuitcaseLine />
           <div className="link-container">
             <h2>Visitas</h2>
@@ -134,7 +134,7 @@ const SideTabs = (props: SideTabsComponentProps) => {
       </div>
       <CreateUserModal
         isOpen={openModalCreateUser}
-        handleCloseModal={toogleCreateUserModal}
+        handleCloseModal={toggleCreateUserModal}
       />
     </div>
   );
