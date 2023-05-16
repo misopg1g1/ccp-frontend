@@ -4,7 +4,7 @@ import { Widget } from "../../components/widget/widget.component";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import "./products.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { GlobalState } from "../../utils/types";
+import { GlobalState, Roles } from "../../utils/types";
 import {
   DataGrid,
   GridRowSelectionModel,
@@ -19,6 +19,7 @@ import AddInventoryModal from "../../components/inventory/addInventoryModal";
 import DetailProductModal from "../../components/product/detailProductModal";
 import { getAllCategories } from "../../actions/category";
 import { Product, columns, noResultsOverlay } from "./product";
+import { RoleWrapper } from "../../components/role-wrapper/role-wrapper.component";
 
 export default function Products() {
   const [sortModel, setSortModel] = React.useState<any>([]);
@@ -165,11 +166,13 @@ export default function Products() {
         handleCloseModal={handleCloseModalAddInventory}
         productData={productSelected}
       />
-      <DetailProductModal
-        isOpen={openModalDetailProduct}
-        handleCloseModal={handleCloseModalDetailProduct}
-        productData={productSelected}
-      />
+      <RoleWrapper allowedRoles={[Roles.ADMIN, Roles.SELLER, Roles.MARKETING]}>
+        <DetailProductModal
+          isOpen={openModalDetailProduct}
+          handleCloseModal={handleCloseModalDetailProduct}
+          productData={productSelected}
+        />      
+      </RoleWrapper>
     </div>
   );
 }
