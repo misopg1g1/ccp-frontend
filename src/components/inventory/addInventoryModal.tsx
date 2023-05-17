@@ -18,7 +18,9 @@ interface AddInventoryComponentProps {
 
 interface AddInventoryComponentState {
     stock: string | undefined
-    fieldIsValid: any
+    fieldIsValid: {
+        stock: boolean
+    }
     login: any
 }
 
@@ -27,7 +29,9 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
         super(props);
         this.state = {
           stock: undefined,
-          fieldIsValid: null,
+          fieldIsValid: {
+            stock: true,
+          },
           login: null
         }
     }
@@ -51,8 +55,13 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
     handleSubmit = (event: any) => {
         event.preventDefault()
 
-        if (!this.state.fieldIsValid) {
-            this.setState({fieldIsValid: false})
+        if (!this.state.fieldIsValid.stock) {
+            this.setState({
+                fieldIsValid: {
+                    ...this.state.fieldIsValid,
+                    stock: false,
+                }
+            })
             return
         }
         const { addInventoryFunc, productData } = this.props
@@ -65,11 +74,15 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
         if (name === 'stock') {
             this.setState({ stock: value })
         }
-        this.setState({fieldIsValid: false})
     }
 
     handleValueValid = (name: string, valid: boolean) => {
-        this.setState({fieldIsValid: valid})
+        this.setState({
+            fieldIsValid: {
+              ...this.state.fieldIsValid,
+              [name]: valid,
+            }
+        });
     }
 
     render () {
@@ -132,7 +145,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                             <Input
                                 type='text'
                                 name='current-stock'
-                                label='Current stock'
+                                label='Stock actual'
                                 value={productData?.stock}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
@@ -145,7 +158,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                             <Input
                                 type='text'
                                 name='stock'
-                                label='Add Units'
+                                label='Agregar unidades'
                                 placeholder='10'
                                 value={this.state.stock}
                                 handleValueChange={this.handleValueChange}
@@ -156,7 +169,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                                 validations={this.validationsStockField}
                                 required={true}
                                 requiredMessage='El campo es requerido'
-                                forcedValid={this.state.fieldIsValid}
+                                forcedValid={this.state.fieldIsValid.stock}
                             ></Input>
                             <div className='{width=46%}'/>
                         </div>
