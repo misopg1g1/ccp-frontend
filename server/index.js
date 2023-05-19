@@ -15,4 +15,4 @@ async function createServer() {
   }
 }
 
-createServer().then(r => console.info(r));
+createServer();

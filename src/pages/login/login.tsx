@@ -35,8 +35,8 @@ const LoginPage = (props: LoginPageProps) => {
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const [fieldIsValid, setFieldIsValid] = useState({
-        user: null,
-        password: null
+        user: true,
+        password: true
     })
 
     if (isLoggedIn) {
@@ -46,10 +46,17 @@ const LoginPage = (props: LoginPageProps) => {
     const isValidFields = () => {
         return !(!fieldIsValid.password || !fieldIsValid.user);
     }
+
+    const formIsValid = (): boolean => {
+        fieldIsValid.user = (user != "");
+        fieldIsValid.password = password != "";
+        const invalidFields = Object.entries(fieldIsValid).filter(([, value]) => !value);
+        return !(invalidFields.length > 0);
+    };
     
     const submit = (event: FormEvent) => {
         event.preventDefault()
-        if (isValidFields()) {
+        if (formIsValid()) {
             loginFunc({
                 credentials: {user, password}
             })
@@ -69,7 +76,6 @@ const LoginPage = (props: LoginPageProps) => {
         if (name === 'password') {
             setPassword(value)
         }
-        setFieldIsValid({...fieldIsValid, [name]: null})
     }
 
     const handleValueValid = (name: string, valid: boolean) => {

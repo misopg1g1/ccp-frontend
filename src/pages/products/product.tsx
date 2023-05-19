@@ -8,7 +8,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 export type Product = {
   id: string;
   name: string;
-  sku: number;
+  sku: string;
   temperature_control: number;
   expiration_date: Date;
   fragility_conditions: string;

@@ -23,4 +23,36 @@ export const handlers = [
   rest.put('/api/products/123456789/inventories', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json([]))
   }),
+
+  rest.post('/api/products', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json([]))
+  }),
+
+  rest.get('/api/products', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json([]))
+  }),
+
+  rest.get('api/customers', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json([]))
+  }),
+
+  rest.get('/api/sellers', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json([]))
+  }),
+
+  rest.post('/api/login', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json([]))
+  }),
+
+  rest.get('/api/orders', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json([]))
+  }),
+
+  rest.get('/api/categories', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json([]))
+  }),
+
+  rest.get('/api/visits', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json([]))
+  }),
 ]
