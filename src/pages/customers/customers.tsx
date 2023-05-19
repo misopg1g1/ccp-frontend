@@ -2,7 +2,7 @@ import "./customers.scss";
 
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GlobalState } from "../../utils/types";
+import { GlobalState, Roles } from "../../utils/types";
 import { DataGrid, GridEventListener } from "@mui/x-data-grid";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { getAllCustomers } from "../../actions/customer";
@@ -16,6 +16,7 @@ import CreateCustomerModal from "../../components/customer/createCustomerModal";
 import { getAllCountries } from "../../actions/country";
 import { getAllSellers } from "../../actions/seller";
 import DetailCustomerModal from "../../components/customer/detailCustomerModal";
+import { RoleWrapper } from "../../components/role-wrapper/role-wrapper.component";
 
 export default function Customers() {
   const [sortModel, setSortModel] = React.useState<any>([]);
@@ -103,11 +104,13 @@ export default function Customers() {
         isOpen={openModalCreateCustomer}
         handleCloseModal={handleCloseModalCreateCustomer}
       />
-      <DetailCustomerModal
-        isOpen={openModalDetailCustomer}
-        handleCloseModal={handleCloseModalDetailCustomer}
-        customer={customerSelected}
-      />
+      <RoleWrapper allowedRoles={[Roles.ADMIN, Roles.SELLER, Roles.MARKETING]}>
+        <DetailCustomerModal
+          isOpen={openModalDetailCustomer}
+          handleCloseModal={handleCloseModalDetailCustomer}
+          customer={customerSelected}
+        />    
+      </RoleWrapper>
     </div>
   )
 }
