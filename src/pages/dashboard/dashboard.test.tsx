@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
 
-describe("tests for dashboard", () => {
+describe("<DashboardPage />", () => {
   it("", () => {});
 });
