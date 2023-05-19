@@ -31,9 +31,9 @@ export default function reducer(state = initialState, action: any) {
         products: null,
       };
     case CREATE_PRODUCT_REQUEST:
-      return { ...state, fetching: true, error: null };
+      return { ...state, fetching: true, error: null, product: action.product };
     case CREATE_PRODUCT_SUCCESS:
-      return { ...state, fetching: false, productData: action.product };
+      return { ...state, fetching: false, product: action.product };
     case CREATE_PRODUCT_FAIL:
       return { ...state, fetching: false, message: action.message };
     default:

@@ -1,6 +1,5 @@
-import React from 'react'
-import {fireEvent, render} from '@testing-library/react'
-import { describe, expect, test, vi } from "vitest";
+import { describe, it, vi } from "vitest";
+import { render, fireEvent } from "../../utils/test-utils";
 import LoginForm from '../login/loginForm'
 
 const loginDataMock = {
@@ -15,7 +14,7 @@ const fieldIsValid = {
 
 describe('<LoginForm />', () => {
 
-  test('renders with the correct fields', () => {
+  it('Should renders with the correct fields', () => {
     const handleValueChange = vi.fn()
     const handleValueValid = vi.fn()
     const handleClick = vi.fn()
@@ -39,6 +38,5 @@ describe('<LoginForm />', () => {
     expect(passwordInput).toBeInTheDocument()
     fireEvent.click(button)
     expect(handleClick).toHaveBeenCalled()
-  })
-
+  });
 })
