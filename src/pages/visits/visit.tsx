@@ -3,6 +3,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Seller, defaultSeller } from "../../utils/types";
 import { Customer, defaultCustomer } from "../customers/customer";
+import { useTranslation } from "react-i18next";
 
 export type Visit = {
   id?: string;
@@ -23,10 +24,21 @@ export const defaultVisit: Visit = {
   seller: defaultSeller,
 };
 
+const getTraduction = (key: string) => {
+  const [t] = useTranslation("global");
+  return t(key)
+}
+
 export const columns: GridColDef[] = [
   {
     field: "customer.registered_name",
-    headerName: "Cliente",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("visit.dashboard.table.columns.customer")}
+        </strong>
+      )
+    },
     flex: 2,
     valueGetter: (params) => {
       return params.row.customer.registered_name;
@@ -34,17 +46,35 @@ export const columns: GridColDef[] = [
   },
   {
     field: "visit_date",
-    headerName: "Fecha",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("visit.dashboard.table.columns.date")}
+        </strong>
+      )
+    },
     flex: 2,
   },
   {
     field: "order_id",
-    headerName: "Order ID",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("visit.dashboard.table.columns.order_id")}
+        </strong>
+      )
+    },
     flex: 2,
   },
   {
     field: "customer.address.zone",
-    headerName: "Zona",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("visit.dashboard.table.columns.zone")}
+        </strong>
+      )
+    },
     flex: 2,
     valueGetter: (params) => {
       return params.row.customer.address.zone;
@@ -52,7 +82,13 @@ export const columns: GridColDef[] = [
   },
   {
     field: "seller",
-    headerName: "Vendedor",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("visit.dashboard.table.columns.seller")}
+        </strong>
+      )
+    },
     flex: 2,
     valueGetter: (params) => {
       return `${params.row.seller.first_name} ${params.row.seller.last_name}`;
@@ -75,7 +111,7 @@ export const columns: GridColDef[] = [
 export const noResultsOverlay = () => {
   return (
       <Stack height="100%" alignItems="center" justifyContent="center">
-        Aún no se han generado visitas!
+        {getTraduction("visit.dashboard.table.results-overlay")}
       </Stack>
   );
 }

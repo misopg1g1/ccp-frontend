@@ -1,6 +1,6 @@
 import './message.scss'
 
-import React, {FC} from 'react';
+import {FC} from 'react';
 import Icons from "../../../libs/icons";
 import { DEFAULT_TIMEOUT_MESSAGE } from '../../../constants/actionTypes';
 

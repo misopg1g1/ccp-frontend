@@ -6,11 +6,13 @@ import Modal from "react-modal";
 import Icons from "../../libs/icons";
 import Input from "../../libs/input";
 import { DataGrid } from "@mui/x-data-grid";
+import { withTranslation } from "react-i18next";
 
 interface DetailOrderComponentProps {
   isOpen: boolean;
   handleCloseModal: (event: any) => void;
   order: Order;
+  t: any;
 }
 
 interface DetailOrderComponentState {}
@@ -53,7 +55,7 @@ class DetailOrderModal extends React.Component<
       >
         <div className="ContentModal">
           <div>
-            <span className="ModalTitle">Detalle de la orden</span>
+            <span className="ModalTitle">{this.props.t("order.modal.title")}</span>
             <div
               className="CloseModalButton"
               onClick={handleCloseModal}
@@ -68,7 +70,7 @@ class DetailOrderModal extends React.Component<
               <Input
                 type="text"
                 name="customer"
-                label="Cliente"
+                label={this.props.t("order.modal.input.customer-label")}
                 value={order.customer.registered_name}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -78,7 +80,7 @@ class DetailOrderModal extends React.Component<
               <Input
                 type="text"
                 name="seller"
-                label="Vendedor"
+                label={this.props.t("order.modal.input.seller-label")}
                 value={`${order.seller.first_name} ${order.seller.last_name}`}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -91,7 +93,7 @@ class DetailOrderModal extends React.Component<
               <Input
                 type="text"
                 name="grand_total"
-                label="Valor de venta"
+                label={this.props.t("order.modal.input.grand_total-label")}
                 value={order.grand_total}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -101,7 +103,7 @@ class DetailOrderModal extends React.Component<
               <Input
                 type="text"
                 name="discount"
-                label="Descuento"
+                label={this.props.t("order.modal.input.discount-label")}
                 value={order.discount.toString()}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -114,7 +116,7 @@ class DetailOrderModal extends React.Component<
               <Input
                 type="text"
                 name="state"
-                label="Estado"
+                label={this.props.t("order.modal.input.state-label")}
                 value={order.status}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -124,7 +126,7 @@ class DetailOrderModal extends React.Component<
               <Input
                 type="text"
                 name="date_delivered"
-                label="Fecha de entrega"
+                label={this.props.t("order.modal.input.date_delivered-label")}
                 value={order.delivery_date}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -135,7 +137,7 @@ class DetailOrderModal extends React.Component<
             </div>
             <div className="table-header-products-order">
               <label className='table-title-products'>
-                  Productos
+                {this.props.t("order.modal.products.title")}
               </label>
             </div>
             <div className="table-container-modal">
@@ -155,4 +157,4 @@ class DetailOrderModal extends React.Component<
   }
 }
 
-export default DetailOrderModal;
+export default withTranslation("global")(DetailOrderModal);

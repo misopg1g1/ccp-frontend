@@ -6,11 +6,13 @@ import Modal from "react-modal";
 import Icons from "../../libs/icons";
 import Input from "../../libs/input";
 import { Customer } from "../../pages/customers/customer";
+import { withTranslation } from "react-i18next";
 
 interface DetailCustomerComponentProps {
   isOpen: boolean;
   handleCloseModal: (event: any) => void;
   customer: Customer;
+  t: any;
 }
 
 interface DetailCustomerComponentState {}
@@ -67,7 +69,7 @@ class DetailCustomerModal extends React.Component<
             <Input
               type="text"
               name="registered_name"
-              label="Razón social"
+              label={this.props.t("customer.modal.input.registered_name-label")}
               value={customer.registered_name}
               classInput="ModalInput mt-8"
               disabled={true}
@@ -77,7 +79,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="first_name"
-                label="Nombres"
+                label={this.props.t("customer.modal.input.first_name-label")}
                 value={customer.first_name}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -87,7 +89,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="last_name"
-                label="Apellidos"
+                label={this.props.t("customer.modal.input.last_name-label")}
                 value={customer.last_name}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -100,7 +102,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="identification_type"
-                label="Tipo de documento"
+                label={this.props.t("customer.modal.select.identification_type-label")}
                 value={customer.identification.type}
                 classInput="ModalInput mt-8"
                 disabled={true}
@@ -110,7 +112,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="identification_number"
-                label="Número"
+                label={this.props.t("customer.modal.input.identification_number-label")}
                 value={customer.identification.number}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -123,7 +125,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="phone"
-                label="Teléfono"
+                label={this.props.t("customer.modal.input.phone-label")}
                 value={customer.phone}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -133,7 +135,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="email"
-                label="Email"
+                label={this.props.t("customer.modal.input.email-label")}
                 value={customer.email}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -146,7 +148,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="address_country"
-                label="País"
+                label={this.props.t("customer.modal.select.country-label")}
                 value={customer.address.country}
                 width="48%"
                 marginTop="24px"
@@ -156,7 +158,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="address_city"
-                label="Ciudad"
+                label={this.props.t("customer.modal.select.city-label")}
                 value={customer.address.city}
                 width="48%"
                 marginTop="24px"
@@ -169,7 +171,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="address_zone"
-                label="Zona"
+                label={this.props.t("customer.modal.select.zone-label")}
                 value={customer.address.zone}
                 width="48%"
                 marginTop="24px"
@@ -179,7 +181,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="seller_id"
-                label="Vendedor"
+                label={this.props.t("customer.modal.select.seller-label")}
                 value={customer.seller_name}
                 width="48%"
                 marginTop="24px"
@@ -192,7 +194,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="address_address"
-                label="Dirección"
+                label={this.props.t("customer.modal.input.address-label")}
                 value={customer.address.address}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -202,7 +204,7 @@ class DetailCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="address_postal_code"
-                label="Código postal"
+                label={this.props.t("customer.modal.input.postal_code-label")}
                 value={customer.address.postal_code}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -227,4 +229,4 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = {}
 
-export default connect(mapStateToProps, mapDispatchToProps)(DetailCustomerModal);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation("global")(DetailCustomerModal));

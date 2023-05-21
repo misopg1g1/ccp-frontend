@@ -14,8 +14,10 @@ import {
   GridEventListener,
 } from "@mui/x-data-grid";
 import DetailVisitModal from "../../components/visit/detailVisitModal";
+import { useTranslation } from "react-i18next";
 
 export default function Visits() {
+  const [t] = useTranslation("global");
   const [sortModel, setSortModel] = React.useState<any>([]);
   const [openModalDetailVisit, setOpenModalDetailVisit] = React.useState<boolean>(false);
   const [visitSelected, setVisitSelected] = React.useState<Visit>(defaultVisit);
@@ -62,20 +64,20 @@ export default function Visits() {
       <div className="widget-container">
         <Widget
           icon={<AiOutlinePlusCircle />}
-          description="Total de visitas"
+          description={t("visit.dashboard.total_visits")}
           quantity={Object.values(visits).length.toString()}
           iconAction={() => console.log("onClick from Add Visit")}
           background
         />
         <Widget 
           icon={<AiOutlinePlusCircle />}
-          description="Vendedores"
+          description={t("visit.dashboard.total_sellers")}
           quantity={sellersCount()}
           iconAction={() => console.log("onClick from Add Seller")}
         />
       </div>
       <div className="table-header">
-        <h2>Todas las visitas</h2>
+        <h2>{t("visit.dashboard.table.title")}</h2>
         <div className="icon-container">
           <IconButton>
             <BiEdit />
