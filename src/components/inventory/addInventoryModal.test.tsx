@@ -3,11 +3,15 @@ import { describe, it, vi } from "vitest";
 import { render, screen, fireEvent } from "../../utils/test-utils";
 import configureStore from '../../configureStore';
 import AddInventoryModal from './addInventoryModal';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../../tests/mocks/i18n';
 
 function renderWithContext(element: any) {
   const {store} = configureStore();
   render(
-    <Provider store={store}>{element}</Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>{element}</Provider>
+    </I18nextProvider>
   );
   return { store };
 }
@@ -20,12 +24,6 @@ const productSelected = {
   sku: "XYZ12345",
   stock: "10",
 }
-
-const myPromise = new Promise(function(resolve) {
-  setTimeout(function() {
-    fireEvent.click(button);
-  }, 3000);
-});
 
 describe("<AddInventoryModal />", () => {
 
@@ -43,7 +41,7 @@ describe("<AddInventoryModal />", () => {
     const modalTitle = screen.getByText(productSelected.name);
     expect(modalTitle).toBeInTheDocument();
 
-    const descriptionInput = screen.getByLabelText("Descripción");
+    const descriptionInput = screen.getByLabelText("Descripción del producto");
     expect(descriptionInput).toBeInTheDocument();
 
     const skuInput = screen.getByLabelText("SKU");
@@ -74,7 +72,7 @@ describe("<AddInventoryModal />", () => {
     expect(imageElement).toBeInTheDocument();
     expect(imageElement.src).toBe(productSelected.img_url);
 
-    const descriptionInput: HTMLInputElement = screen.getByLabelText("Descripción");
+    const descriptionInput: HTMLInputElement = screen.getByLabelText("Descripción del producto");
     expect(descriptionInput.value).toBe('Product description test');
 
     const skuInput: HTMLInputElement = screen.getByLabelText("SKU");

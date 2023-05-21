@@ -17,8 +17,10 @@ import { getAllCountries } from "../../actions/country";
 import { getAllSellers } from "../../actions/seller";
 import DetailCustomerModal from "../../components/customer/detailCustomerModal";
 import { RoleWrapper } from "../../components/role-wrapper/role-wrapper.component";
+import { useTranslation } from "react-i18next";
 
 export default function Customers() {
+  const [t] = useTranslation("global");
   const [sortModel, setSortModel] = React.useState<any>([]);
   const [openModalCreateCustomer, setOpenModalCreateCustomer] = React.useState<boolean>(false);
   const [openModalDetailCustomer, setOpenModalDetailCustomer] = React.useState<boolean>(false);
@@ -67,14 +69,14 @@ export default function Customers() {
       <div className="widget-container">
         <Widget
           icon={<AiOutlinePlusCircle />}
-          description="Total de clientes"
+          description={t("customer.dashboard.customers_total")}
           quantity={Object.values(customers).length.toString()}
           iconAction={handleClicNewCustomer}
           background
         />
       </div>
       <div className="table-header">
-        <h2>Todos los clientes</h2>
+        <h2>{t("customer.dashboard.table.title")}</h2>
         <div className="icon-container">
           <IconButton onClick={() => console.log("onClick from Edit")}>
               <BiEdit />

@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import { IconButton } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Zone } from "../../utils/types";
+import { useTranslation } from "react-i18next";
 
 export type IdentificationType = {
   number: string,
@@ -85,15 +86,32 @@ export const defaultFieldsRequired: FieldsRequired = {
     address_address: true,
 };
 
+const getTraduction = (key: string) => {
+  const [t] = useTranslation("global");
+  return t(key)
+}
+
 export const columns: GridColDef[] = [
   {
     field: "registered_name",
-    headerName: "Nombre",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("customer.dashboard.table.columns.name")}
+        </strong>
+      )
+    },
     flex: 2,
   },
   {
     field: "identification",
-    headerName: "Identificación",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("customer.dashboard.table.columns.identification")}
+        </strong>
+      )
+    },
     flex: 2,
     valueGetter: (params) => {
       return (params.value as Customer["identification"]).number;
@@ -101,7 +119,13 @@ export const columns: GridColDef[] = [
   },
   {
     field: "address.city",
-    headerName: "Ciudad",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("customer.dashboard.table.columns.city")}
+        </strong>
+      )
+    },
     flex: 2,
     valueGetter: (params) => {
       return `${params.row.address.city}`;
@@ -109,7 +133,13 @@ export const columns: GridColDef[] = [
   },
   {
     field: "address.zone",
-    headerName: "Zona",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("customer.dashboard.table.columns.zone")}
+        </strong>
+      )
+    },
     flex: 2,
     valueGetter: (params) => {
       return `${params.row.address.zone}`;
@@ -117,7 +147,13 @@ export const columns: GridColDef[] = [
   },
   {
     field: "seller_name",
-    headerName: "Vendedor",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("customer.dashboard.table.columns.seller")}
+        </strong>
+      )
+    },
     flex: 2,
   },
   {
@@ -137,7 +173,7 @@ export const columns: GridColDef[] = [
 export const noResultsOverlay = () => {
   return (
     <Stack height="100%" alignItems="center" justifyContent="center">
-      Aún no se han creado clientes!
+      {getTraduction("customer.dashboard.table.results-overlay")}
     </Stack>
   );
 }

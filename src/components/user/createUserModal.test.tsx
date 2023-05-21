@@ -3,11 +3,15 @@ import { describe, it, vi } from "vitest";
 import CreateUserModal from "../user/createUserModal";
 import configureStore from '../../configureStore';
 import { render, screen, fireEvent } from "../../utils/test-utils";
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../../tests/mocks/i18n';
 
 function renderWithContext(element: any) {
   const {store} = configureStore();
   render(
-    <Provider store={store}>{element}</Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>{element}</Provider>
+    </I18nextProvider>
   );
   return { store };
 }

@@ -5,6 +5,8 @@ import configureStore from '../../configureStore';
 import Header from "../../components/header/header.component";
 import { LOGIN_SUCCESS } from "../../constants/actionTypes";
 import dayjs from "dayjs";
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../../tests/mocks/i18n';
 
 dayjs.locale("es");
 const userData = {
@@ -24,9 +26,11 @@ describe("<Header />", () => {
       userData: userData.data 
     });
     render(
-      <Provider store={store}>
-        <Header></Header>
-      </Provider>
+      <I18nextProvider i18n={i18n}>
+        <Provider store={store}>
+          <Header></Header>
+        </Provider>
+      </I18nextProvider>
     );
 
     const welcomeText = screen.getByText(`Bienvenido ${userData.data.user}`);

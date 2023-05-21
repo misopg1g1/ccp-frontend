@@ -20,8 +20,10 @@ import DetailProductModal from "../../components/product/detailProductModal";
 import { getAllCategories } from "../../actions/category";
 import { Product, columns, noResultsOverlay } from "./product";
 import { RoleWrapper } from "../../components/role-wrapper/role-wrapper.component";
+import { useTranslation } from "react-i18next";
 
 export default function Products() {
+  const [t] = useTranslation("global");
   const [sortModel, setSortModel] = React.useState<any>([]);
   const [rowSelectionModel, setRowSelectionModel] =
     React.useState<GridRowSelectionModel>([]);
@@ -110,26 +112,26 @@ export default function Products() {
       <div className="widget-container">
         <Widget
           icon={<AiOutlinePlusCircle />}
-          description="Total de Productos"
+          description={t("product.dashboard.total_products")}
           quantity={Object.values(products).length.toString()}
           iconAction={handleClickNewProduct}
           background
         />
         <Widget
           icon={<AiOutlinePlusCircle />}
-          description="Categorias"
+          description={t("product.dashboard.total_categories")}
           quantity="3"
           iconAction={() => console.log("clicked")}
         />
         <Widget
           icon={<AiOutlinePlusCircle />}
-          description="Bodegas"
+          description={t("product.dashboard.total_warehouses")}
           quantity="1"
           iconAction={() => console.log("clicked")}
         />
       </div>
       <div className="table-header">
-        <h2>Todos los Productos</h2>
+        <h2>{t("product.dashboard.table.title")}</h2>
         <div className="icon-container">
           <IconButton onClick={handleClickDetail}>
             <BiEdit />

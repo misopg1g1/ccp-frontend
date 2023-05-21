@@ -9,6 +9,7 @@ import Select from "../../libs/select";
 import { createProduct } from "../../actions/product";
 import { onlyNumbersRegex } from "../../utils/regex";
 import { Category, ProductCreate, ProductType } from "../../utils/types";
+import { withTranslation } from "react-i18next";
 
 interface CreateProductComponentProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface CreateProductComponentProps {
   createProductFunc: any;
   token: string;
   categories: Category[];
+  t: any;
 }
 
 interface CreateProductComponentState {
@@ -51,10 +53,10 @@ class CreateProductModal extends React.Component<
     };
   }
 
-  validationsStockField: any = [
+  validationsNumericField: any = [
     {
       fn: (value: string) => onlyNumbersRegex.test(value),
-      message: "Ingrese un valor numerico",
+      message: this.props.t("product.modal.input.validation_numbers_message"),
     },
   ];
 
@@ -214,7 +216,9 @@ class CreateProductModal extends React.Component<
       >
         <div className="ContentModal">
           <div>
-            <span className="ModalTitle">Nuevo producto</span>
+            <span className="ModalTitle">
+              {this.props.t("product.modal.title")}
+            </span>
             <div
               className="CloseModalButton"
               onClick={this.handleCloseModal}
@@ -225,7 +229,7 @@ class CreateProductModal extends React.Component<
             </div>
           </div>
           <React.Fragment>
-            <img className="ProductImage mt-16" src={image} alt="Product Image"></img>
+            <img className="ProductImage mt-16" src={image} alt={this.props.t("product.modal.image")}></img>
             <input
               className="mt-8"
               type="file"
@@ -236,42 +240,41 @@ class CreateProductModal extends React.Component<
             <Input
               type="text"
               name="name"
-              label="Nombre del producto"
-              placeholder="Escribe el nombre del producto"
+              label={this.props.t("product.modal.input.name-label")}
+              placeholder={this.props.t("product.modal.input.name-placeholder")}
               value={product.name}
               handleValueChange={this.handleValueChange}
               handleValueValid={this.handleValueValid}
               classInput="Input mt-8"
               marginTop="36px"
               required={true}
-              requiredMessage="El campo es requerido"
+              requiredMessage={this.props.t("product.modal.input.required_message")}
               forcedValid={fieldIsValid.name}
             ></Input>
             <Input
               type="text"
               name="description"
-              label="Descripción del producto"
-              placeholder="Escribe la descripción del producto"
+              label={this.props.t("product.modal.input.description-label")}
+              placeholder={this.props.t("product.modal.input.description-placeholder")}
               value={product.description}
               handleValueChange={this.handleValueChange}
               handleValueValid={this.handleValueValid}
               classInput="Input mt-8"
               marginTop="36px"
               required={true}
-              requiredMessage="El campo es requerido"
+              requiredMessage={this.props.t("product.modal.input.required_message")}
               forcedValid={fieldIsValid.description}
             ></Input>
             <div className="ModalContainerTwoColumns">
               <Select
                 name="type"
-                label="Tipo de producto"
+                label={this.props.t("product.modal.select.type-label")}
                 handleValueValid={this.handleValueValid}
                 handleValueChange={this.handleValueChange}
                 value={product.type}
-                defaultOption="Seleccione un tipo"
                 options={optionsType}
                 required={true}
-                requiredMessage="Debe seleccionar una opción"
+                requiredMessage={this.props.t("product.modal.select.required_message")}
                 forcedValid={fieldIsValid.type}
                 marginTop="36px"
                 width="46%"
@@ -279,16 +282,15 @@ class CreateProductModal extends React.Component<
               />
               <Select
                 name="categories"
-                label="Categoria"
+                label={this.props.t("product.modal.select.category-label")}
                 handleValueValid={this.handleValueValid}
                 handleValueChange={(name: string, value: string) =>
                   this.handleValueChange(name, [value])
                 }
                 value={product.categories}
-                defaultOption="Seleccione una categoria"
                 options={optionsCategory}
                 required={true}
-                requiredMessage="Debe seleccionar una opción"
+                requiredMessage={this.props.t("product.modal.select.required_message")}
                 forcedValid={fieldIsValid.categories}
                 classSelect="Input mt-8"
                 marginTop="36px"
@@ -300,24 +302,24 @@ class CreateProductModal extends React.Component<
               <Input
                 type="text"
                 name="price"
-                label="Precio unitario"
-                placeholder="100.000,00"
+                label={this.props.t("product.modal.input.price-label")}
+                placeholder={this.props.t("product.modal.input.price-placeholder")}
                 value={product.price}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
                 classInput="Input mt-8"
                 marginTop="36px"
                 required={true}
-                requiredMessage="El campo es requerido"
+                requiredMessage={this.props.t("product.modal.input.required_message")}
                 forcedValid={fieldIsValid.price}
-                validations={this.validationsStockField}
+                validations={this.validationsNumericField}
                 width="46%"
               ></Input>
               <Input
                 type="date"
                 name="expiration_date"
-                label="Fecha de expiración"
-                placeholder="dd/mm/aaaa"
+                label={this.props.t("product.modal.input.expiration_date-label")}
+                placeholder={this.props.t("product.modal.input.expiration_date-placeholder")}
                 value={product.expiration_date}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
@@ -331,21 +333,21 @@ class CreateProductModal extends React.Component<
               <Input
                 type="text"
                 name="temperature_control"
-                label="Control de temperatura"
-                placeholder="temperature_control"
+                label={this.props.t("product.modal.input.temperature_control-label")}
+                placeholder={this.props.t("product.modal.input.temperature_control-placeholder")}
                 value={product.temperature_control}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
                 classInput="Input mt-8"
                 marginTop="36px"
-                validations={this.validationsStockField}
+                validations={this.validationsNumericField}
                 width="46%"
               ></Input>
               <Input
                 type="text"
                 name="dimensions"
-                label="Dimensiones (cm)"
-                placeholder="Ancho - Alto - Largo"
+                label={this.props.t("product.modal.input.dimensions-label")}
+                placeholder={this.props.t("product.modal.input.dimensions-placeholder")}
                 value={product.dimensions}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
@@ -361,7 +363,7 @@ class CreateProductModal extends React.Component<
                 className="ModalButton mt-32"
                 onClick={this.handleSubmit}
               >
-                Guardar
+                {this.props.t("product.modal.save-button")}
               </button>
             </div>
           </React.Fragment>
@@ -380,4 +382,4 @@ const mapDispatchToProps = {
   createProductFunc: createProduct,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProductModal);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation("global")(CreateProductModal));

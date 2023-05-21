@@ -7,6 +7,7 @@ import Icons from '../../libs/icons'
 import Input from '../../libs/input'
 import { addInventory } from '../../actions/inventory'
 import { onlyNumbersRegex } from '../../utils/regex'
+import { withTranslation } from 'react-i18next';
 
 interface AddInventoryComponentProps {
     isOpen: boolean
@@ -14,6 +15,7 @@ interface AddInventoryComponentProps {
     addInventoryFunc: any
     productData: any
     token: string
+    t: any
 }
 
 interface AddInventoryComponentState {
@@ -39,7 +41,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
     validationsStockField: any = [
         {
             fn: (value: string) => onlyNumbersRegex.test(value),
-            message: 'Ingrese un valor numerico'
+            message: this.props.t("inventory.validation_numbers_message"),
         }
     ]
 
@@ -119,12 +121,12 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                         <img 
                             className='ProductImage mt-16'
                             src={productData?.img_url}
-                            alt={'Imagen del producto con nombre: ' + productData?.name}>
+                            alt={`${this.props.t("product.modal.input.alt-image")} ${productData?.name}`}>
                         </img>
                         <Input
                             type='text'
                             name='description'
-                            label='Descripción'
+                            label={this.props.t("product.modal.input.description-label")}
                             value={productData?.description}
                             maxLength={20}
                             classInput='ModalInput mt-8'
@@ -135,7 +137,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                             <Input
                                 type='text'
                                 name='sku'
-                                label='SKU'
+                                label={this.props.t("product.modal.input.sku")}
                                 value={productData?.sku}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
@@ -145,7 +147,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                             <Input
                                 type='text'
                                 name='current-stock'
-                                label='Stock actual'
+                                label={this.props.t("product.modal.input.current-stock")}
                                 value={productData?.stock}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
@@ -158,7 +160,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                             <Input
                                 type='text'
                                 name='stock'
-                                label='Agregar unidades'
+                                label={this.props.t("product.modal.input.stock")}
                                 placeholder='10'
                                 value={this.state.stock}
                                 handleValueChange={this.handleValueChange}
@@ -175,7 +177,7 @@ class AddInventoryModal extends React.Component<AddInventoryComponentProps, AddI
                         </div>
                         <div>
                             <button type='submit' className='ModalButton mt-32' onClick={this.handleSubmit}>
-                                Actualizar
+                                {this.props.t("product.modal.update-button")}
                             </button>
                         </div>
                     </React.Fragment>
@@ -193,4 +195,4 @@ const mapDispatchToProps = {
     addInventoryFunc: addInventory
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddInventoryModal)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation("global")(AddInventoryModal))

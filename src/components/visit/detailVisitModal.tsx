@@ -5,11 +5,13 @@ import { Visit } from "../../pages/visits/visit";
 import Modal from "react-modal";
 import Input from "../../libs/input";
 import Icons from "../../libs/icons";
+import { withTranslation } from "react-i18next";
 
 interface DetailVisitComponentProps {
   isOpen: boolean;
   handleCloseModal: (event: any) => void;
   visit: Visit;
+  t: any;
 }
 
 interface DetailVisitComponentState {}
@@ -52,7 +54,9 @@ class DetailVisitModal extends React.Component<
       >
         <div className="ContentModal">
           <div>
-            <span className="ModalTitle">Detalle de la visita</span>
+            <span className="ModalTitle">
+              {this.props.t("visit.modal.title")}
+            </span>
             <div
               className="CloseModalButton"
               onClick={handleCloseModal}
@@ -66,13 +70,13 @@ class DetailVisitModal extends React.Component<
             <img
               className="VisitImage mt-32"
               src={visit.image_url}
-              alt={'Imagen de la visita'}
+              alt={this.props.t("visit.modal.alt-img")}
             />
             <div className="ModalContainerTwoColumns mt-16">
               <Input
                 type="text"
                 name="date"
-                label="Fecha"
+                label={this.props.t("visit.modal.input.date-label")}
                 value={visit.visit_date}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -82,7 +86,7 @@ class DetailVisitModal extends React.Component<
               <Input
                 type="text"
                 name="seller"
-                label="Vendedor"
+                label={this.props.t("visit.modal.input.seller-label")}
                 value={`${visit.seller.first_name} ${visit.seller.last_name}`}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -94,7 +98,7 @@ class DetailVisitModal extends React.Component<
             <Input
               type="text"
               name="customer"
-              label="Cliente"
+              label={this.props.t("visit.modal.input.customer-label")}
               value={visit.customer.registered_name}
               classInput="ModalInput mt-8"
               disabled={true}
@@ -104,7 +108,7 @@ class DetailVisitModal extends React.Component<
               <Input
                 type="text"
                 name="order_id"
-                label="Orden ID"
+                label={this.props.t("visit.modal.input.order_id-label")}
                 value={visit.order_id}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -114,7 +118,7 @@ class DetailVisitModal extends React.Component<
               <Input
                 type="text"
                 name="zone"
-                label="Zona"
+                label={this.props.t("visit.modal.input.zone-label")}
                 value={visit.customer.address.zone}
                 classInput="ModalInput mt-8"
                 marginTop="24px"
@@ -126,7 +130,7 @@ class DetailVisitModal extends React.Component<
             <Input
               type="text"
               name="comments"
-              label="Comentarios"
+              label={this.props.t("visit.modal.input.comments-label")}
               value={visit.description}
               classInput="ModalInput mt-8"
               disabled={true}
@@ -140,4 +144,4 @@ class DetailVisitModal extends React.Component<
 }
 
 
-export default DetailVisitModal;
+export default withTranslation("global")(DetailVisitModal);

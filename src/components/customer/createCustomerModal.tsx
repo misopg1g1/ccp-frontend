@@ -11,6 +11,7 @@ import { Customer, FieldsRequired, defaultFieldsRequired, defaultCustomer } from
 import { createCustomer } from "../../actions/customer";
 import { getCitiesByCountry, cleanCities } from "../../actions/country";
 import { emailRegex } from "../../utils/regex";
+import { withTranslation } from "react-i18next";
 
 interface CreateCustomerComponentProps {
   isOpen: boolean;
@@ -22,6 +23,7 @@ interface CreateCustomerComponentProps {
   sellers: Seller[];
   countries: string[];
   cities: string[];
+  t: any;
 }
 
 interface CreateCustomerComponentState {
@@ -180,23 +182,23 @@ class CreateCustomerModal extends React.Component<
       },
     };
     const optionsDocumentType = [
-      { value: "default", label: "Seleccione un tipo de documento" },
-      { value: DocumentType.DNI, label: "Documento nacional de identidad" },
-      { value: DocumentType.NIT, label: "Número de identificación tributaria" },
-      { value: DocumentType.RUT, label: "Registro único tributario" },
-      { value: DocumentType.CEDULA_DE_EXTRANJERIA, label: "Cedula de extranjeria" },
-      { value: DocumentType.PASAPORTE, label: "Pasaporte" },
+      { value: "default", label: this.props.t("customer.options.document-type") },
+      { value: DocumentType.DNI, label: this.props.t("customer.options.document-type-dni") },
+      { value: DocumentType.NIT, label: this.props.t("customer.options.document-type-nit") },
+      { value: DocumentType.RUT, label: this.props.t("customer.options.document-type-rut") },
+      { value: DocumentType.CEDULA_DE_EXTRANJERIA, label: this.props.t("customer.options.document-type-ce") },
+      { value: DocumentType.PASAPORTE, label: this.props.t("customer.options.document-type-ps") },
     ];
     const optionsZone = [
-      { value: "default", label: "Seleccione una zona" },
-      { value: Zone.ZONA_NORTE, label: "Norte" },
-      { value: Zone.ZONA_ESTE, label: "Este" },
-      { value: Zone.ZONA_CENTRO, label: "Centro" },
-      { value: Zone.ZONA_OESTE, label: "Oeste" },
-      { value: Zone.ZONA_SUR, label: "Sur" },
+      { value: "default", label: this.props.t("customer.options.zone") },
+      { value: Zone.ZONA_NORTE, label: this.props.t("customer.options.zone-north") },
+      { value: Zone.ZONA_ESTE, label: this.props.t("customer.options.zone-east") },
+      { value: Zone.ZONA_CENTRO, label: this.props.t("customer.options.zone-central") },
+      { value: Zone.ZONA_OESTE, label: this.props.t("customer.options.zone-west") },
+      { value: Zone.ZONA_SUR, label: this.props.t("customer.options.zone-south") },
     ];
     const optionsCountry = [
-      { value: "default", label: "Seleccione un país" },
+      { value: "default", label: this.props.t("customer.options.country") },
     ].concat(
       Object.values(this.props.countries || []).map((country) => ({
         label: country,
@@ -204,7 +206,7 @@ class CreateCustomerModal extends React.Component<
       }))
     );
     const optionsCity = [
-      { value: "default", label: "Seleccione una ciudad" },
+      { value: "default", label: this.props.t("customer.options.city") },
     ].concat(
       Object.values(this.props.cities || []).map((city) => ({
         label: city,
@@ -212,7 +214,7 @@ class CreateCustomerModal extends React.Component<
       }))
     );
     const optionsSellers = [
-      { value: "default", label: "Seleccione un vendedor" },
+      { value: "default", label: this.props.t("customer.options.seller") },
     ].concat(
       Object.values(this.props.sellers || []).map((seller) => ({
         label: `${seller.first_name} ${seller.last_name}`,
@@ -229,7 +231,9 @@ class CreateCustomerModal extends React.Component<
       >
         <div className="ContentModal">
           <div>
-            <span className="ModalTitle">Nuevo Cliente</span>
+            <span className="ModalTitle">
+              {this.props.t("customer.modal.title")}
+            </span>
             <div
               className="CloseModalButton"
               onClick={this.handleCloseModal}
@@ -243,45 +247,45 @@ class CreateCustomerModal extends React.Component<
             <Input
               type="text"
               name="registered_name"
-              label="Razón social"
-              placeholder="Razón social del cliente"
+              label={this.props.t("customer.modal.input.registered_name-label")}
+              placeholder={this.props.t("customer.modal.input.registered_name-placeholder")}
               value={customer.registered_name}
               handleValueChange={this.handleValueChange}
               handleValueValid={this.handleValueValid}
               classInput="Input mt-8"
               marginTop="24px"
               required={true}
-              requiredMessage="El campo es requerido"
+              requiredMessage={this.props.t("customer.modal.input.required_message")}
               forcedValid={fieldIsValid.registered_name}
             />
             <div className="ModalContainerTwoColumns">
               <Input
                 type="text"
                 name="first_name"
-                label="Nombres"
-                placeholder="Nombres del contacto"
+                label={this.props.t("customer.modal.input.first_name-label")}
+                placeholder={this.props.t("customer.modal.input.first_name-placeholder")}
                 value={customer.first_name}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
                 classInput="Input mt-8"
                 marginTop="24px"
                 required={true}
-                requiredMessage="El campo es requerido"
+                requiredMessage={this.props.t("customer.modal.input.required_message")}
                 forcedValid={fieldIsValid.first_name}
                 width="48%"
               />
               <Input
                 type="text"
                 name="last_name"
-                label="Apellidos"
-                placeholder="Apellidos del contacto"
+                label={this.props.t("customer.modal.input.last_name-label")}
+                placeholder={this.props.t("customer.modal.input.last_name-placeholder")}
                 value={customer.last_name}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
                 classInput="Input mt-8"
                 marginTop="24px"
                 required={true}
-                requiredMessage="El campo es requerido"
+                requiredMessage={this.props.t("customer.modal.input.required_message")}
                 forcedValid={fieldIsValid.last_name}
                 width="48%"
                 marginLeft="4%"
@@ -290,13 +294,13 @@ class CreateCustomerModal extends React.Component<
             <div className="ModalContainerTwoColumns">
               <Select
                 name="identification_type"
-                label="Tipo de documento"
+                label={this.props.t("customer.modal.select.identification_type-label")}
                 handleValueValid={this.handleValueValid}
                 handleValueChange={this.handleValueChange}
                 value={customer.identification.type}
                 options={optionsDocumentType}
                 required={true}
-                requiredMessage="Debe seleccionar una opción"
+                requiredMessage={this.props.t("customer.modal.select.required_message")}
                 forcedValid={fieldIsValid.identification_type}
                 width="48%"
                 marginTop="24px"
@@ -305,15 +309,15 @@ class CreateCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="identification_number"
-                label="Número"
-                placeholder="Número de documento"
+                label={this.props.t("customer.modal.input.identification_number-label")}
+                placeholder={this.props.t("customer.modal.input.identification_number-placeholder")}
                 value={customer.identification.number}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
                 classInput="Input mt-8"
                 marginTop="24px"
                 required={true}
-                requiredMessage="El campo es requerido"
+                requiredMessage={this.props.t("customer.modal.input.required_message")}
                 forcedValid={fieldIsValid.identification_number}
                 width="48%"
                 marginLeft="4%"
@@ -323,30 +327,30 @@ class CreateCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="phone"
-                label="Teléfono"
-                placeholder="Teléfono de contacto"
+                label={this.props.t("customer.modal.input.phone-label")}
+                placeholder={this.props.t("customer.modal.input.phone-placeholder")}
                 value={customer.phone}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
                 classInput="Input mt-8"
                 marginTop="24px"
                 required={true}
-                requiredMessage="El campo es requerido"
+                requiredMessage={this.props.t("customer.modal.input.required_message")}
                 forcedValid={fieldIsValid.phone}
                 width="48%"
               />
               <Input
                 type="text"
                 name="email"
-                label="Email"
-                placeholder="Email del contacto"
+                label={this.props.t("customer.modal.input.email-label")}
+                placeholder={this.props.t("customer.modal.input.email-placeholder")}
                 value={customer.email}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
                 classInput="Input mt-8"
                 marginTop="24px"
                 required={true}
-                requiredMessage="El campo es requerido"
+                requiredMessage={this.props.t("customer.modal.input.required_message")}
                 forcedValid={fieldIsValid.email}
                 width="48%"
                 marginLeft="4%"
@@ -356,13 +360,13 @@ class CreateCustomerModal extends React.Component<
             <div className="ModalContainerTwoColumns">
               <Select
                 name="address_country"
-                label="País"
+                label={this.props.t("customer.modal.select.country-label")}
                 handleValueValid={this.handleValueValid}
                 handleValueChange={this.handleValueChangeCountry}
                 value={customer.address.country}
                 options={optionsCountry}
                 required={true}
-                requiredMessage="Debe seleccionar una opción"
+                requiredMessage={this.props.t("customer.modal.select.required_message")}
                 forcedValid={fieldIsValid.address_country}
                 width="48%"
                 marginTop="24px"
@@ -370,13 +374,13 @@ class CreateCustomerModal extends React.Component<
               />
               <Select
                 name="address_city"
-                label="Ciudad"
+                label={this.props.t("customer.modal.select.city-label")}
                 handleValueValid={this.handleValueValid}
                 handleValueChange={this.handleValueChange}
                 value={customer.address.city}
                 options={optionsCity}
                 required={true}
-                requiredMessage="Debe seleccionar una opción"
+                requiredMessage={this.props.t("customer.modal.select.required_message")}
                 forcedValid={fieldIsValid.address_city}
                 width="48%"
                 marginTop="24px"
@@ -387,13 +391,13 @@ class CreateCustomerModal extends React.Component<
             <div className="ModalContainerTwoColumns">
               <Select
                 name="address_zone"
-                label="Zona"
+                label={this.props.t("customer.modal.select.zone-label")}
                 handleValueValid={this.handleValueValid}
                 handleValueChange={this.handleValueChange}
                 value={customer.address.zone}
                 options={optionsZone}
                 required={true}
-                requiredMessage="Debe seleccionar una opción"
+                requiredMessage={this.props.t("customer.modal.select.required_message")}
                 forcedValid={fieldIsValid.address_zone}
                 width="48%"
                 marginTop="24px"
@@ -401,13 +405,13 @@ class CreateCustomerModal extends React.Component<
               />
               <Select
                 name="seller_id"
-                label="Vendedor"
+                label={this.props.t("customer.modal.select.seller-label")}
                 handleValueValid={this.handleValueValid}
                 handleValueChange={this.handleValueChange}
                 value={customer.seller_id}
                 options={optionsSellers}
                 required={true}
-                requiredMessage="Debe seleccionar una opción"
+                requiredMessage={this.props.t("customer.modal.select.required_message")}
                 forcedValid={fieldIsValid.seller_id}
                 width="48%"
                 marginTop="24px"
@@ -419,23 +423,23 @@ class CreateCustomerModal extends React.Component<
               <Input
                 type="text"
                 name="address_address"
-                label="Dirección"
-                placeholder="Dirección de entrega"
+                label={this.props.t("customer.modal.input.address-label")}
+                placeholder={this.props.t("customer.modal.input.address-placeholder")}
                 value={customer.address.address}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
                 classInput="Input mt-8"
                 marginTop="24px"
                 required={true}
-                requiredMessage="El campo es requerido"
+                requiredMessage={this.props.t("customer.modal.input.required_message")}
                 forcedValid={fieldIsValid.address_address}
                 width="48%"
               />
               <Input
                 type="text"
                 name="address_postal_code"
-                label="Código postal"
-                placeholder="Código postal"
+                label={this.props.t("customer.modal.input.postal_code-label")}
+                placeholder={this.props.t("customer.modal.input.postal_code-placeholder")}
                 value={customer.address.postal_code}
                 handleValueChange={this.handleValueChange}
                 handleValueValid={this.handleValueValid}
@@ -451,7 +455,7 @@ class CreateCustomerModal extends React.Component<
                 className="ModalButton mt-32"
                 onClick={this.handleSubmit}
               >
-                Guardar
+                {this.props.t("customer.modal.button")}
               </button>
             </div>
           </React.Fragment>
@@ -474,4 +478,4 @@ const mapDispatchToProps = {
   cleanCitiesFunc: cleanCities,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateCustomerModal);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation("global")(CreateCustomerModal));

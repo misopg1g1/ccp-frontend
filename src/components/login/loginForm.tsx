@@ -1,8 +1,9 @@
 import "./loginForm.css";
 
-import React, {FC} from 'react';
+import {FC} from 'react';
 import Input from "../../libs/input";
 import Icon from "../../libs/icons";
+import { useTranslation } from 'react-i18next'
 
 interface LoginFormComponentProps {
   user: string,
@@ -26,21 +27,22 @@ const LoginForm : FC<LoginFormComponentProps> = (props) => {
     togglePasswordVisible,
     onSubmit,
   } = props;
+  const [t] = useTranslation("global");
 
   return (
     <div className="LoginForm">
-      <h1 className="LoginFormTitle mt-64">Iniciar Sesión</h1>
+      <h1 className="LoginFormTitle mt-64">{t("login.title")}</h1>
       <div className="LoginFormInputs mt-16">
         <Input
           type="text"
           name="user"
           autoComplete='true'
-          label="Usuario"
-          placeholder="Escriba su usuario"
+          label={t("login.input.username-label")}
+          placeholder={t("login.input.username-placeholder")}
           value={user}
           handleValueChange={handleValueChange}
           handleValueValid={handleValueValid}
-          requiredMessage="El campo usuario es requerido"
+          requiredMessage={t("login.input.username-message")}
           required
           maxLength={20}
           classInput="LoginFormInput"
@@ -50,12 +52,12 @@ const LoginForm : FC<LoginFormComponentProps> = (props) => {
           type={showPassword ? "text" : "password"}
           name="password"
           autocomplete='true'
-          label="Contraseña"
-          placeholder="Escriba su contraseña"
+          label={t("login.input.password-label")}
+          placeholder={t("login.input.password-placeholder")}
           value={password}
           handleValueChange={handleValueChange}
           handleValueValid={handleValueValid}
-          requiredMessage="El campo contraseña es requerido"
+          requiredMessage={t("login.input.password-message")}
           required
           maxLength={20}
           classInput="LoginFormInput"
@@ -72,7 +74,7 @@ const LoginForm : FC<LoginFormComponentProps> = (props) => {
         ></Input>
       </div>
       <button type="submit" onClick={onSubmit} className="LoginFormButton mt-32">
-        Ingresar
+        {t("login.button")}
       </button>
     </div>
   );

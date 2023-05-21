@@ -3,6 +3,8 @@ import { describe, it, vi } from "vitest";
 import { render, screen, fireEvent } from "../../utils/test-utils";
 import configureStore from '../../configureStore';
 import CreateCustomerModal from "../../components/customer/createCustomerModal";
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../../tests/mocks/i18n';
 
 function renderWithContext(element: any) {
   const {store} = configureStore();
@@ -25,7 +27,9 @@ function renderWithContext(element: any) {
     }
   }
   render(
-    <Provider store={initialState}>{element}</Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={initialState}>{element}</Provider>
+    </I18nextProvider>
   );
   return { store };
 }

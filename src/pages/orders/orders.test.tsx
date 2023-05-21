@@ -4,6 +4,8 @@ import { render, screen, act } from "../../utils/test-utils";
 import configureStore from '../../configureStore';
 import Orders from '../orders/orders';
 import { LOGIN_SUCCESS } from '../../constants/actionTypes';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../../tests/mocks/i18n';
 
 const userData = {
   access_token: "",
@@ -22,9 +24,11 @@ describe("<Orders />", () => {
     });
     await act(async () => {
       render(
-        <Provider store={store}>
-          <Orders />
-        </Provider>
+        <I18nextProvider i18n={i18n}>
+          <Provider store={store}>
+            <Orders />
+          </Provider>
+        </I18nextProvider>
       );
     });
 
