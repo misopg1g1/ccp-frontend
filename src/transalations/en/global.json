@@ -1,0 +1,239 @@
+{
+  "login": {
+    "greeting": "Welcome back!",
+    "system-version": "CCP system v1.0",
+    "option-language": "Choose your language",
+    "title": "Sign In",
+    "input": {
+      "username-label": "Username",
+      "username-placeholder": "Type your username",
+      "username-message": "The user field is required",
+      "password-label": "Password",
+      "password-placeholder": "Type your password",
+      "password-message": "The password field is required"
+    },
+    "button": "Login"
+  },
+  "sidetab": {
+    "orders": "Orders",
+    "products": "Products",
+    "customers": "Customers",
+    "visits": "Visits",
+    "settings": "Settings",
+    "create-user": "Add user",
+    "exit": "Exit"
+  },
+  "dashboard": {
+    "title": "Welcome"
+  },
+  "user": {
+    "modal": {
+      "title": "Create user",
+      "input": {
+        "username-label": "Username",
+        "username-placeholder": "Type username",
+        "username-message": "The user field is required",
+        "password-label": "Password",
+        "password-placeholder": "Type password",
+        "password-message": "The password field is required",
+        "confirm-password-label": "Confirm password",
+        "confirm-password-placeholder": "Type password again",
+        "confirm-password-message": "The password field is required"
+      },
+      "rol-title": "Add Rol",
+      "rol-message": "You must select a role",
+      "button": "Save"
+    }
+  },
+  "customer": {
+    "options": {
+      "document-type": "Select a document type",
+      "document-type-dni": "National identity document",
+      "document-type-nit": "Tax identification number",
+      "document-type-rut": "Single tax registry",
+      "document-type-ce": "Foreigner ID",
+      "document-type-ps": "Passport",
+      "zone": "Select a zone",
+      "zone-north": "North",
+      "zone-east": "East",
+      "zone-central": "Central",
+      "zone-west": "West",
+      "zone-south": "South",
+      "country": "Select a country",
+      "city": "Select a city",
+      "seller": "Select a seller"
+    },
+    "modal": {
+      "title": "New customer",
+      "input": {
+        "required_message": "The fiel is required",
+        "registered_name-label": "Registered name",
+        "registered_name-placeholder": "Registered name",
+        "first_name-label": "First name",
+        "first_name-placeholder": "First name contact",
+        "last_name-label": "Last name",
+        "last_name-placeholder": "Last name contact",
+        "identification_number-label": "Identification number",
+        "identification_number-placeholder": "Identification number",
+        "phone-label": "Phone",
+        "phone-placeholder": "Phone contact",
+        "email-label": "Email",
+        "email-placeholder": "Email contact",
+        "address-label": "Address",
+        "address-placeholder": "Shipping address",
+        "postal_code-label": "Postal code",
+        "postal_code-placeholder": "Postal code"
+      },
+      "select": {
+        "required_message": "You must select an option",
+        "identification_type-label": "Identification type",
+        "country-label": "Country",
+        "city-label": "City",
+        "zone-label": "Zone",
+        "seller-label": "Seller"
+      },
+      "button": "Save"
+    },
+    "dashboard": {
+      "customers_total": "All customers",
+      "table": {
+        "title": "All customers",
+        "columns": {
+          "name": "Name",
+          "identification": "Identification",
+          "city": "City",
+          "zone": "Zone",
+          "seller": "Seller"
+        },
+        "results-overlay": "No customers have been created yet!"
+      }
+    }
+  },
+  "inventory": {
+    "validation_numbers_message": "Enter a numeric value"
+  },
+  "product": {
+    "options": {
+      "product-type": "Select a type",
+      "product-type-perishable": "perishable",
+      "product-type-non-perishable": "Non perishable",
+      "category": "Select a category"
+    },
+    "modal": {
+      "title": "New product",
+      "image": "Product image",
+      "input": {
+        "required_message": "The field is required",
+        "alt-image": "Product image with name: ",
+        "name-label": "Product name",
+        "name-placeholder": "Type product name",
+        "description-label": "Description",
+        "description-placeholder": "Type description product",
+        "sku": "SKU",
+        "current-stock": "Current stock",
+        "stock": "Add units",
+        "validation_numbers_message": "Enter a numeric value",
+        "price-label": "Unit price",
+        "price-placeholder": "100.000,00",
+        "expiration_date-label": "Expiration date",
+        "expiration_date-placeholder": "dd/mm/aaaa",
+        "temperature_control-label": "Temperature control",
+        "temperature_control-placeholder": "50",
+        "dimensions-label": "Dimensions (inches)",
+        "dimensions-placeholder": "Width - Length - Height"
+      },
+      "select": {
+        "required_message": "You must select an option",
+        "type-label": "Product type",
+        "category-label": "Category"
+      },
+      "update-button": "Update",
+      "save-button": "Save"
+    },
+    "dashboard": {
+      "total_products": "All products",
+      "total_categories": "Categories",
+      "total_warehouses": "Warehouses",
+      "table": {
+        "title": "All products",
+        "columns": {
+          "img": "Image",
+          "name": "Name",
+          "sku": "SKU",
+          "category": "Category",
+          "stock": "Stock",
+          "status": "State"
+        },
+        "results-overlay": "No products have been created yet!"
+      }
+    }
+  },
+  "order": {
+    "modal": {
+      "title": "Order detail",
+      "input": {
+        "customer-label": "Customer",
+        "seller-label": "Seller",
+        "grand_total-label": "Gran total",
+        "discount-label": "Discount",
+        "state-label": "State",
+        "date_delivered-label": "Delivered date"
+      },
+      "products": {
+        "title": "Products",
+        "table": {
+          "columns": {
+            "name": "Product",
+            "id": "Product ID",
+            "quantity": "Quantity"
+          }
+        }
+      }   
+    },
+    "dashboard": {
+      "total_orders": "All orders",
+      "delivered_orders": "Orders delivered",
+      "pending_orders": "Pending orders to be delivered",
+      "table": {
+        "title": "All orders",
+        "columns": {
+          "customer_name": "Customer",
+          "id": "Order ID",
+          "grand_total": "Grand total",
+          "items": "Items",
+          "status": "State"
+        },
+        "results-overlay": "No orders have been generated yet!"
+      }
+    }
+  },
+  "visit": {
+    "modal": {
+      "title": "Visit detail",
+      "alt-img": "Visit image",
+      "input": {
+        "date-label": "Date",
+        "seller-label": "Seller",
+        "customer-label": "Customer",
+        "order_id-label": "Order ID",
+        "zone-label": "Zone",
+        "comments-label": "Comments"
+      } 
+    },
+    "dashboard": {
+      "total_visits": "All visits",
+      "total_sellers": "Sellers",
+      "table": {
+        "title": "All visits",
+        "columns": {
+          "customer": "Customer",
+          "date": "Date",
+          "order_id": "Order ID",
+          "zone": "Zone",
+          "seller": "Seller"
+        },
+        "results-overlay": "No visits have been generated yet!"
+      }
+    }
+  }
+}

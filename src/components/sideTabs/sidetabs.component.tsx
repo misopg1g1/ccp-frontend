@@ -14,12 +14,14 @@ import { RoleWrapper } from "../role-wrapper/role-wrapper.component";
 import { logout } from "../../actions/login";
 import CreateUserModal from "../user/createUserModal";
 import { deleteUserData } from "../../actions/user";
+import { useTranslation } from 'react-i18next';
 
 interface SideTabsComponentProps {
   deleteUserDataFunc: any
 }
 
 const SideTabs = (props: SideTabsComponentProps) => {
+  const [t] = useTranslation("global");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openModalCreateUser, setOpenModalCreateUser] = React.useState<false | boolean>(false);
   const open = Boolean(anchorEl);
@@ -61,7 +63,7 @@ const SideTabs = (props: SideTabsComponentProps) => {
   return (
     <div className="side-tabs-container">
       <div className="title-container">
-        <h1>CPP</h1>
+        <h1>CCP</h1>
       </div>
       <div className="profile-container">
         <div className="profile-circle">
@@ -75,25 +77,25 @@ const SideTabs = (props: SideTabsComponentProps) => {
         <Link className="button-container" to="orders">
           <BsCalculator />
           <div className="link-container">
-            <h2>Ordenes</h2>
+            <h2>{t("sidetab.orders")}</h2>
           </div>
         </Link>
         <Link className="button-container" to="products">
           <AiOutlineInbox />
           <div className="link-container">
-            <h2>Productos</h2>
+            <h2>{t("sidetab.products")}</h2>
           </div>
         </Link>
         <Link className="button-container" to="customers">
           <CgProfile />
           <div className="link-container">
-            <h2>Clientes</h2>
+            <h2>{t("sidetab.customers")}</h2>
           </div>
         </Link>
         <Link className="button-container" to="visits">
           <RiSuitcaseLine />
           <div className="link-container">
-            <h2>Visitas</h2>
+            <h2>{t("sidetab.visits")}</h2>
           </div>
         </Link>
       </div>
@@ -118,17 +120,17 @@ const SideTabs = (props: SideTabsComponentProps) => {
             <RoleWrapper allowedRoles={[Roles.ADMIN]}>
               <MenuItem onClick={openModalUser}>
                 <CgProfile />
-                Crear Usuario
+                {t("sidetab.create-user")}
               </MenuItem>
             </RoleWrapper>
             <MenuItem onClick={handleLogout}>
               <BiExit />
-              Salir
+              {t("sidetab.exit")}
             </MenuItem>
           </Menu>
           <RxGear />
           <div className="link-container">
-            <h2>Ajustes</h2>
+            <h2>{t("sidetab.settings")}</h2>
           </div>
         </div>
       </div>

@@ -3,11 +3,15 @@ import { describe, it, vi } from "vitest";
 import { render, screen } from "../../utils/test-utils";
 import configureStore from '../../configureStore';
 import DetailProductModal from "../../components/product/detailProductModal";
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../../tests/mocks/i18n';
 
 function renderWithContext(element: any) {
   const { store } = configureStore();
   render(
-    <Provider store={store}>{element}</Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>{element}</Provider>
+    </I18nextProvider>
   );
   return { store };
 }
@@ -42,7 +46,7 @@ describe("<DetailProductModal />", () => {
     const modalTitle = screen.getByText(productSelected.name);
     expect(modalTitle).toBeInTheDocument();
 
-    const descriptionInput = screen.getByLabelText("Descripción");
+    const descriptionInput = screen.getByLabelText("Descripción del producto");
     expect(descriptionInput).toBeInTheDocument();
 
     const skuInput = screen.getByLabelText("SKU");
@@ -51,7 +55,7 @@ describe("<DetailProductModal />", () => {
     const unitPriceInput = screen.getByLabelText("Precio unitario");
     expect(unitPriceInput).toBeInTheDocument();
 
-    const typeInput = screen.getByLabelText("Tipo");
+    const typeInput = screen.getByLabelText("Tipo de producto");
     expect(typeInput).toBeInTheDocument();
     
     const categoryInput = screen.getByLabelText("Categoria");
@@ -79,7 +83,7 @@ describe("<DetailProductModal />", () => {
     expect(imageElement).toBeInTheDocument();
     expect(imageElement.src).toBe(productSelected.img_url);
 
-    const descriptionInput: HTMLInputElement = screen.getByLabelText("Descripción");
+    const descriptionInput: HTMLInputElement = screen.getByLabelText("Descripción del producto");
     expect(descriptionInput.value).toBe(productSelected.description);
 
     const skuInput: HTMLInputElement = screen.getByLabelText("SKU");
@@ -88,7 +92,7 @@ describe("<DetailProductModal />", () => {
     const unitPriceInput: HTMLInputElement = screen.getByLabelText("Precio unitario");
     expect(unitPriceInput.value).toBe(productSelected.price);
 
-    const typeInput: HTMLInputElement = screen.getByLabelText("Tipo");
+    const typeInput: HTMLInputElement = screen.getByLabelText("Tipo de producto");
     expect(typeInput.value).toBe(productSelected.type);
     
     const categoryInput: HTMLInputElement = screen.getByLabelText("Categoria");

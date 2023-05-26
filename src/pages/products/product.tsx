@@ -4,6 +4,7 @@ import {
 import Stack from '@mui/material/Stack';
 import { IconButton } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
 
 export type Product = {
   id: string;
@@ -25,10 +26,21 @@ export type Product = {
   }[];
 };
 
+const getTraduction = (key: string) => {
+  const [t] = useTranslation("global");
+  return t(key)
+}
+
 export const columns: GridColDef[] = [
   {
     field: "img_url",
-    headerName: "Imagen",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("product.dashboard.table.columns.img")}
+        </strong>
+      )
+    },
     width: 100,
     renderCell: (params) => (
       <img
@@ -40,11 +52,37 @@ export const columns: GridColDef[] = [
     sortable: false,
     disableColumnMenu: true,
   },
-  { field: "name", headerName: "Nombre", flex: 2 },
-  { field: "sku", headerName: "SKU", flex: 2 },
+  { 
+    field: "name",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("product.dashboard.table.columns.name")}
+        </strong>
+      )
+    },
+    flex: 2
+  },
+  {
+    field: "sku",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("product.dashboard.table.columns.sku")}
+        </strong>
+      )
+    },
+    flex: 2
+  },
   {
     field: "categories",
-    headerName: "Categoría",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("product.dashboard.table.columns.category")}
+        </strong>
+      )
+    },
     flex: 2,
     valueGetter: (params) => {
       const names = (params.value as Product["categories"]).map(
@@ -59,7 +97,13 @@ export const columns: GridColDef[] = [
   },
   {
     field: "stock",
-    headerName: "Stock",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("product.dashboard.table.columns.stock")}
+        </strong>
+      )
+    },
     flex: 1,
     valueGetter: (params) => {
       return params.value ? params.value : 0;
@@ -67,7 +111,13 @@ export const columns: GridColDef[] = [
   },
   {
     field: "status",
-    headerName: "Estado",
+    renderHeader: (): any => {
+      return (
+        <strong>
+          {getTraduction("product.dashboard.table.columns.status")}
+        </strong>
+      )
+    },
     flex: 1,
     valueGetter: (params) => (params.value ? "Activo" : "Inactivo"),
   },

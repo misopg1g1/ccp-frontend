@@ -1,12 +1,14 @@
-import './login.css'
+import './login.scss'
 
-import React, {FormEvent, useState} from 'react'
+import {FormEvent, useState} from 'react'
 import {connect} from 'react-redux'
 import {Navigate} from 'react-router-dom'
 import {login} from '../../actions/login'
 import {cleanMessage} from '../../actions/message'
 import Message from '../../components/layout/messages/message'
 import LoginForm from '../../components/login/loginForm'
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../../libs/switcher';
 
 interface LoginPageProps {
     message?: any
@@ -31,6 +33,7 @@ const LoginPage = (props: LoginPageProps) => {
         cleanMessage
     } = props
 
+    const [t] = useTranslation("global");
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
@@ -43,15 +46,11 @@ const LoginPage = (props: LoginPageProps) => {
         return <Navigate to={'/dashboard'} />
     }
 
-    const isValidFields = () => {
-        return !(!fieldIsValid.password || !fieldIsValid.user);
-    }
-
     const formIsValid = (): boolean => {
         fieldIsValid.user = (user != "");
         fieldIsValid.password = password != "";
         const invalidFields = Object.entries(fieldIsValid).filter(([, value]) => !value);
-        return !(invalidFields.length > 0);
+        return invalidFields.length <= 0;
     };
     
     const submit = (event: FormEvent) => {
@@ -89,9 +88,10 @@ const LoginPage = (props: LoginPageProps) => {
             <div className="LoginBoard">
                 <div className='LoginGreetingPanel'>
                     <div className='LoginGreetingPanelText'>
-                        <p className='medium'>Bienvenido!</p>
-                        <p className='light'>Sistema CCP  v1.0</p>
+                        <p className='medium'>{t("login.greeting")}</p>
+                        <p className='light'>{t("login.system-version")}</p>
                     </div>
+                    <LanguageSwitcher />
                 </div>
                 <div className='LoginFormPanel'>
                     <LoginForm

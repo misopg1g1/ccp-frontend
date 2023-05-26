@@ -5,11 +5,13 @@ import {connect} from 'react-redux'
 import Modal from 'react-modal'
 import Icons from '../../libs/icons'
 import Input from '../../libs/input'
+import { withTranslation } from 'react-i18next'
 
 interface DetailProductComponentProps {
     isOpen: boolean
     handleCloseModal: any
     productData: any
+    t: any
 }
 
 interface DetailProductComponentState {}
@@ -60,12 +62,12 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                         <img 
                             className='ProductImage mt-16'
                             src={productData?.img_url}
-                            alt={'Imagen del producto con nombre: ' + productData?.name}>
+                            alt={`${this.props.t("product.modal.input.alt-image")} ${productData?.name}`}>
                         </img>
                         <Input
                             type='text'
                             name='description'
-                            label='Descripción'
+                            label={this.props.t("product.modal.input.description-label")}
                             value={productData?.description}
                             maxLength={20}
                             classInput='ModalInput mt-8'
@@ -76,7 +78,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                             <Input
                                 type='text'
                                 name='sku'
-                                label='SKU'
+                                label={this.props.t("product.modal.input.sku")}
                                 value={productData?.sku}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
@@ -86,7 +88,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                             <Input
                                 type='text'
                                 name='unit-price'
-                                label='Precio unitario'
+                                label={this.props.t("product.modal.input.price-label")}
                                 value={productData?.price}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
@@ -99,7 +101,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                             <Input
                                 type='text'
                                 name='type'
-                                label='Tipo'
+                                label={this.props.t("product.modal.select.type-label")}
                                 value={productData?.type}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
@@ -109,7 +111,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                             <Input
                                 type='text'
                                 name='category'
-                                label='Categoria'
+                                label={this.props.t("product.modal.select.category-label")}
                                 value={categories}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
@@ -122,7 +124,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                             <Input
                                 type='text'
                                 name='expiration-date'
-                                label='Fecha de expiración'
+                                label={this.props.t("product.modal.input.expiration_date-label")}
                                 value={productData?.expiration_date}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
@@ -132,7 +134,7 @@ class DetailProductModal extends React.Component<DetailProductComponentProps, De
                             <Input
                                 type='text'
                                 name='dimensions'
-                                label='Dimensiones (cm)'
+                                label={this.props.t("product.modal.input.dimensions-label")}
                                 value={productData?.dimensions}
                                 classInput='ModalInput mt-8'
                                 disabled={true}
@@ -152,4 +154,4 @@ const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {}
 
-export default connect(mapStateToProps, mapDispatchToProps)(DetailProductModal)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation("global")(DetailProductModal));

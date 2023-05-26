@@ -10,8 +10,10 @@ import { IconButton } from "@mui/material";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import DetailOrderModal from "../../components/order/detailOrderModal";
+import { useTranslation } from "react-i18next";
 
 export default function Orders() {
+  const [t] = useTranslation("global");
   const [sortModel, setSortModel] = React.useState<any>([]);
   const [openModalDetailOrder, setOpenModalDetailOrder] = React.useState<boolean>(false);
   const [orderSelected, setOrderSelected] = React.useState<Order>(defaultOrder);
@@ -53,21 +55,21 @@ export default function Orders() {
       <Header></Header>
       <div className="widget-container">
         <Widget
-          description="Total de ordenes"
+          description={t("order.dashboard.total_orders")}
           quantity={getTotalProducts().toString()}
           background
         />
         <Widget 
-          description="Ordenes entregadas"
+          description={t("order.dashboard.delivered_orders")}
           quantity={getTotalProductsDelivered().toString()}
         />
         <Widget 
-          description="Ordenes pendientes por entregar"
+          description={t("order.dashboard.pending_orders")}
           quantity={(getTotalProducts() - getTotalProductsDelivered()).toString()}
         />
       </div>
       <div className="table-header">
-        <h2>Todas las ordenes</h2>
+        <h2>{t("order.dashboard.table.title")}</h2>
         <div className="icon-container">
           <IconButton>
             <BiEdit />

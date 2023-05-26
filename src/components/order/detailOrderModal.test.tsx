@@ -4,11 +4,15 @@ import { render, screen } from "../../utils/test-utils";
 import configureStore from '../../configureStore';
 import DetailOrderModal from "../../components/order/detailOrderModal";
 import { Order } from '../../pages/orders/order';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../../tests/mocks/i18n';
 
 function renderWithContext(element: any) {
   const { store } = configureStore();
   render(
-    <Provider store={store}>{element}</Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>{element}</Provider>
+    </I18nextProvider>
   );
   return { store };
 }

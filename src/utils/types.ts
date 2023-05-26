@@ -110,3 +110,14 @@ export const defaultSeller: Seller = {
   first_name: "",
   last_name: "",
 }
+
+export const languages = [
+  {
+    code: 'es',
+    name: 'Español'
+  },
+  {
+    code: 'en',
+    name: 'English'
+  },
+];

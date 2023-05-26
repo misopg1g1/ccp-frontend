@@ -7,12 +7,14 @@ import Icons from '../../libs/icons'
 import Input from '../../libs/input'
 import { createUser } from '../../actions/user'
 import Icon from "../../libs/icons"
+import { withTranslation } from 'react-i18next';
 
 interface CreateUserModalComponentProps {
     isOpen: boolean
     handleCloseModal: any
     createUserFunc?: any
     token: string
+    t: any
 }
 
 interface NewUserData {
@@ -190,7 +192,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
             <Modal isOpen={isOpen} onRequestClose={this.handleCloseModal} style={customStyle} ariaHideApp={false} >
                 <div className='ContentModal'>
                     <div>
-                        <span className='ModalTitle'>Crear Usuario</span>
+                        <span className='ModalTitle'>{this.props.t("user.modal.title")}</span>
                         <div className='CloseModalButton' onClick={this.handleCloseModal} role='button' tabIndex={0}>
                             <Icons icon='close' className='left-icon' color='#000000' />
                         </div>
@@ -201,12 +203,12 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                 <Input
                                     type='text'
                                     name='username'
-                                    label='Usuario'
-                                    placeholder='Ingrese el usuario'
+                                    label={this.props.t("user.modal.input.username-label")}
+                                    placeholder={this.props.t("user.modal.input.username-placeholder")}
                                     value={this.state.userData.user}
                                     handleValueChange={this.handleValueChange}
                                     handleValueValid={this.handleValueValid}
-                                    requiredMessage='El campo usuario es requerido'
+                                    requiredMessage={this.props.t("user.modal.input.username-message")}
                                     required={true}
                                     maxLength={20}
                                     classInput='Input mt-8'
@@ -216,12 +218,12 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                 <Input
                                     type={this.state.showPassword ? "text" : "password"}
                                     name="password"
-                                    label="Contraseña"
-                                    placeholder="Escriba la contraseña"
+                                    label={this.props.t("user.modal.input.password-label")}
+                                    placeholder={this.props.t("user.modal.input.password-placeholder")}
                                     value={this.state.userData.password}
                                     handleValueChange={this.handleValueChange}
                                     handleValueValid={this.handleValueValid}
-                                    requiredMessage="El campo contraseña es requerido"
+                                    requiredMessage={this.props.t("user.modal.input.password-message")}
                                     required={true}
                                     maxLength={20}
                                     classInput="Input mt-8"
@@ -241,12 +243,12 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                 <Input
                                     type={this.state.showConfirmPassword ? "text" : "password"}
                                     name="confirmPassword"
-                                    label="Confirmar contraseña"
-                                    placeholder="Confirme la contraseña"
+                                    label={this.props.t("user.modal.input.confirm-password-label")}
+                                    placeholder={this.props.t("user.modal.input.confirm-password-placeholder")}
                                     value={this.state.userData.verify_password}
                                     handleValueChange={this.handleValueChange}
                                     handleValueValid={this.handleValueValid}
-                                    requiredMessage="El campo contraseña es requerido"
+                                    requiredMessage={this.props.t("user.modal.input.confirm-password-message")}
                                     required={true}
                                     maxLength={20}
                                     classInput="Input mt-8"
@@ -267,7 +269,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                             </div>
                             <div className='CategoryPanel'>
                                 <div className='AddRolePanel'>
-                                    <span className='AddRoleTitle'>Agregar Role</span>
+                                    <span className='AddRoleTitle'>{this.props.t("user.modal.rol-title")}</span>
                                     {this.state.roles.map((rol: any) =>
                                         <div
                                             key={rol.name}
@@ -286,7 +288,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                                 <div>
                                     {this.state.hasError && (
                                         <p className='ErrorMessage'>
-                                            Debe seleccionar un rol
+                                            {this.props.t("user.modal.rol-message")}
                                         </p>
                                     )}
                                 </div>
@@ -294,7 +296,7 @@ class CreateUserModal extends React.Component<CreateUserModalComponentProps, Cre
                         </div>
                         <div>
                             <button type='submit' className='ModalButton mt-32' onClick={this.handleSubmit}>
-                                Guardar
+                                {this.props.t("user.modal.button")}
                             </button>
                         </div>
                     </React.Fragment>
@@ -312,4 +314,4 @@ const mapDispatchToProps = {
     createUserFunc: createUser
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateUserModal)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation("global")(CreateUserModal))

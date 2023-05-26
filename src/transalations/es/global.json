@@ -1,0 +1,239 @@
+{
+  "login": {
+    "greeting": "Bienvenido!",
+    "system-version": "Sistema CCP  v1.0",
+    "option-language": "Seleccione su lenguaje",
+    "title": "Iniciar Sesión",
+    "input": {
+      "username-label": "Usuario",
+      "username-placeholder": "Escriba su usuario",
+      "username-message": "El campo usuario es requerido",
+      "password-label": "Contraseña",
+      "password-placeholder": "Escriba su contraseña",
+      "password-message": "El campo cpntraseña es requerido"
+    },
+    "button": "Ingresar"
+  },
+  "sidetab": {
+    "orders": "Ordenes",
+    "products": "Productos",
+    "customers": "Clientes",
+    "visits": "Visitas",
+    "settings": "Ajustes",
+    "create-user": "Crear Usuario",
+    "exit": "Salir"
+  },
+  "dashboard": {
+    "title": "Bienvenido"
+  },
+  "user": {
+    "modal": {
+      "title": "Crear Usuario",
+      "input": {
+        "username-label": "Usuario",
+        "username-placeholder": "Ingrese el usuario",
+        "username-message": "El campo usuario es requerido",
+        "password-label": "Contraseña",
+        "password-placeholder": "Escriba la contraseña",
+        "password-message": "El campo contraseña es requerido",
+        "confirm-password-label": "Confirmar contraseña",
+        "confirm-password-placeholder": "Confirme la contraseña",
+        "confirm-password-message": "El campo contraseña es requerido"
+      },
+      "rol-title": "Agregar Role",
+      "rol-message": "Debe seleccionar un rol",
+      "button": "Guardar"
+    }
+  },
+  "customer": {
+    "options": {
+      "document-type": "Seleccione un tipo de documento",
+      "document-type-dni": "Documento nacional de identidad",
+      "document-type-nit": "Número de identificación tributaria",
+      "document-type-rut": "Registro único tributario",
+      "document-type-ce": "Cedula de extranjeria",
+      "document-type-ps": "Pasaporte",
+      "zone": "Seleccione una zona",
+      "zone-north": "Norte",
+      "zone-east": "Este",
+      "zone-central": "Centro",
+      "zone-west": "Oeste",
+      "zone-south": "Sur",
+      "country": "Seleccione un país",
+      "city": "Seleccione una ciudad",
+      "seller": "Seleccione un vendedor"
+    },
+    "modal": {
+      "title": "Nuevo Cliente",
+      "input": {
+        "required_message": "El campo es requerido",
+        "registered_name-label": "Razón social",
+        "registered_name-placeholder": "Razón social del cliente",
+        "first_name-label": "Nombres",
+        "first_name-placeholder": "Nombres del contacto",
+        "last_name-label": "Apellidos",
+        "last_name-placeholder": "Apellidos del contacto",
+        "identification_number-label": "Número",
+        "identification_number-placeholder": "Número de documento",
+        "phone-label": "Teléfono",
+        "phone-placeholder": "Teléfono de contacto",
+        "email-label": "Email",
+        "email-placeholder": "Email del contacto",
+        "address-label": "Dirección",
+        "address-placeholder": "Dirección de entrega",
+        "postal_code-label": "Código postal",
+        "postal_code-placeholder": "Código postal"
+      },
+      "select": {
+        "required_message": "Debe seleccionar una opción",
+        "identification_type-label": "Tipo de documento",
+        "country-label": "País",
+        "city-label": "Ciudad",
+        "zone-label": "Zona",
+        "seller-label": "Vendedor"
+      },
+      "button": "Guardar"
+    },
+    "dashboard": {
+      "customers_total": "Total de clientes",
+      "table": {
+        "title": "Todos los clientes",
+        "columns": {
+          "name": "Nombre",
+          "identification": "Identificación",
+          "city": "Ciudad",
+          "zone": "Zona",
+          "seller": "Vendedor"
+        },
+        "results-overlay": "Aún no se han creado clientes!"
+      }
+    }
+  },
+  "inventory": {
+    "validation_numbers_message": "Ingrese un valor numerico"
+  },
+  "product": {
+    "options": {
+      "product-type": "Seleccione un tipo",
+      "product-type-perishable": "Perecedero",
+      "product-type-non-perishable": "No Perecedero",
+      "category": "Seleccione una categoria"
+    },
+    "modal": {
+      "title": "Nuevo producto",
+      "image": "Imagen del producto",
+      "input": {
+        "required_message": "El campo es requerido",
+        "alt-image": "Imagen del producto con nombre: ",
+        "name-label": "Nombre del producto",
+        "name-placeholder": "Escribe el nombre del producto",
+        "description-label": "Descripción del producto",
+        "description-placeholder": "Escribe la descripción del producto",
+        "sku": "SKU",
+        "current-stock": "Stock actual",
+        "stock": "Agregar unidades",
+        "validation_numbers_message": "Ingrese un valor numerico",
+        "price-label": "Precio unitario",
+        "price-placeholder": "100.000,00",
+        "expiration_date-label": "Fecha de expiración",
+        "expiration_date-placeholder": "dd/mm/aaaa",
+        "temperature_control-label": "Control de temperatura",
+        "temperature_control-placeholder": "50",
+        "dimensions-label": "Dimensiones (cm)",
+        "dimensions-placeholder": "Ancho - Alto - Largo"
+      },
+      "select": {
+        "required_message": "Debe seleccionar una opción",
+        "type-label": "Tipo de producto",
+        "category-label": "Categoria"
+      },
+      "update-button": "Actualizar",
+      "save-button": "Guardar"
+    },
+    "dashboard": {
+      "total_products": "Total de Productos",
+      "total_categories": "Categorias",
+      "total_warehouses": "Bodegas",
+      "table": {
+        "title": "Todos los Productos",
+        "columns": {
+          "img": "Imagen",
+          "name": "Nombre",
+          "sku": "SKU",
+          "category": "Categoria",
+          "stock": "Stock",
+          "status": "Estado"
+        },
+        "results-overlay": "Aún no se han creado productos!"
+      }
+    }
+  },
+  "order": {
+    "modal": {
+      "title": "Detalle de la orden",
+      "input": {
+        "customer-label": "Cliente",
+        "seller-label": "Vendedor",
+        "grand_total-label": "Valor de venta",
+        "discount-label": "Descuento",
+        "state-label": "Estado",
+        "date_delivered-label": "Fecha de entrega"
+      },
+      "products": {
+        "title": "Productos",
+        "table": {
+          "columns": {
+            "name": "Producto",
+            "id": "Producto ID",
+            "quantity": "Cantidad"
+          }
+        }
+      }   
+    },
+    "dashboard": {
+      "total_orders": "Total de ordenes",
+      "delivered_orders": "Ordenes entregadas",
+      "pending_orders": "Ordenes pendientes por entregar",
+      "table": {
+        "title": "Todas las ordenes",
+        "columns": {
+          "customer_name": "Cliente",
+          "id": "Orden ID",
+          "grand_total": "Total venta",
+          "items": "Items",
+          "status": "Estado"
+        },
+        "results-overlay": "Aún no se han generado ordenes!"
+      }
+    }
+  },
+  "visit": {
+    "modal": {
+      "title": "Detalle de la visita",
+      "alt-img": "Imagen de la visita",
+      "input": {
+        "date-label": "Fecha",
+        "seller-label": "Vendedor",
+        "customer-label": "Cliente",
+        "order_id-label": "Orden ID",
+        "zone-label": "Zona",
+        "comments-label": "Comentarios"
+      } 
+    },
+    "dashboard": {
+      "total_visits": "Total de visitas",
+      "total_sellers": "Vendedores",
+      "table": {
+        "title": "Todas las visitas",
+        "columns": {
+          "customer": "Cliente",
+          "date": "Fecha",
+          "order_id": "Orden ID",
+          "zone": "Zona",
+          "seller": "Vendedor"
+        },
+        "results-overlay": "Aún no se han generado visitas!"
+      }
+    }
+  }
+}
