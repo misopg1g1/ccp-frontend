@@ -6,13 +6,14 @@ import "dayjs/locale/es";
 import './header.scss';
 import { useTranslation } from 'react-i18next';
 
-dayjs.locale("es");
+
 
 export default function Header() {
-  const [t] = useTranslation("global");
+  const [t, i18n] = useTranslation("global");
   const userState = useSelector<GlobalState>(
     (state) => state.login.userData
   ) as UserData;
+  dayjs.locale(i18n.language);
   const date = dayjs().format("MMMM DD, YYYY")
   const formattedDate = date.charAt(0).toUpperCase() + date.slice(1)
   return (
